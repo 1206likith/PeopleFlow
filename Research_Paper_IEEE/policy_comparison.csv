@@ -1,0 +1,4 @@
+Policy,Mean Evac Time (s),Lower CI,Upper CI,Std Dev
+nearest,300.1,300.1,300.1,0.0
+least_crowded,300.1,300.1,300.1,0.0
+guided,300.1,300.1,300.1,0.0

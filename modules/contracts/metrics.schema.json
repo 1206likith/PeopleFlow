@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "peopleflow://contracts/metrics.schema.json",
+  "title": "PeopleFlow Metrics Schema",
+  "type": "object",
+  "properties": {
+    "total_evacuation_time": { "type": "number", "minimum": 0 },
+    "average_evacuation_time": { "type": "number", "minimum": 0 },
+    "median_evacuation_time": { "type": "number", "minimum": 0 },
+    "flow_rate_per_exit": { "type": "object", "additionalProperties": { "type": "number" } },
+    "total_flow_rate": { "type": "number", "minimum": 0 },
+    "peak_flow_rate": { "type": "number", "minimum": 0 },
+    "average_delay": { "type": "number", "minimum": 0 },
+    "exit_utilization": { "type": "object", "additionalProperties": { "type": "number" } },
+    "exit_load_balance": { "type": "number", "minimum": 0 },
+    "peak_congestion_density": { "type": "number", "minimum": 0 },
+    "average_stress": { "type": "number", "minimum": 0, "maximum": 1 },
+    "average_panic": { "type": "number", "minimum": 0, "maximum": 1 },
+    "casualties": { "type": "integer", "minimum": 0 },
+    "near_misses": { "type": "integer", "minimum": 0 },
+    "safety_score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "survival_probability": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "required": [
+    "total_evacuation_time",
+    "average_evacuation_time",
+    "median_evacuation_time",
+    "peak_flow_rate",
+    "average_delay",
+    "exit_load_balance",
+    "safety_score",
+    "survival_probability"
+  ],
+  "additionalProperties": true
+}

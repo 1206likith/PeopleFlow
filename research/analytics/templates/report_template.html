@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PeopleFlow Report</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      h1 { margin-bottom: 8px; }
+      .metric { margin: 4px 0; }
+    </style>
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <h3>Metrics</h3>
+    <div class="metrics">
+      {{metrics}}
+    </div>
+    <h3>Heatmap</h3>
+    <img src="{{heatmap_path}}" alt="Heatmap" style="max-width: 100%" />
+  </body>
+  </html>

@@ -1,0 +1,146 @@
+[
+  {
+    "layout": "Metro",
+    "occupancy": 120,
+    "policy": "shortest_path",
+    "time_mean": 34.64,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Metro",
+    "occupancy": 120,
+    "policy": "least_crowded",
+    "time_mean": 10.52,
+    "completion_pct_mean": 29.33,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Metro",
+    "occupancy": 160,
+    "policy": "shortest_path",
+    "time_mean": 34.56,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Metro",
+    "occupancy": 160,
+    "policy": "least_crowded",
+    "time_mean": 6.68,
+    "completion_pct_mean": 16.12,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Metro",
+    "occupancy": 200,
+    "policy": "shortest_path",
+    "time_mean": 34.88,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Metro",
+    "occupancy": 200,
+    "policy": "least_crowded",
+    "time_mean": 5.08,
+    "completion_pct_mean": 10.2,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 120,
+    "policy": "shortest_path",
+    "time_mean": 33.04,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 120,
+    "policy": "least_crowded",
+    "time_mean": 9.64,
+    "completion_pct_mean": 30.5,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 160,
+    "policy": "shortest_path",
+    "time_mean": 29.56,
+    "completion_pct_mean": 95.12,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 160,
+    "policy": "least_crowded",
+    "time_mean": 6.28,
+    "completion_pct_mean": 12.25,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 200,
+    "policy": "shortest_path",
+    "time_mean": 27.48,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0
+  },
+  {
+    "layout": "Airport",
+    "occupancy": 200,
+    "policy": "least_crowded",
+    "time_mean": 5.12,
+    "completion_pct_mean": 6.4,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 120,
+    "policy": "shortest_path",
+    "time_mean": 52.92,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 120,
+    "policy": "least_crowded",
+    "time_mean": 38.8,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 160,
+    "policy": "shortest_path",
+    "time_mean": 34.88,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 160,
+    "policy": "least_crowded",
+    "time_mean": 26.88,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 200,
+    "policy": "shortest_path",
+    "time_mean": 25.52,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  },
+  {
+    "layout": "Plan3",
+    "occupancy": 200,
+    "policy": "least_crowded",
+    "time_mean": 18.2,
+    "completion_pct_mean": 0.0,
+    "completion_rate": 0.0
+  }
+]

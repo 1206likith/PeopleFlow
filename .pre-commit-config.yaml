@@ -1,0 +1,53 @@
+repos:
+  # Ruff: Fast Python linter with isort, flake8, pyupgrade bundled
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.8
+    hooks:
+      - id: ruff
+        args: ['--fix', 'apps/backend/app']
+      - id: ruff-format
+        args: ['apps/backend/app']
+
+  # MyPy: Static type checker for Python
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        additional_dependencies: ['pydantic', 'fastapi', 'types-aiofiles', 'types-requests']
+        args: ['--config-file=apps/backend/mypy.ini', 'apps/backend/app']
+        language_version: python3.11
+
+  # Pytest: Run test suite on changed Python files
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest
+        entry: bash -c 'cd apps/backend && python -m pytest app/tests -q --tb=short'
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
+
+  # YAML validation
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+        args: ['--maxkb=1024']
+
+  # JSON validation
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-json
+
+default_language_version:
+  python: python3.11
+
+ci:
+  autofix_commit_msg: '[pre-commit.ci] auto fixes from hooks'
+  autofix_stage: manual
+  skip: [pytest-check]  # Skip test hook in CI (handled separately)

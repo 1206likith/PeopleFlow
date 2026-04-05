@@ -1,0 +1,21 @@
+policy,policy_label,run,seed,steps,wall_clock_s,sim_time_s,peak_density,completion_pct,completed
+shortest_path,Nearest/shortest baseline,1,3100,163,0.8224327999923844,32.59999999999992,21.68,95.0,True
+shortest_path,Nearest/shortest baseline,2,3101,166,0.7748223000089638,33.19999999999993,24.44,95.0,True
+shortest_path,Nearest/shortest baseline,3,3102,170,0.793374800006859,33.99999999999994,19.8,95.0,True
+shortest_path,Nearest/shortest baseline,4,3103,190,0.8585352000081912,38.0,25.08,95.0,True
+shortest_path,Nearest/shortest baseline,5,3104,163,0.7533619000023464,32.59999999999992,21.72,95.0,True
+shortest_path,Nearest/shortest baseline,6,3105,146,0.734135900012916,29.19999999999993,27.68,95.0,True
+shortest_path,Nearest/shortest baseline,7,3106,181,0.6931523000093875,36.199999999999974,16.12,95.0,True
+shortest_path,Nearest/shortest baseline,8,3107,168,0.7334340999950655,33.59999999999994,19.4,95.0,True
+shortest_path,Nearest/shortest baseline,9,3108,167,0.7882819000078598,33.399999999999935,16.88,95.0,True
+shortest_path,Nearest/shortest baseline,10,3109,152,0.741742800004431,30.399999999999924,19.2,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),1,3100,270,6.293636000002152,54.00000000000023,13.68,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),2,3101,273,5.93025389999093,54.600000000000236,14.0,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),3,3102,255,5.2580191000015475,51.000000000000185,13.08,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),4,3103,311,6.774988700009999,62.200000000000344,16.12,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),5,3104,302,6.032237199993688,60.40000000000032,13.84,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),6,3105,285,5.801063100007013,57.00000000000027,15.96,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),7,3106,295,4.661676900010207,59.0000000000003,12.12,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),8,3107,320,5.7332164000108605,64.00000000000037,11.04,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),9,3108,281,5.684617600010824,56.20000000000026,13.56,95.0,True
+least_crowded,Congestion-aware (PeopleFlow),10,3109,290,5.9208560999977635,58.000000000000284,14.48,95.0,True

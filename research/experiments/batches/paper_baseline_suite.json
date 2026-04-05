@@ -1,0 +1,21 @@
+{
+  "name": "paper_baseline_suite",
+  "base_config": "research/experiments/baseline.json",
+  "seeds": [42, 43, 44, 45, 46, 47, 48, 49],
+  "variants": [
+    {
+      "id": "full_model",
+      "description": "Full PeopleFlow model with social force + behavior + hazards",
+      "overrides": {}
+    },
+    {
+      "id": "no_behavior",
+      "description": "Ablation baseline without behavioral decision updates",
+      "overrides": {
+        "ablation": {
+          "use_behavioral_decisions": false
+        }
+      }
+    }
+  ]
+}

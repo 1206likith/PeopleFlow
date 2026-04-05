@@ -1,0 +1,20 @@
+{
+  "models": {
+    "floorplan_wall_segmentation": {
+      "path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\apps\\backend\\artifacts\\model_training\\fptrain-570925de9e18\\wall_segmentation.bundle",
+      "updated_at": "2026-04-03T11:00:33.288063Z",
+      "metadata": {
+        "job_id": "fptrain-570925de9e18",
+        "approved_samples": 0
+      }
+    },
+    "floorplan_exit_detection": {
+      "path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\apps\\backend\\artifacts\\model_training\\fptrain-570925de9e18\\exit_detection.bundle",
+      "updated_at": "2026-04-03T11:00:33.289062Z",
+      "metadata": {
+        "job_id": "fptrain-570925de9e18",
+        "approved_samples": 0
+      }
+    }
+  }
+}

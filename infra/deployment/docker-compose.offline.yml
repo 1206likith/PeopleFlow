@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.backend-gpu
+    environment:
+      - ENVIRONMENT=production
+      - APP_MODE=production
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=peopleflow
+      - REDIS_URL=redis://redis:6379
+      - REDIS_ENABLED=true
+      - ADMIN_KEY_ENABLED=true
+      - ADMIN_API_KEY=${ADMIN_API_KEY:-dev-key}
+    volumes:
+      - backend-uploads:/app/uploads
+      - backend-artifacts:/app/artifacts
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - peopleflow-network
+
+  frontend:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.frontend-offline
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - peopleflow-network
+
+  mongodb:
+    image: mongo:6.0
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - peopleflow-network
+
+  redis:
+    image: redis:7.0-alpine
+    networks:
+      - peopleflow-network
+
+networks:
+  peopleflow-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  backend-uploads:
+  backend-artifacts:

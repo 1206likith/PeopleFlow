@@ -1,0 +1,25 @@
+Date: April 5, 2026
+
+To,
+The Editor-in-Chief
+IEEE Access
+
+Subject: Submission of Manuscript "PeopleFlow: Floor-Plan-Aware Simulation for Building Evacuation Safety Assessment"
+
+Dear Editor,
+
+I am pleased to submit the manuscript titled "PeopleFlow: Floor-Plan-Aware Simulation for Building Evacuation Safety Assessment" for consideration in IEEE Access.
+
+This manuscript presents a reproducible simulation workflow for evacuation-safety assessment from architectural floor plans, with journal-scale evidence across a 450-run core matrix and supplementary validation and sensitivity studies. The work emphasizes comparative decision support for safety engineering and digital twin-enabled planning.
+
+For reviewer visibility, we include a short supplementary multimedia file (peopleflow_multimedia_supplement.mp4) that demonstrates the end-to-end simulation workflow and scenario-comparison outputs.
+
+The manuscript is original, has not been published previously, and is not under consideration elsewhere. All authors have approved the submission.
+
+Thank you for your consideration.
+
+Sincerely,
+Likith Sai Kunchi
+B.Tech CSE (SCOPE), VIT (Vellore Institute of Technology)
+India
+likithsai.kunchi@gmail.com

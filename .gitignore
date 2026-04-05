@@ -1,0 +1,113 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+dist-ssr/
+*.local
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs (all)
+*.log
+Logs/
+
+# Runtime generated data (never commit)
+uploads/
+reports/
+apps/backend/uploads/
+apps/backend/reports/*.pdf
+apps/backend/artifacts/
+data/*.db
+apps/backend/data/*.db
+artifacts/audit.log
+artifacts/archive/
+artifacts/logs/
+research/experiments/output/
+research/analytics/output/
+apps/frontend/public/experiments/output/reports/
+
+# Vercel deployment shims (local-only project)
+.vercel/
+apps/backend/vercel.json
+apps/backend/.vercelignore
+apps/frontend/vercel.json
+
+# AI model data
+modules/ai_engine/data/saved_models/
+modules/ai_engine/data/simulation_runs/
+modules/ai_engine/data/training_logs/
+
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+Assets/AssetStoreTools*
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Tools and Caches
+.coverage
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+coverage.xml
+htmlcov/
+nosetests.xml
+pip-log.txt
+pip-delete-this-directory.txt
+*.tmp
+*.user
+*.userprefs

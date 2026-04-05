@@ -1,0 +1,13 @@
+{
+  "manifest_version": "peopleflow-research-artifact-index-v1",
+  "record_version": "peopleflow-research-artifact-v1",
+  "generated_at": "2026-04-04T16:05:38.077970+00:00",
+  "artifact_count": 0,
+  "source_dir": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\artifacts\\paper_results",
+  "output_path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\artifacts\\paper_results\\artifacts_index.json",
+  "metadata": {
+    "artifact_scope": "paper_results",
+    "catalog_version": "peopleflow-publication-bundle-catalog-v1"
+  },
+  "artifacts": []
+}

@@ -1,0 +1,10 @@
+{
+  "required_paths": [
+    "/api/v3/simulation/sessions",
+    "/api/v3/simulation/sessions/{session_id}",
+    "/api/v3/simulation/sessions/{session_id}/control",
+    "/api/v3/simulation/sessions/{session_id}/stream",
+    "/api/v3/simulation/sessions/{session_id}/analysis",
+    "/api/v3/simulation/sessions/{session_id}/replay"
+  ]
+}

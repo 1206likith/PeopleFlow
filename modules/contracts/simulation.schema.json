@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "peopleflow://contracts/simulation.schema.json",
+  "title": "PeopleFlow Simulation Schema",
+  "type": "object",
+  "definitions": {
+    "agent": {
+      "type": "object",
+      "required": ["agent_id", "x", "y", "z", "status"],
+      "properties": {
+        "agent_id": { "type": ["integer", "string"] },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" },
+        "speed": { "type": "number" },
+        "status": { "type": "string" },
+        "panic_level": { "type": "number" },
+        "stress_level": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "bottleneck": {
+      "type": "object",
+      "required": ["x", "y", "z", "density"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" },
+        "density": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "wall": {
+      "type": "object",
+      "properties": {
+        "x1": { "type": "number" },
+        "y1": { "type": "number" },
+        "x2": { "type": "number" },
+        "y2": { "type": "number" },
+        "length": { "type": "number" },
+        "type": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "obstacle": {
+      "type": "object",
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number" },
+        "height": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "total_agents": { "type": "integer" },
+        "evacuated": { "type": "integer" },
+        "remaining": { "type": "integer" },
+        "elapsed_time": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "exit": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" },
+        "width": { "type": "number" },
+        "capacity": { "type": "number" },
+        "flow_rate": { "type": "number" },
+        "is_emergency": { "type": "boolean" },
+        "is_accessible": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "floor": {
+      "type": "object",
+      "properties": {
+        "floorNumber": { "type": "integer" },
+        "name": { "type": "string" },
+        "exits": { "type": "array", "items": { "$ref": "#/definitions/exit" } }
+      },
+      "additionalProperties": true
+    },
+    "simulation_config": {
+      "type": "object",
+      "properties": {
+        "num_agents": { "type": "integer" },
+        "emergency_type": { "type": "string" },
+        "panic_level": { "type": "number" },
+        "seed": { "type": "integer" },
+        "floor_number": { "type": "integer" }
+      },
+      "additionalProperties": true
+    }
+  }
+}
+

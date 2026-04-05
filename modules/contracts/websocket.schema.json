@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "peopleflow://contracts/websocket.schema.json",
+  "title": "PeopleFlow WebSocket Message",
+  "type": "object",
+  "required": ["type"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "ping",
+        "pong",
+        "subscribe",
+        "simulation_update",
+        "simulation_complete",
+        "start_simulation",
+        "pause_simulation",
+        "resume_simulation",
+        "stop_simulation",
+        "request_floor_plan",
+        "floor_plan_data",
+        "error"
+      ]
+    },
+    "simulation_id": { "type": "string" },
+    "timestamp": { "type": ["number", "string"] },
+    "schema_version": { "type": "integer", "minimum": 1 },
+    "frame_id": { "type": "integer" },
+    "seed": { "type": "integer" },
+    "replay_id": { "type": "string" },
+    "hazard_state": { "type": "object" },
+    "agents": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/agent" } },
+    "bottlenecks": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/bottleneck" } },
+    "walls": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/wall" } },
+    "exits": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/exit" } },
+    "obstacles": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/obstacle" } },
+    "stats": { "$ref": "simulation.schema.json#/definitions/stats" },
+    "building_name": { "type": "string" },
+    "floors": { "type": "array", "items": { "$ref": "simulation.schema.json#/definitions/floor" } },
+    "file_path": { "type": "string" },
+    "floor_number": { "type": "integer" },
+    "message": { "type": "string" },
+    "config": { "$ref": "simulation.schema.json#/definitions/simulation_config" }
+  },
+  "additionalProperties": true
+}

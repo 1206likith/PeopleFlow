@@ -1,0 +1,10 @@
+{
+  "trials": 12,
+  "seed": 321,
+  "parameters": [
+    { "path": "pre_evacuation_delay.mean", "min": 1.0, "max": 5.0 },
+    { "path": "exit_flow_capacity.base_flow_rate", "min": 0.9, "max": 1.8 },
+    { "path": "social_forces.repulsion_strength", "min": 1000.0, "max": 3000.0 },
+    { "path": "density_speed_curve.speed_factors", "mode": "scale_list", "scale_min": 0.8, "scale_max": 1.1 }
+  ]
+}

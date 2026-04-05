@@ -1,0 +1,6 @@
+layout,processing_time_ms,wall_count,exit_count,processed
+Academic_Plan,46333.0,471,24,True
+Hospital_Plan,506.0,73,2,True
+Mall_Plan,4108.0,173,1,True
+Airport_Terminal,67583.0,445,24,True
+Metro_Station,16505.0,423,23,True

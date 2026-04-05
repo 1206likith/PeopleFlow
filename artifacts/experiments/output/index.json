@@ -1,0 +1,440 @@
+{
+  "manifest_version": "peopleflow-experiment-index-v1",
+  "run_record_version": "peopleflow-experiment-run-v1",
+  "generated_at": "2026-04-05T20:10:37.288195+00:00",
+  "result_count": 14,
+  "source_dir": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\research\\experiments\\output",
+  "output_path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\artifacts\\experiments\\output\\index.json",
+  "metadata": {
+    "index_name": "index.json"
+  },
+  "results": [
+    {
+      "name": "manual-experiment-run",
+      "config_hash": "ba1182b38ea74f11487a912c7405cc02669eca64547744d989bd4684d7a40bdf",
+      "seed": 101,
+      "num_agents": 12,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-04T16:15:05.403012+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {},
+      "output_file": "manual-experiment-run.json"
+    },
+    {
+      "name": "live-calib-check__calib_009",
+      "config_hash": "a08579bcb93353c7bfbd02f05e0e1ccc4f527b191a8a9f3a5346dc22232790db",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:21:09.770323+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "ok",
+        "overall_score": 0.5845111033253765,
+        "status": "needs_review",
+        "calibration_score": 0.5845111033253765,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_009.json"
+    },
+    {
+      "name": "live-calib-check__calib_008",
+      "config_hash": "37b96e2fee4cbfb74e92bec22a12aea2cab8f44912ed87fa9161bc2860824ec9",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:21:00.033263+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "ok",
+        "overall_score": 0.5092319445421746,
+        "status": "needs_review",
+        "calibration_score": 0.5092319445421746,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_008.json"
+    },
+    {
+      "name": "live-calib-check__calib_007",
+      "config_hash": "32f40fad665f722f98f7b1b57cdb4e9057afceca2dd7fd647e15ba4e24edf7cb",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:50.326664+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.34712278079327724,
+        "status": "needs_review",
+        "calibration_score": 0.34712278079327724,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_007.json"
+    },
+    {
+      "name": "live-calib-check__calib_006",
+      "config_hash": "01cc7eee8d8cf15c207f7575086c2b096a8723ce8eeeca23d1008c39281bc983",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:41.897739+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.3818871238658332,
+        "status": "needs_review",
+        "calibration_score": 0.3818871238658332,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_006.json"
+    },
+    {
+      "name": "live-calib-check__calib_005",
+      "config_hash": "2f8435a397e9dcd9b4dc808943ab01fc3217fdc358f8aa9098da4bff3109dbf3",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:31.607235+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.31091248960717577,
+        "status": "needs_review",
+        "calibration_score": 0.31091248960717577,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_005.json"
+    },
+    {
+      "name": "live-calib-check__calib_004",
+      "config_hash": "08a969ffcc497402e7e9fbb6eb2bd07eebb975324b5f1798e0e9e3d7ea9d719e",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:21.418206+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "ok",
+        "overall_score": 0.5092692526425554,
+        "status": "needs_review",
+        "calibration_score": 0.5092692526425554,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_004.json"
+    },
+    {
+      "name": "live-calib-check__calib_003",
+      "config_hash": "e93b336d511de87a01f6880420ffeaee18ab9edf0fb5613bd900e9f74210cea2",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:10.882539+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "ok",
+        "overall_score": 0.5375258346807547,
+        "status": "needs_review",
+        "calibration_score": 0.5375258346807547,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_003.json"
+    },
+    {
+      "name": "live-calib-check__calib_002",
+      "config_hash": "c129538c1530d1484818db640f2b47433d92ee87f9c3df4e12a2261e48efd464",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:20:00.416384+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.33805370851192057,
+        "status": "needs_review",
+        "calibration_score": 0.33805370851192057,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_002.json"
+    },
+    {
+      "name": "live-calib-check__calib_001",
+      "config_hash": "3d1123d69de86c80d2815ea55fa9c937c84b13b854a26faf1a4ea83d2020cb25",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:19:50.432080+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.3109718503322587,
+        "status": "needs_review",
+        "calibration_score": 0.3109718503322587,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_001.json"
+    },
+    {
+      "name": "live-calib-check__calib_000",
+      "config_hash": "67b2ffd4ce23bfd4abc10098f9e0036dd7ab56b8bc786895284a45193e4adb71",
+      "seed": 42,
+      "num_agents": 16,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-04-02T22:19:39.852319+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.402467991435467,
+        "status": "needs_review",
+        "calibration_score": 0.402467991435467,
+        "optimization_score": null
+      },
+      "output_file": "live-calib-check__calib_000.json"
+    },
+    {
+      "name": "test_optuna__opt_001",
+      "config_hash": "b80aec655ddb5c5f354ac83fabb802131193c7669f1173937f4f986298e32147",
+      "seed": 42,
+      "num_agents": 10,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-03-23T19:02:50.885259+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "out_of_range",
+        "fundamental": "ok",
+        "overall_score": 0.3094648859617497,
+        "status": null,
+        "calibration_score": null,
+        "optimization_score": 0.3856789315770498
+      },
+      "output_file": "test_optuna__opt_001.json"
+    },
+    {
+      "name": "test_optuna__opt_000",
+      "config_hash": "cc38bd1760ac5fef6ec988d50613e2a36f1129821e03cb0fd571be363c52e1b0",
+      "seed": 42,
+      "num_agents": 10,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-03-23T19:02:50.737147+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "ok",
+        "overall_score": 0.6076374657468714,
+        "status": null,
+        "calibration_score": null,
+        "optimization_score": 0.5645824794481229
+      },
+      "output_file": "test_optuna__opt_000.json"
+    },
+    {
+      "name": "baseline",
+      "config_hash": "916541d933becabbbb549c187d0fda5b26381df472b7bd562017dc5ac7110426",
+      "seed": 42,
+      "num_agents": 200,
+      "emergency_type": "fire",
+      "ablation": {
+        "use_social_force": true,
+        "use_pathfinding": true,
+        "use_behavioral_decisions": true,
+        "use_hazard_effects": true
+      },
+      "generated_at": "2026-02-26T12:40:37.693119+00:00",
+      "metrics_summary": {
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "median_time": 0.0,
+        "peak_flow": 0.0,
+        "safety_score": 100.0,
+        "survival_probability": 0.0
+      },
+      "validation_summary": {
+        "exit89": "ok",
+        "fundamental": "out_of_range",
+        "overall_score": 0.9776758764776863,
+        "status": null,
+        "calibration_score": null,
+        "optimization_score": null
+      },
+      "output_file": "baseline.json"
+    }
+  ]
+}

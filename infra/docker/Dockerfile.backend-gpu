@@ -1,0 +1,54 @@
+# High-performance, GPU-enabled Backend Dockerfile
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
+
+# Avoid interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Python 3.11 and necessary system tools
+RUN apt-get update && apt-get install -y \
+    python3.11 \
+    python3-pip \
+    python3.11-dev \
+    gcc \
+    g++ \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set Python 3.11 as default
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 \
+    && update-alternatives --set python3 /usr/bin/python3.11
+
+WORKDIR /app
+
+# Copy requirements first
+COPY requirements.txt .
+
+# Install Python dependencies with GPU support
+# Note: Torch and TF often need specific index URLs or versions for optimal GPU use
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY apps/backend/ ./apps/backend/
+COPY modules/ ./modules/
+
+# Create necessary directories
+RUN mkdir -p /app/uploads /app/artifacts /app/modules/ai_engine/data/saved_models
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV UPLOAD_DIR=/app/uploads
+ENV ENVIRONMENT=production
+ENV APP_MODE=production
+
+# Expose API port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/api/health || exit 1
+
+WORKDIR /app/apps/backend
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]

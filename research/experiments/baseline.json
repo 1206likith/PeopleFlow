@@ -1,0 +1,15 @@
+﻿{
+  "name": "baseline",
+  "engine": "core",
+  "seed": 42,
+  "num_agents": 200,
+  "emergency_type": "fire",
+  "floor_number": 1,
+  "duration_seconds": 120,
+  "ablation": {
+    "use_social_force": true,
+    "use_pathfinding": true,
+    "use_behavioral_decisions": true,
+    "use_hazard_effects": true
+  }
+}

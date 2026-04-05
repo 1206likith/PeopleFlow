@@ -1,0 +1,38 @@
+{
+  "manifest_version": "peopleflow-experiment-export-v1",
+  "run_record_version": "peopleflow-experiment-run-v1",
+  "generated_at": "2026-04-04T16:06:49.171699+00:00",
+  "row_count": 13,
+  "source_dir": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\research\\experiments\\output",
+  "csv_path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\artifacts\\experiments\\output\\metrics.csv",
+  "columns": [
+    "name",
+    "config_hash",
+    "seed",
+    "num_agents",
+    "emergency_type",
+    "floor_plan_id",
+    "floor_plan_revision",
+    "engine_version",
+    "generated_at",
+    "ablation_social_force",
+    "ablation_pathfinding",
+    "ablation_behavioral",
+    "ablation_hazard",
+    "total_time",
+    "avg_time",
+    "median_time",
+    "peak_flow",
+    "avg_delay",
+    "safety_score",
+    "survival_probability",
+    "exit_balance",
+    "optimal_exit_utilization",
+    "validation_overall",
+    "validation_status",
+    "optimization_score"
+  ],
+  "metadata": {
+    "export_name": "metrics.csv"
+  }
+}

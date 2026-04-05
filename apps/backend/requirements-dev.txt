@@ -1,0 +1,26 @@
+# PeopleFlow Backend - Development Tools (Optional)
+# Install core requirements first, then: pip install -r requirements-dev.txt
+
+# Notebooks & Interactive Development
+jupyter==1.0.0
+ipython==8.17.2
+ipykernel==6.26.0
+
+# Code Quality
+black==23.12.0
+isort==5.13.2
+flake8==6.1.0
+pylint==3.0.2
+
+# Security Scanning
+bandit==1.7.5
+pip-audit==2.6.2
+
+# Testing Enhancements
+pytest-cov==4.1.0
+pytest-xdist==3.5.0
+pytest-timeout==2.2.0
+
+# Documentation
+sphinx==7.2.6
+sphinx-rtd-theme==2.0.0

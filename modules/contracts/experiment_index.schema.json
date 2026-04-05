@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExperimentIndex",
+  "type": "object",
+  "required": ["results"],
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "config_hash": { "type": "string" },
+          "seed": { "type": ["integer", "null"] },
+          "num_agents": { "type": ["integer", "null"] },
+          "emergency_type": { "type": ["string", "null"] },
+          "ablation": { "type": "object" },
+          "generated_at": { "type": ["string", "null"] },
+          "metrics_summary": { "type": "object" },
+          "validation_summary": { "type": "object" },
+          "output_file": { "type": "string" }
+        }
+      }
+    }
+  }
+}

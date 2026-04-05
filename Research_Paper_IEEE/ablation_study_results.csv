@@ -1,0 +1,4 @@
+Configuration,Mean Time (s),Mean Density
+Full Model (S4),7.24,3.96
+No Congestion Routing,39.42,28.58
+No Panic Variation,10.08,5.46

@@ -1,0 +1,23 @@
+# PeopleFlow Backend - ML Extras (Optional)
+# Install core requirements first, then: pip install -r requirements-ml.txt
+#
+# This file is intentionally limited to packages that are realistic for the
+# default PeopleFlow Windows/Python workflow.
+# Detectron2 is NOT included here because it commonly fails on Windows/Python 3.11
+# without a specialized wheel/toolchain. Treat it as an advanced optional add-on.
+
+# Deep Learning
+torch==2.1.1
+torchvision==0.16.1
+torchaudio==2.1.1
+
+# YOLOv8 / object detection
+ultralytics==8.1.0
+
+# Computer Vision
+# OpenCV is already provided by requirements.txt. Keep ML extras focused.
+
+# Additional ML Utilities
+scikit-learn==1.3.2
+scikit-image==0.22.0
+Pillow==10.1.0

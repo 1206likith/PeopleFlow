@@ -1,0 +1,509 @@
+\documentclass[conference]{IEEEtran}
+% Project-level writing notes for AI-assisted drafting:
+% see ai_writer_project_notes.md in this same folder.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{balance}
+
+\newcommand{\safeincludegraphics}[2][0.48\textwidth]{%
+    \IfFileExists{#2}{%
+        \includegraphics[width=#1]{#2}%
+    }{%
+        \fbox{%
+            \parbox[c][1.6in][c]{#1}{%
+                \centering
+                \textbf{Placeholder Figure}\\[3pt]
+                \footnotesize #2
+            }%
+        }%
+    }%
+}
+
+% Camera-ready metadata. Replace these once and keep the author block below unchanged.
+\newcommand{\PaperAuthorName}{Likith Sai Kunchi}
+\newcommand{\PaperAuthorAffiliation}{B.Tech CSE (SCOPE), VIT (Vellore Institute of Technology)}
+\newcommand{\PaperAuthorCityCountry}{India}
+\newcommand{\PaperAuthorEmail}{likithsai.kunchi@gmail.com}
+
+\begin{document}
+
+\title{Simulation-Based Safety Assessment of Building Evacuation Using Floor-Plan-Aware Crowd Modeling}
+
+\author{\IEEEauthorblockN{\PaperAuthorName}
+\IEEEauthorblockA{\textit{\PaperAuthorAffiliation} \\
+\PaperAuthorCityCountry \\
+\PaperAuthorEmail}}
+
+\maketitle
+
+\begin{abstract}
+This paper presents PeopleFlow, a floor-plan-aware evacuation simulation framework for simulation-based safety assessment under emergency conditions. The system converts architectural floor plans into simulation-ready environments, models pedestrian movement and route selection, and reports interpretable indicators including operational clearance time, congestion hotspots, and replay-derived bottleneck traces. Instead of treating evacuation analysis as a single deterministic estimate, the workflow evaluates safety through reproducible comparative evidence. The platform integrates floor-plan ingestion, simulation sessions, replay, and artifact-backed reporting to support traceable engineering analysis. In this updated bundle, we report four case studies generated directly from user-provided uploaded floor plans. Across these runs (67 agents per case), operational clearance ranges from 48.4~s to 418.8~s, peak density ranges from 12.84 to 231.00, and congestion duration ranges from 21.3~s to 223.3~s. Relative to the fastest layout, the slowest layout is 8.65\x slower and reaches 17.99\x higher peak density, demonstrating strong geometry sensitivity. The results position simulation as a decision-support tool for identifying safer configurations, not as a guarantee of real-world safety, and explicitly acknowledge limitations in hazard modeling, empirical calibration scope, and floor-plan extraction quality.
+\end{abstract}
+
+\begin{IEEEkeywords}
+evacuation simulation, crowd modeling, building safety, floor plan analysis, emergency planning, decision support
+\end{IEEEkeywords}
+
+\section{Introduction}
+Building evacuation safety is difficult to evaluate directly in operational environments because full-scale emergency drills are costly, disruptive, and limited in the range of hazardous conditions that can be reproduced safely. As a result, designers and safety planners often rely on simplified code-based calculations or isolated scenario assumptions that do not adequately capture route competition, localized congestion, bottleneck formation, and sensitivity to exit availability. Simulation offers a practical alternative by enabling structured what-if analysis under repeatable conditions \cite{evac_review,sfpe}.
+
+However, many evacuation tools remain difficult to integrate with real floor plans, difficult to reproduce across repeated runs, or difficult to interpret from a safety-analysis perspective \cite{path_planning,kuligowski}. A useful engineering workflow should support the full chain from building layout ingestion to scenario construction, replayable simulation, and interpretable safety indicators. It should also make it possible to compare alternative emergency conditions and operational strategies in a traceable manner.
+
+This paper presents PeopleFlow as a floor-plan-aware evacuation analysis framework aimed at simulation-based safety assessment. The contribution is not a claim of absolute proof of safety, nor a claim of a novel state-of-the-art pedestrian policy. Instead, the goal is to show that building safety can be assessed through structured simulation evidence drawn from realistic layouts, scenario comparisons, and measurable evacuation metrics.
+
+The motivation for this framing is practical. In real projects, the central question is rarely whether one algorithm is globally optimal. The more common question is whether a building layout, occupancy profile, or evacuation policy appears acceptably robust when conditions deteriorate. This means that the most valuable outputs are not only animated trajectories but also interpretable measures of congestion, clearance time, and exit usage under multiple scenarios. A simulation platform that helps safety stakeholders understand why performance changes across cases can therefore be more useful than a tool that reports only a single scalar outcome.
+
+This paper therefore treats PeopleFlow as an engineering-analysis system. The paper contributes an end-to-end workflow, a reproducible case-study bundle, and a set of interpretable results that can be discussed in the language of safety review. The quantitative sections are intentionally framed around three locally reproduced cases rather than around broad benchmark claims. That choice matches the current maturity of the repository and keeps the manuscript aligned with what the system can demonstrate credibly today.
+
+The main contributions of this work are as follows:
+\begin{itemize}
+    \item A floor-plan-to-simulation pipeline that converts building layouts into simulation-ready environments containing walls, exits, obstacles, and navigable structure.
+    \item A session-based simulation workflow that supports live execution, replay, analysis, and artifact-backed experiment tracking.
+    \item A safety-assessment methodology based on interpretable indicators such as evacuation time, density hotspots, bottleneck persistence, and exit utilization balance.
+    \item A case-study-oriented evaluation strategy for comparing baseline evacuation, blocked-exit disruption, occupancy stress, and guided-routing interventions.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_pipeline.png}}
+\caption{Overall PeopleFlow workflow from floor-plan ingestion to safety metric generation.}
+\label{fig:pipeline}
+\end{figure}
+
+\section{Related Work}
+Research on pedestrian evacuation commonly combines continuous-space crowd motion models, discrete route-selection logic, and environment-aware constraints. Social-force-inspired movement models remain widely used for simulating interpersonal repulsion, wall avoidance, and desired-direction behavior in dense crowd movement \cite{sfm,helbing2000}. Other work has focused on cellular automata \cite{ca}, route-choice modelling, and simulation frameworks for evacuation decision support \cite{path_planning,evac_review}.
+
+Within building safety analysis, simulation is often used as a comparative tool rather than a theorem-level proof mechanism. The value of such systems lies in their ability to highlight congestion patterns, exit competition, and degraded performance under disruption. Safety-oriented literature and guidance documents also emphasize the importance of flow, density, and egress capacity interpretation instead of relying on a single scalar completion time \cite{fruin,sfpe,crowd_book}. The present work is positioned in this engineering-analysis space. PeopleFlow emphasizes floor-plan-aware scenario construction, reproducible simulation sessions, and interpretable safety indicators over claims of algorithmic novelty alone.
+
+This distinction matters for the current paper. A large body of literature studies pedestrian dynamics at the level of microscopic motion or collective self-organization. A separate stream studies evacuation modeling as an engineering problem in which the main goal is assessing whether a design or operational policy meets safety expectations. PeopleFlow belongs more strongly to the second category. Its contribution in the current repository is the end-to-end workflow that links floor-plan processing, browser-based geometry review, live simulation, replay, analytics, and reproducible experiment artifacts. The manuscript therefore complements prior modeling literature by focusing on reproducibility, interpretability, and case-study communication.
+
+\section{PeopleFlow Framework}
+PeopleFlow is organized as a workflow that connects building-layout ingestion, geometry extraction, evacuation simulation, session replay, and experiment reporting.
+
+\subsection{Floor-plan ingestion and geometry extraction}
+The system accepts floor-plan imagery and converts it into a simulation-ready representation. The extracted representation includes walls, exits, obstacles, rooms, and other geometric cues needed for route construction and crowd movement. Manual correction can be applied through the designer workflow when automated extraction requires adjustment.
+
+In practical terms, this stage is where PeopleFlow becomes more than a generic simulator. The platform is intended to work from building layouts that are close to how designers and safety reviewers actually receive them. The resulting processed model can be refined through the browser designer, where exits may be inserted, deleted, or updated directly on the canvas. This is important because geometry quality has a first-order impact on the credibility of the downstream simulation. In the current workflow, geometry inspection is part of the research method rather than an afterthought.
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_floorplan.png}}
+\caption{Example floor plan and extracted geometry used for simulation environment creation.}
+\label{fig:floorplan}
+\end{figure}
+
+\subsection{Session-based simulation workflow}
+Simulation is organized around persistent sessions. Each session stores an immutable configuration snapshot, deterministic seed, runtime state, replayable frames, and derived analysis outputs. This session-centric design supports live interaction in the browser studio while preserving a reproducible artifact trail for later review.
+
+The session model also supports a clearer research story. Instead of launching a run and discarding the context afterward, the platform preserves the configuration that produced the run, the analysis tied to that run, and the replay slices needed for later inspection. This makes it easier to compare multiple scenarios for the same floor plan while keeping the provenance of every result explicit.
+
+\subsection{Artifact-backed reporting}
+The experiment layer records configuration, output summaries, and generated artifacts so that case-study results can be revisited without rerunning the entire workflow. This is important for research reporting because it separates analysis evidence from transient runtime state.
+
+At the project level, this artifact-first design supports calibration summaries, optimization summaries, session histories, and experiment records. Even when some specific benchmark outputs still need refinement, the architecture already supports a credible research workflow in which reported results can be tied back to generated artifacts and configuration snapshots.
+
+\section{System Architecture and Workflow Integration}
+
+The value of PeopleFlow for research writing comes not only from the simulation model itself but also from how the surrounding workflow is organized. The current repository links preparation, execution, inspection, and reporting into one path. This matters because safety papers often become difficult to reproduce when floor-plan processing, runtime configuration, and result interpretation are handled by disconnected tools.
+
+\subsection{Backend and frontend roles}
+
+The backend provides floor-plan processing, simulation-session lifecycle management, analysis and replay endpoints, and experiment execution. The frontend provides three primary research-facing surfaces: the designer, the simulation studio, and the experiments dashboard. In combination, these surfaces support a workflow in which the same building can be processed, corrected, simulated, replayed, and compared without leaving the project environment.
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_architecture.png}}
+\caption{Logical PeopleFlow architecture linking floor-plan processing, browser-based editing, session-based simulation, replay, and experiment artifacts.}
+\label{fig:architecture}
+\end{figure}
+
+\begin{table}[htbp]
+\caption{PeopleFlow Research Workflow Components}
+\label{tab:components}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.27\linewidth}}
+\toprule
+Component & Role in Research Workflow \\
+\midrule
+Floor-plan upload & Convert building images into simulation-ready inputs \\
+Designer canvas & Correct exits and geometry before evaluation \\
+Simulation sessions & Run reproducible evacuation scenarios \\
+Replay and analysis & Inspect live and post-run congestion behavior \\
+Experiments pipeline & Store artifacts, calibration, and optimization outputs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Core Research-Facing Interfaces}
+\label{tab:interfaces}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.25\linewidth}}
+\toprule
+Interface & Research Use \\
+\midrule
+Floor-plan upload API & Bring building layouts into the analysis pipeline \\
+Designer canvas & Correct exits and improve geometry fidelity \\
+Simulation session API & Launch, control, replay, and analyze scenarios \\
+Experiment endpoints & Run calibration, optimization, and artifact-backed studies \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Session-centric analysis model}
+
+A key architectural decision in PeopleFlow is to treat simulation sessions as the canonical unit of runtime analysis. Instead of separating live execution from post hoc visualization, the system keeps configuration, runtime status, replay data, and analysis outputs linked to the same session identifier. For research communication, this is useful because it reduces ambiguity: every figure, table, and narrative claim can be tied back to a session or experiment artifact rather than to an informal run description.
+
+\subsection{Why this matters for a safety paper}
+
+For a paper built around case studies, workflow integration improves both rigor and clarity. A reader can understand how a floor plan entered the system, how exits were corrected, how the scenario was configured, and how the metrics were derived. This makes the platform stronger as a systems contribution. Even if the manuscript does not claim a fundamentally new agent model, it can still make a meaningful contribution by demonstrating a reproducible and interpretable safety-analysis pipeline.
+
+\section{Simulation Methodology}
+\subsection{Crowd movement model}
+PeopleFlow uses a continuous-space pedestrian movement model coupled with environment-aware routing. Agents move toward assigned exits while responding to neighboring pedestrians, walls, local crowding, and emergency-specific modifiers. Desired speed and movement behavior are further affected by occupancy conditions, route competition, and panic-related settings.
+
+At the engineering level, the simulation can be interpreted as combining three components:
+\begin{enumerate}
+    \item a geometric environment extracted from the floor plan,
+    \item a routing layer that determines feasible movement toward exits, and
+    \item an agent-behavior layer that updates movement under congestion and emergency pressure.
+\end{enumerate}
+
+The motion model is best interpreted as a practical engineering approximation rather than a universal behavioral theory. This is appropriate for the current contribution because the paper is not attempting to prove a new crowd-physics law. Instead, it uses a stable movement model to compare scenarios under common assumptions.
+
+\begin{equation}
+\mathbf{F}_i = \mathbf{F}_i^{\text{desired}} + \sum_{j \neq i}\mathbf{F}_{ij}^{\text{interaction}} + \sum_k \mathbf{F}_{ik}^{\text{wall}}
+\label{eq:force}
+\end{equation}
+
+where $\mathbf{F}_i^{\text{desired}}$ expresses movement toward the next assigned target, $\mathbf{F}_{ij}^{\text{interaction}}$ models interpersonal repulsion or collision-avoidance pressure, and $\mathbf{F}_{ik}^{\text{wall}}$ represents obstacle and boundary avoidance. The velocity update can then be written as
+
+\begin{equation}
+\mathbf{v}_i(t+\Delta t) = \mathbf{v}_i(t) + \frac{\mathbf{F}_i}{m_i}\Delta t
+\label{eq:velocity}
+\end{equation}
+
+with the position advanced at each timestep according to the updated velocity.
+
+\subsection{Routing policies}
+
+Route selection is treated as a scenario-dependent policy choice rather than a fixed property of the environment. The current platform supports shortest-path, least-crowded, and guided-routing styles of behavior. A generic exit-choice cost for exit $e$ at time $t$ can be written as
+
+\begin{equation}
+C(e,t) = \alpha D(e) + \beta Q(e,t) + \gamma H(e,t)
+\label{eq:routecost}
+\end{equation}
+
+where $D(e)$ is a path-length or distance term, $Q(e,t)$ is a congestion or queue term, and $H(e,t)$ is an optional disruption or hazard penalty. The weights $\alpha$, $\beta$, and $\gamma$ reflect the evacuation policy under test. This representation is useful in the paper because it gives a clean conceptual distinction between geometry, occupancy effects, and operational control.
+
+\subsection{Scenario parameters}
+The main scenario parameters considered in this paper are:
+\begin{itemize}
+    \item number of occupants,
+    \item emergency type,
+    \item routing policy,
+    \item panic baseline,
+    \item exit availability, and
+    \item deterministic simulation seed.
+\end{itemize}
+
+The current implementation supports hazard-oriented presets such as fire, earthquake, flood, gas leak, and blast-style disruption. These presets are used to drive scenario comparisons rather than to claim complete physical fidelity for all hazard mechanisms.
+
+In the context of the present manuscript, these scenario parameters matter for two reasons. First, they define how a case study is reproduced. Second, they allow safety assessment to be framed as a robustness problem: a building should not be evaluated only under nominal occupancy and fully available exits.
+
+\subsection{Reproducibility}
+
+The simulation workflow is explicitly designed to be reproducible. Each session captures a deterministic seed, a floor-plan reference, an emergency profile, a routing policy, and a set of runtime parameters. This means the reported case studies can be described not only qualitatively but procedurally, which is important for an IEEE-style research paper.
+
+\subsection{Calibration and validation}
+PeopleFlow includes a calibration workflow that adjusts selected behavioral and flow parameters against empirical targets and density-speed consistency checks. In the current repository state, the available calibration summary reports 10 trials with a best composite validation score of approximately 0.5845. This does not constitute full empirical validation, but it provides a traceable tuning process that improves interpretability of the simulation outputs.
+
+The calibration process is a meaningful part of the research workflow. It demonstrates that parameter choices are not entirely ad hoc. At the same time, partial calibration is not the same as full external validation across all building and hazard types.
+
+\section{Safety Assessment Method}
+The central claim of this paper is not that simulation proves absolute safety, but that it provides structured evidence for safer or less safe configurations under specified assumptions. Safety is assessed through a compact set of interpretable indicators.
+
+\subsection{Primary safety indicators}
+The core indicators used in the reproduced case-study bundle are:
+\begin{itemize}
+    \item operational clearance time, defined here as the terminal time associated with the current kernel completion rule of 95\% evacuated occupants,
+    \item 90\% clearance time,
+    \item peak local crowd density,
+    \item exit-flow imbalance reconstructed from replay transitions,
+    \item bottleneck persistence,
+    \item percentage evacuated within a target time threshold, and
+    \item hazard-exposure-oriented proxy metrics when scenario support is stable enough.
+\end{itemize}
+
+These indicators are selected because they communicate both speed and quality of evacuation. Operational clearance time alone can hide severe localized crowding or overdependence on one exit. Similarly, peak density without clearance time can miss whether congestion is brief or persistent. A compact metric set is therefore preferable to an overly large collection of loosely interpreted outputs.
+
+\subsection{Metric interpretation}
+
+Let $T_{\text{op}}$ denote the operational clearance time under the current 95\% completion rule, and let $T_{0.9}$ denote the time at which 90\% of the agent population has evacuated. Partial-clearance metrics are useful because they reduce sensitivity to very small late-phase tails while still reflecting whether most occupants can clear the environment in a timely manner. In the reproduced bundle, $T_{\text{op}}$ is reported explicitly to avoid overstating it as literal 100\% evacuation time.
+
+A spatially smoothed crowd-density field can be written as
+
+\begin{equation}
+\rho(\mathbf{x},t) = \sum_{i=1}^{N} K_{\sigma}\left(\mathbf{x} - \mathbf{x}_i(t)\right)
+\label{eq:density}
+\end{equation}
+
+where $K_{\sigma}$ is a smoothing kernel centered on the position of agent $i$. Peak local density is then the maximum of $\rho(\mathbf{x},t)$ over the spatial domain and analysis horizon. An exit-imbalance index can similarly be expressed as
+
+\begin{equation}
+I_{\text{exit}} = \frac{\sigma(f_1, f_2, \dots, f_m)}{\mu(f_1, f_2, \dots, f_m) + \epsilon}
+\label{eq:imbalance}
+\end{equation}
+
+where $f_k$ is the cumulative flow through exit $k$, $\mu$ is the mean, $\sigma$ is the standard deviation, and $\epsilon$ is a small stabilizing constant. Lower values correspond to more balanced exit usage. In the case-study bundle, exit counts are reconstructed from frame-to-frame evacuation transitions rather than taken directly from a single runtime field, because replay-derived accounting is more robust across routing-policy variants in the current implementation.
+
+\subsection{Interpretation}
+Within this paper, a configuration is considered \emph{safer} when it produces lower evacuation times, lower sustained congestion, lower dependence on a single overloaded exit, and better resilience under adverse conditions such as blocked exits or increased occupancy. This is an evidence-based engineering interpretation rather than a universal guarantee.
+
+This point is important enough to state explicitly: the manuscript avoids language such as ``the building is proven safe.'' A more defensible phrasing is that the simulation provides evidence that one layout or policy appears safer than another under the modeled assumptions and evaluated scenarios.
+
+\subsection{Bottleneck persistence and threshold-based interpretation}
+
+In addition to scalar end-state metrics, the analysis pays attention to whether high-density regions persist over time. A location that experiences a brief density spike is qualitatively different from a location that remains congested for a long portion of the evacuation. Bottleneck persistence in region $\Omega$ over time horizon $T$ can be written as
+
+\begin{equation}
+B(\Omega) = \frac{1}{T} \int_{0}^{T} \mathbb{I}\!\left[\rho(\Omega,t) > \rho_{\text{thr}}\right] dt
+\label{eq:bottleneck}
+\end{equation}
+
+where $\rho_{\text{thr}}$ is the density threshold chosen to indicate problematic crowding. This kind of measure is useful for safety interpretation because it links geometry, flow, and time in one quantity. A design that produces the same peak density as another design may still be preferable if the congested condition decays more quickly.
+
+\section{Experimental Setup}
+
+The study is organized as a case-study evaluation rather than as a large benchmark sweep. This choice is deliberate. For building-safety analysis, the most meaningful question is often not whether one algorithm dominates on a broad benchmark, but whether the workflow can reveal actionable differences across a small number of realistic layouts and operational conditions. The experimental setup therefore focuses on representative building cases, reproducible scenario definitions, and a compact set of safety indicators.
+
+\subsection{Floor-plan preparation protocol}
+
+Each case begins with a floor-plan representation that is converted into simulation-ready geometry. The preparation protocol involves four steps:
+\begin{enumerate}
+    \item ingest the source layout,
+    \item extract walls, exits, and obstacles,
+    \item inspect and correct geometry in the designer, and
+    \item freeze the corrected geometry as the basis for session creation.
+\end{enumerate}
+
+This preparation protocol is important because safety conclusions are only as credible as the environment representation on which they are based. In the present workflow, geometry preparation is treated as part of the experiment itself rather than as an invisible preprocessing step.
+
+\subsection{Scenario initialization}
+
+For each case study, the session configuration specifies the occupancy, emergency type, routing policy, available exits, panic baseline, and deterministic seed. The study is designed so that the same layout can be evaluated under multiple conditions with minimal ambiguity regarding what changed. In practice, this means that each scenario varies only a small number of factors at a time. For example, the blocked-exit case keeps occupancy and routing policy fixed while disabling one exit, while the occupancy-stress case keeps layout and routing fixed and changes only the population size.
+
+\subsection{Data collection and replay analysis}
+
+For every session, the study collects:
+\begin{itemize}
+    \item session configuration and seed,
+    \item replayable frame data,
+    \item summary metrics,
+    \item density or bottleneck visualizations, and
+    \item scenario-linked interpretation notes.
+\end{itemize}
+
+The replay component is not merely visual decoration. It is important for validating that the reported scalar metrics correspond to plausible and interpretable crowd behavior. In a case-study paper, replay evidence helps explain \emph{why} a bottleneck emerged or why a routing-policy change altered flow distribution. The paper bundle generated for this manuscript stores both aggregate metrics and replay-derived figures beside the \LaTeX{} source so that tables and figures remain consistent.
+
+\section{Calibration and Validation Considerations}
+
+This paper presents calibration and validation as supporting components of the workflow, not as the sole contribution. This distinction is important. PeopleFlow already contains infrastructure for calibration, optimization, and experiment artifact storage, but the most defensible claim at present is that the platform supports a traceable validation-oriented workflow rather than that it has completed exhaustive empirical validation for every scenario class.
+
+\subsection{Calibration evidence in the current repository}
+
+The strongest currently available validation-oriented artifact is the calibration summary, which reports 10 calibration trials and a best composite score of approximately 0.5845. This result is useful for the paper because it shows that the simulation parameters can be adjusted against reference targets instead of being selected arbitrarily. The calibration summary also contains reproducibility metadata, including configuration snapshots and parameter overrides, which strengthens the argument that the platform is suitable for research use.
+
+\begin{table}[htbp]
+\caption{Validation-Oriented Artifacts Available in the Current Repository}
+\label{tab:validation_artifacts}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.26\linewidth}}
+\toprule
+Artifact & Research Use \\
+\midrule
+Calibration summary & Parameter tuning and consistency checking \\
+Optimization summary & Evidence of parameter-search workflow \\
+Session replay outputs & Qualitative interpretation of bottlenecks and congestion \\
+Experiment artifacts & Provenance and reproducibility support \\
+The reproduced evaluation is organized around four case studies generated directly from user-uploaded floor-plan images. The cases intentionally span heterogeneous geometry complexity to measure how layout structure affects evacuation dynamics at fixed population size. The cases are summarized in Table~\ref{tab:cases}.
+
+\begin{table}[htbp]
+\caption{Uploaded Floor-Plan Cases Used in the Reproduced Bundle}
+\label{tab:cases}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.12\linewidth} >{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.23\linewidth}}
+	oprule
+Case & Floor-Plan Source & Purpose & Main Observation \\
+\midrule
+P1 & Uploaded plan 1 & Baseline reference & Fastest operational clearance among the four \\
+P2 & Uploaded plan 2 & Congestion sensitivity & Large delay relative to P1 with matched population \\
+P3 & Uploaded plan 3 & Partitioning stress & High density and reduced completion under runtime cap \\
+P4 & Uploaded plan 4 & Complex layout stress & Highest density and longest operational clearance \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Scenario Definitions for Uploaded Floor-Plan Cases}
+\label{tab:scenario_setup}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.09\linewidth} >{\raggedright\arraybackslash}p{0.17\linewidth} c c >{\raggedright\arraybackslash}p{0.12\linewidth}}
+	oprule
+Case & Scenario & Agents & Seed & Routing \\
+\midrule
+P1 & Baseline & 67 & 201 & Shortest path \\
+P2 & Baseline & 67 & 202 & Least crowded \\
+P3 & Baseline & 67 & 203 & Shortest path \\
+P4 & Baseline & 67 & 204 & Least crowded \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For each case study, the reported evidence includes the uploaded floor plan, extracted geometry, deterministic seed, fixed agent population, routing policy, replay frames, and aggregated safety metrics.
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_case_layouts.png}}
+\caption{Representative uploaded floor-plan layouts used in the reproduced bundle (P1--P4).}
+\label{fig:case_layouts}
+\end{figure}
+
+\subsection{Scenario rationale}
+
+The scenario matrix is intentionally compact and runtime-bounded for rapid reproducible comparison. Each uploaded plan is executed once with fixed population size and deterministic seed. This isolates geometric influence while preserving practical turnaround for iterative research updates.
+
+\section{Results and Interpretation}
+The reported values in this section are drawn from the updated case-study bundle stored beside the manuscript as \texttt{paper\_case\_studies.json} and \texttt{paper\_case\_studies.csv}. Because the current kernel declares completion at 95\% evacuated occupants, terminal time is reported as operational clearance time.
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_simulation.png}}
+\caption{Replay snapshots from uploaded case P4 at start, mid-run, and late-stage clearance.}
+\label{fig:simulation}
+\end{figure}
+
+\begin{figure}[htbp]
+\centerline{\safeincludegraphics{fig_density.png}}
+\caption{Density heatmap generated from replay frames for uploaded case P4.}
+\label{fig:density}
+\end{figure}
+
+Table~\ref{tab:metrics} reports the primary metrics used in the uploaded-layout analysis.
+
+\begin{table*}[htbp]
+\caption{Primary Safety Metrics for Uploaded Floor-Plan Cases}
+\label{tab:metrics}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.06\linewidth} >{\raggedright\arraybackslash}p{0.16\linewidth} c c c c c c}
+	oprule
+Case & Scenario & Operational Clearance (s) & Peak Density & 90\% Clearance (s) & Congestion Duration (s) & Bottleneck Count & Completed (\%) \\
+\midrule
+P1 & Baseline & 48.4 & 12.84 & 30.58 & 21.3 & 35 & 95.5 \\
+P2 & Baseline & 342.6 & 70.44 & 122.40 & 168.3 & 76 & 95.5 \\
+P3 & Baseline & 362.6 & 189.08 & 262.00 & 222.1 & 141 & 82.1 \\
+P4 & Baseline & 418.8 & 231.00 & 251.50 & 223.3 & 183 & 53.7 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table}[htbp]
+\caption{Relative Change with Respect to Uploaded Case P1}
+\label{tab:relative_change}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.16\linewidth} c c}
+	oprule
+Comparison & $\Delta T_{\text{op}}$ & $\Delta$ Peak Density \\
+\midrule
+P2 vs P1 & +607.9\% & +448.6\% \\
+P3 vs P1 & +649.2\% & +1372.9\% \\
+P4 vs P1 & +765.3\% & +1698.8\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Routing Policy and Completion Outcomes}
+\label{tab:exit_distribution}
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.19\linewidth} >{\raggedright\arraybackslash}p{0.18\linewidth} c}
+	oprule
+Case & Routing policy & Completed (\%) \\
+\midrule
+P1 & shortest\_path & 95.5 \\
+P2 & least\_crowded & 95.5 \\
+P3 & shortest\_path & 82.1 \\
+P4 & least\_crowded & 53.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:relative_change} quantifies cross-layout degradation relative to the fastest uploaded case, while Table~\ref{tab:exit_distribution} links routing-policy selection to completion outcomes.
+
+\subsection{Cross-case interpretation}
+
+Across the uploaded floor-plan cases, several patterns recur:
+\begin{itemize}
+    \item geometry complexity dominates runtime behavior even at fixed population size;
+    \item operational clearance can vary by nearly an order of magnitude across uploaded layouts;
+    \item peak density growth is superlinear relative to clearance-time growth in constrained layouts; and
+    \item completion ratio drops sharply in layouts with dense partitioning and narrow connector structure.
+\end{itemize}
+
+These patterns support a broader argument about safety-oriented analysis. The most informative signal is not a single best clearance number; it is the degradation profile across layouts. In this four-plan bundle, P1 behaves as a low-congestion reference, while P2--P4 expose progressively stronger bottleneck concentration and completion loss.
+
+\subsection{Case B: route competition and congestion-aware routing}
+
+Case B evaluates route-choice policy. The nearest-exit variant reaches operational clearance in 26.4~s with a replay-derived exit-imbalance index of 0.282. Switching to congestion-aware routing lowers operational clearance time slightly to 26.0~s, reduces peak density from 12.48 to 12.36, reduces congestion duration from 12.2~s to 12.0~s, and lowers the imbalance index to 0.227. The 90\% clearance time increases slightly from 21.36~s to 22.44~s, suggesting a tradeoff between early surge behavior and more even late-stage distribution. This is still a useful safety result: the routing policy changes how demand is spread across exits, and that can improve balance without requiring any geometry change.
+
+\subsection{Case C: large real floor plan}
+
+Case C is the practical anchor. It is derived from a real uploaded floor plan in the project database and normalized for simulation by scaling image-space coordinates into runtime coordinates. Under the baseline occupancy, the normalized layout reaches operational clearance in 44.4~s with peak density 18.92 and congestion duration 21.5~s. Increasing the population from 80 to 120 agents raises operational clearance time to 54.4~s, peak density to 28.36, congestion duration to 26.6~s, and bottleneck count from 37 to 42. The replay-derived density map in Fig.~\ref{fig:density} shows that the stress scenario does not merely slow the overall run; it amplifies sustained crowding in the same connectors that are already active in the baseline.
+
+\subsection{Cross-case interpretation}
+
+Across the reproduced case studies, several patterns recur:
+\begin{itemize}
+    \item blocked exits increase both operational clearance time and local density concentration;
+    \item route choice changes exit imbalance even when geometry is fixed;
+    \item occupancy stress increases density much faster than it increases clearance time; and
+    \item recurring bottlenecks tend to appear near corridor merges, doorway clusters, and narrow connectors.
+\end{itemize}
+
+These patterns support a broader argument about safety-oriented analysis. The most informative differences are not always in the absolutely fastest scenario. Instead, they often appear in how gracefully the system degrades. A layout that performs moderately well in the baseline but degrades severely under exit loss or occupancy stress may be less desirable than a layout with slightly slower nominal performance but better resilience. The reproduced results therefore justify a comparative workflow in which the analyst evaluates robustness, not only nominal speed.
+
+\section{Discussion}
+The reproduced results reinforce the idea that safety analysis is most useful as a comparison workflow rather than a single-run prediction task. Using four real uploaded floor plans, operational clearance spans from 48.4~s (P1) to 418.8~s (P4), while peak density rises from 12.84 to 231.00. This spread is large enough to change engineering priorities in practice: the slowest case is 8.65\x slower and 17.99\x denser than the fastest case under matched population size.
+
+Another practical lesson is that speed alone is not a sufficient summary. Cases P3 and P4 show this clearly: both exhibit high operational clearance and extreme density, but they also show reduced completion ratios (82.1\% and 53.7\%). For this reason, PeopleFlow should be interpreted through a compact metric family including operational clearance, partial-clearance time, peak density, congestion duration, bottleneck count, and completion ratio.
+
+The current study also clarifies how the system is best presented. It is strongest as a systems-and-case-study contribution centered on simulation-based safety assessment. The paper can make credible claims about reproducibility, floor-plan-aware workflow integration, and interpretable scenario comparison. It does not claim exhaustive hazard realism or universal predictive accuracy.
+
+\subsection{Practical use in engineering review}
+
+Another strength of PeopleFlow is that it supports a browser-first workflow. This is practically meaningful because simulation evidence often needs to be inspected and discussed by people who are not implementing the backend. The ability to review floor-plan geometry, run scenarios, observe density evolution, and replay sessions in the same interface makes the system more suitable for engineering review, teaching, and iterative safety planning. In the context of this paper, that matters because the same workflow used to generate the reported metrics also produced the figures used to interpret them.
+
+\subsection{Threats to validity}
+
+Three threats to validity are especially important:
+\begin{enumerate}
+    \item \textbf{Geometry validity:} if a floor plan is processed incorrectly, the simulation inherits that error unless corrected in the designer.
+    \item \textbf{Behavioral abstraction:} the modeled agent behavior is a useful approximation for scenario comparison, but it cannot capture every real-world perception and decision effect.
+    \item \textbf{Metric and scaling assumptions:} the current reproduced bundle reports operational clearance at a 95\% completion threshold, and the uploaded-layout case requires coordinate normalization from image space into simulation space.
+\end{enumerate}
+
+Additional caution is needed around validation scope. The repository includes a meaningful calibration workflow, but the current paper does not claim comprehensive external validation across diverse real buildings and hazards. That limitation does not eliminate the value of the present results; it defines the correct interpretation of those results.
+
+\section{Conclusion}
+This paper presents PeopleFlow as a floor-plan-aware framework for simulation-based evacuation safety assessment. The contribution lies in combining building-layout ingestion, session-based evacuation simulation, replay, and artifact-backed reporting into a reproducible workflow for engineering analysis. The updated case-study bundle reported here uses four user-uploaded floor plans and demonstrates substantial geometry-driven variation in operational clearance, congestion intensity, and completion outcomes under matched population size. The results are intended to support safety-oriented decision-making rather than to guarantee real-world safety in all emergency conditions.
+
+Future work should focus on stronger empirical validation, additional building case studies, richer hazard models, and more systematic comparison of operational guidance strategies across diverse layouts. An immediate next step for this project is to replace the normalized uploaded-layout envelope with richer geometry-preserving simplification so that more of the full processed floor-plan detail can be retained in publication-ready case studies.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\balance
+
+\end{document}

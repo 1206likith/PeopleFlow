@@ -1,0 +1,28 @@
+[
+  {
+    "policy": "shortest_path",
+    "policy_label": "Nearest/shortest baseline",
+    "runs": 10,
+    "num_agents": 120,
+    "blocked_exit_id": "exit_1",
+    "evac_time_mean_s": 33.32,
+    "evac_time_std_s": 2.39,
+    "peak_density_mean": 21.2,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0,
+    "wall_clock_mean_s": 0.769
+  },
+  {
+    "policy": "least_crowded",
+    "policy_label": "Congestion-aware (PeopleFlow)",
+    "runs": 10,
+    "num_agents": 120,
+    "blocked_exit_id": "exit_1",
+    "evac_time_mean_s": 57.64,
+    "evac_time_std_s": 3.74,
+    "peak_density_mean": 13.79,
+    "completion_pct_mean": 95.0,
+    "completion_rate": 1.0,
+    "wall_clock_mean_s": 5.809
+  }
+]

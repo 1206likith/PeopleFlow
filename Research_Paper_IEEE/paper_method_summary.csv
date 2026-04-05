@@ -1,0 +1,5 @@
+method,routing_policy,mean_operational_clearance_s,std_operational_clearance_s,mean_peak_density,std_peak_density,mean_completed_pct
+shortest_path,shortest_path,301.955,65.42485674266197,140.5175,31.759631606211443,86.05375000000001
+random_routing,stochastic,189.2275,27.113001559172204,70.4365,8.721631722309688,72.445
+density_aware,least_crowded,211.555,47.88070457781638,90.423,19.480751973135284,83.02375
+peopleflow_guided,guided,276.17249999999996,34.48850975257636,202.582,20.81632399256697,58.90625

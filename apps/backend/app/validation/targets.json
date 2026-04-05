@@ -1,0 +1,23 @@
+{
+  "exit89": {
+    "mean_delay": { "target": 2.5, "tolerance": 2.0 }
+  },
+  "fundamental": {
+    "peak_flow_rate": { "min": 0.4, "max": 2.5 },
+    "rmse_tolerance": 0.5
+  },
+  "evacuation": {
+    "time_target": 60.0,
+    "time_tolerance_pct": 0.15,
+    "density_target": 2.0,
+    "density_tolerance": 1.0
+  },
+  "eth_trajectory": {
+    "rmse_tolerance": 1.0,
+    "success_ratio_min": 0.8,
+    "overlap_proportion_max": 0.10,
+    "min_scenes": 2,
+    "interaction_radius": 2.5,
+    "repulsion_gain": 0.12
+  }
+}

@@ -1,0 +1,31 @@
+:root,
+:root[data-theme="aurora-research"],
+:root[data-theme="dark"] {
+  --surface-bg: radial-gradient(circle at 14% -8%, rgba(0, 229, 200, 0.1) 0%, rgba(56, 184, 245, 0.05) 22%, #060912 64%);
+  --orb-1-color: rgba(0, 229, 200, 0.17);
+  --orb-2-color: rgba(124, 109, 255, 0.12);
+  --orb-3-color: rgba(255, 125, 59, 0.08);
+  --accent-gradient: linear-gradient(135deg, #00e5c8 0%, #38b8f5 52%, #7c6dff 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #52f0da 0%, #5cc6fb 52%, #9486ff 100%);
+  --accent-glow: rgba(0, 229, 200, 0.28);
+  --accent-soft: rgba(0, 229, 200, 0.12);
+}
+
+:root[data-theme="aurora-light"],
+:root[data-theme="light"] {
+  --bg: #eef4fb;
+  --bg-alt: #f6f9fc;
+  --bg-soft: #ffffff;
+  --bg-deep: #e9eef6;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-2: rgba(255, 255, 255, 0.96);
+  --surface-3: rgba(255, 255, 255, 1);
+  --border: rgba(31, 54, 88, 0.12);
+  --border-strong: rgba(31, 54, 88, 0.2);
+  --text-main: #182233;
+  --text-muted: #566680;
+  --text-soft: #72809a;
+  --surface-bg: radial-gradient(circle at 12% -8%, rgba(0, 229, 200, 0.08) 0%, rgba(56, 184, 245, 0.04) 18%, #edf4fb 58%);
+  --topbar-bg: rgba(255, 255, 255, 0.8);
+  --topbar-border: rgba(31, 54, 88, 0.08);
+}

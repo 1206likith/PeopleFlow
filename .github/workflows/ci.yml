@@ -1,0 +1,126 @@
+﻿name: backend-ci
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  quality-and-tests:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+
+    env:
+      MONGODB_URL: mongodb://localhost:27017
+      APP_MODE: demo
+      ADMIN_KEY_ENABLED: true
+      ADMIN_API_KEY: test-admin-key
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff mypy pytest pytest-cov httpx
+
+      - name: Ruff
+        run: |
+          cd apps/backend
+          ruff check app/main.py app/core app/api app/tests
+
+      - name: Mypy
+        run: |
+          mypy apps/backend/app/main.py apps/backend/app/core apps/backend/app/api/websocket.py --ignore-missing-imports
+
+      - name: Pytest with coverage
+        run: |
+          cd apps/backend
+          pytest app/tests -v \
+            --cov=app.core.middleware \
+            --cov=app.core.admin_gate \
+            --cov=app.core.request_context \
+            --cov=app.api.websocket \
+            --cov-report=term-missing \
+            --cov-report=xml \
+            --cov-fail-under=90
+
+      - name: Coverage gates for core/api
+        run: |
+          cd apps/backend
+          python -m coverage report --include='app/core/middleware.py,app/core/admin_gate.py,app/core/request_context.py' --fail-under=95
+          python -m coverage report --include='app/api/websocket.py' --fail-under=95
+
+      - name: Verify API contract snapshot
+        run: |
+          cd apps/backend
+          pytest app/tests/test_openapi_contract.py -q
+
+      - name: Research validation baseline
+        run: |
+          cd apps/backend
+          python -m app.experiments.cli --config ../../research/experiments/baseline.json --validate --skip-index --skip-export
+
+      - name: Build Docker image
+        run: |
+          docker build -f infra/docker/Dockerfile.backend -t peopleflow-backend:test .
+
+  frontend-quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Frontend lint
+        run: npm run lint
+
+      - name: Frontend typecheck
+        run: npm run typecheck
+
+      - name: Frontend unit/integration tests
+        run: npm run test
+
+      - name: Frontend e2e tests
+        run: npm run test:e2e
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL
+          exit-code: "1"

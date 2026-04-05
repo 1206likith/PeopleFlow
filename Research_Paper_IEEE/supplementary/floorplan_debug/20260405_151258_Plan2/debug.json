@@ -1,0 +1,29 @@
+{
+  "mode": "traditional",
+  "image_path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\Floor_Plans\\Plan2.jpg",
+  "summary": {
+    "wall_count": 125,
+    "exit_count": 5,
+    "obstacle_count": 10,
+    "room_count": 9
+  },
+  "building_bounds": {
+    "min_x": 92.0,
+    "min_y": 0.0,
+    "max_x": 707.0,
+    "max_y": 599.0,
+    "width": 615.0,
+    "height": 599.0
+  },
+  "quality": {
+    "score": 1.0,
+    "warnings": [],
+    "bounds_ratio": 0.76746875,
+    "ink_ratio": 0.15890208333333333,
+    "wall_length_total": 13361.426831414808,
+    "wall_density": 0.02783630589878085,
+    "avg_confidence": 0.8867192982456138,
+    "orthogonal_ratio": 0.824,
+    "short_internal_ratio": 0.0
+  }
+}

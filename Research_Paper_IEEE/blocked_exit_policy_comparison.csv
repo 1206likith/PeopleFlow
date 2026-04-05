@@ -1,0 +1,3 @@
+policy,policy_label,runs,num_agents,blocked_exit_id,evac_time_mean_s,evac_time_std_s,peak_density_mean,completion_pct_mean,completion_rate,wall_clock_mean_s
+shortest_path,Nearest/shortest baseline,10,120,exit_1,33.32,2.39,21.2,95.0,1.0,0.769
+least_crowded,Congestion-aware (PeopleFlow),10,120,exit_1,57.64,3.74,13.79,95.0,1.0,5.809

@@ -1,0 +1,5 @@
+layout,agents,runs,wall_clock_mean_s,wall_clock_std_s,wall_clock_min_s,wall_clock_max_s,steps_mean,sim_time_mean_s,completion_rate
+Airport Terminal,80,5,10.192,1.483,8.884,12.01,179.2,30.88,0.6
+Metro Station,80,5,1.477,0.111,1.333,1.628,154.8,30.96,1.0
+Office Building,80,5,0.945,0.03,0.892,0.974,147.8,29.56,1.0
+Plan3 (core set),80,5,4.317,0.049,4.266,4.386,1600,119.24,0.0
