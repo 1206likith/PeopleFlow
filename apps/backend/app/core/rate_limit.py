@@ -25,13 +25,17 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
     
     def _get_client_id(self, request: Request) -> str:
         """Get client identifier for rate limiting"""
-        # Use IP address or user ID if authenticated
+        actor_id = request.headers.get("X-Actor-ID", "").strip()
+        if actor_id:
+            return f"actor:{actor_id}"
+
+        # Use user ID if authenticated, otherwise fallback to IP
         if hasattr(request.state, "user_id") and request.state.user_id:
             return f"user:{request.state.user_id}"
         return f"ip:{request.client.host if request.client else 'unknown'}"
     
-    def _is_rate_limited(self, client_id: str, limit: int, window: int = 60) -> bool:
-        """Check if client has exceeded rate limit"""
+    def _evaluate_rate_limit(self, client_id: str, limit: int, window: int = 60) -> tuple[bool, int, int]:
+        """Return rate limit state as (is_limited, remaining, reset_epoch_seconds)."""
         now = time.time()
         
         # Clean up old entries periodically
@@ -46,13 +50,20 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         # Remove old requests
         client_requests[:] = [req_time for req_time in client_requests if req_time > window_start]
         
+        if client_requests:
+            reset_at = int(client_requests[0] + window)
+        else:
+            reset_at = int(now + window)
+
         # Check limit
         if len(client_requests) >= limit:
-            return True
-        
+            return True, 0, reset_at
+
         # Add current request
         client_requests.append(now)
-        return False
+        remaining = max(0, limit - len(client_requests))
+        reset_after_append = int(client_requests[0] + window)
+        return False, remaining, reset_after_append
     
     def _cleanup_old_entries(self, cutoff_time: float):
         """Remove old entries to prevent memory leak"""
@@ -75,7 +86,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         # For now use a single policy for all routes.
         limit = settings.RATE_LIMIT_PER_MINUTE
         
-        if self._is_rate_limited(client_id, limit):
+        is_limited, remaining, reset_at = self._evaluate_rate_limit(client_id, limit)
+        if is_limited:
             logger.warning(
                 "Rate limit exceeded",
                 extra={
@@ -89,7 +101,11 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
                 content={"detail": f"Rate limit exceeded. Maximum {limit} requests per minute."},
                 headers={
                     "X-RateLimit-Limit": str(limit),
-                    "X-RateLimit-Remaining": "0"
+                    "X-RateLimit-Remaining": "0",
+                    "X-RateLimit-Reset": str(reset_at),
+                    "RateLimit-Limit": str(limit),
+                    "RateLimit-Remaining": "0",
+                    "RateLimit-Reset": str(reset_at),
                 }
             )
         
@@ -97,9 +113,12 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             
             # Add rate limit headers
-            remaining = limit - len(self.requests.get(client_id, []))
             response.headers["X-RateLimit-Limit"] = str(limit)
             response.headers["X-RateLimit-Remaining"] = str(max(0, remaining))
+            response.headers["X-RateLimit-Reset"] = str(reset_at)
+            response.headers["RateLimit-Limit"] = str(limit)
+            response.headers["RateLimit-Remaining"] = str(max(0, remaining))
+            response.headers["RateLimit-Reset"] = str(reset_at)
             
             return response
         except Exception:

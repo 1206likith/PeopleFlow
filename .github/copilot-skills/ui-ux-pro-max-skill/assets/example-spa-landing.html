@@ -1,0 +1,328 @@
+<!-- Example: SaaS Landing Page with Soft UI -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Spa – Serenity & Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #E8B4B8;
+            --color-secondary: #A8D5BA;
+            --color-cta: #D4AF37;
+            --color-bg: #FFF5F5;
+            --color-text: #2D3436;
+            --color-error: #E53935;
+            --color-success: #43A047;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+            
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.6;
+        }
+        
+        /* Typography */
+        h1 {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text);
+        }
+        
+        h2 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--color-bg);
+            box-shadow: var(--shadow-md);
+            z-index: 100;
+            padding: var(--spacing-md) 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            margin-left: var(--spacing-xl);
+            transition: color 300ms ease-in-out;
+        }
+        
+        nav a:hover {
+            color: var(--color-cta);
+            border-bottom: 2px solid var(--color-cta);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 300ms ease-in-out;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--color-cta);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:focus {
+            outline: 2px solid var(--color-cta);
+            outline-offset: 2px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-cta);
+            border: 1px solid var(--color-cta);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-bg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: var(--spacing-3xl) 0;
+            background: linear-gradient(135deg, var(--color-bg) 0%, rgba(168, 213, 186, 0.1) 100%);
+        }
+        
+        .hero h1 {
+            color: var(--color-text);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            margin-top: var(--spacing-2xl);
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: all 300ms ease-in-out;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-2xl);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Sections */
+        .section {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 24px; }
+            .container { padding: var(--spacing-md); }
+            nav { flex-direction: column; gap: var(--spacing-md); }
+            .hero { padding: var(--spacing-2xl) 0; }
+        }
+        
+        @media (max-width: 375px) {
+            h1 { font-size: 24px; }
+            .btn { padding: 10px 16px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <h3 style="margin: 0; font-family: var(--font-display);">Serenity Spa</h3>
+                <div>
+                    <a href="#services">Services</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#booking">Book Now</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Escape to Serenity</h1>
+            <p>Experience luxury wellness in our award-winning spa. Relax with expert therapists and premium treatments.</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary">Book a Treatment</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Tailored treatments for your wellness journey</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Massage Therapy</h3>
+                    <p>Swedish, deep tissue, and custom treatments to melt away stress and tension.</p>
+                </div>
+                <div class="card">
+                    <h3>Facials & Skincare</h3>
+                    <p>Professional facials using premium organic products for radiant, healthy skin.</p>
+                </div>
+                <div class="card">
+                    <h3>Body Treatments</h3>
+                    <p>Exfoliating scrubs, wraps, and specialized therapies for total body wellness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials" style="background: rgba(168, 213, 186, 0.05); padding: var(--spacing-3xl) 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Loved by Our Guests</h2>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <p style="margin-bottom: var(--spacing-lg); font-style: italic;">"Best spa experience I've had. The therapists are incredibly skilled and the atmosphere is so calming."</p>
+                    <strong style="color: var(--color-cta);">— Sarah M.</strong>
+                </div>
+                <div class="card">
+                    <p style="margin-bottom: var(--spacing-lg); font-style: italic;">"I've recommended Serenity to all my friends. Premium quality at a fair price."</p>
+                    <strong style="color: var(--color-cta);">— James K.</strong>
+                </div>
+                <div class="card">
+                    <p style="margin-bottom: var(--spacing-lg); font-style: italic;">"The perfect escape from the city. Every detail is thoughtfully designed."</p>
+                    <strong style="color: var(--color-cta);">— Emily R.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="section" id="booking" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%); text-align: center; padding: var(--spacing-3xl) 0;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: var(--spacing-lg);">Ready to Relax?</h2>
+            <p style="color: white; font-size: 18px; margin-bottom: var(--spacing-xl);">Book your perfect treatment today</p>
+            <button class="btn btn-primary">Book Now</button>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer style="background: var(--color-text); color: white; padding: var(--spacing-2xl) 0; text-align: center;">
+        <div class="container">
+            <p>&copy; 2025 Serenity Spa. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

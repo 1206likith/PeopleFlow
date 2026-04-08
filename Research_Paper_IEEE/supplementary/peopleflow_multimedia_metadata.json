@@ -5,32 +5,88 @@
     1280,
     720
   ],
-  "total_frames": 1389,
-  "duration_seconds": 46.3,
-  "generation_wall_clock_s": 85.17,
+  "total_frames": 1044,
+  "duration_seconds": 34.8,
+  "generation_wall_clock_s": 446.01,
+  "style_version": "god_tier_v6",
+  "export_profiles": {
+    "standard": {
+      "path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\supplementary\\peopleflow_multimedia_supplement.mp4",
+      "resolution": [
+        1280,
+        720
+      ],
+      "fps": 30,
+      "encoder": "opencv/mp4v"
+    },
+    "projector_1080p": {
+      "enabled": true,
+      "path": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\supplementary\\peopleflow_multimedia_supplement_1080p.mp4",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "target_bitrate": "12M",
+      "encoder": "ffmpeg/libx264",
+      "status": "ok"
+    }
+  },
   "layout": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\Floor_Plans\\Plan2.jpg",
   "layout_name": "Plan2.jpg",
   "detector_summary": {
-    "pipeline": "traditional",
-    "wall_count": 125,
+    "wall_count": 0,
     "exit_count": 5,
-    "room_count": 9,
-    "quality_score": 1.0,
-    "debug_dir": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\supplementary\\floorplan_debug\\20260405_151430_Plan2"
+    "room_count": 0,
+    "quality_score": 0.5
   },
   "scenario": {
     "num_agents": 140,
     "routing_policy": "least_crowded",
     "blocked_exits": [
-      "exit_1"
+      "exit_2"
     ],
     "panic_level": 0.4,
     "dt_s": 0.2
   },
   "metrics_summary": {
-    "total_evacuation_time_s": 101.0000000000009,
-    "peak_congestion_density": 59.88,
+    "total_evacuation_time_s": 97.20000000000084,
+    "peak_congestion_density": 19.84,
     "max_queue_length": 0,
     "bottleneck_events": 0
-  }
+  },
+  "segments": [
+    {
+      "name": "Intro",
+      "duration_s": 3.4
+    },
+    {
+      "name": "Pipeline",
+      "duration_s": 3.8
+    },
+    {
+      "name": "Ingestion",
+      "duration_s": 4.0
+    },
+    {
+      "name": "Geometry",
+      "duration_s": 3.8
+    },
+    {
+      "name": "Scenario",
+      "duration_s": 3.4
+    },
+    {
+      "name": "Simulation",
+      "duration_s": 8.6
+    },
+    {
+      "name": "Analytics",
+      "duration_s": 4.2
+    },
+    {
+      "name": "Closing",
+      "duration_s": 3.6
+    }
+  ],
+  "preview_frames_dir": "L:\\Likith\\Coding_Projects\\Python\\PeopleFlow\\Research_Paper_IEEE\\supplementary\\preview_frames_v6"
 }

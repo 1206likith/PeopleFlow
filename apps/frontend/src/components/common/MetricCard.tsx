@@ -6,11 +6,11 @@ interface MetricCardProps {
 }
 
 const accentMap = {
-  violet:  { bar: "#14b8a6", glow: "rgba(20,184,166,0.2)",  text: "#99f6e4" },
-  sky:     { bar: "#38bdf8", glow: "rgba(56,189,248,0.2)",   text: "#7dd3fc" },
-  emerald: { bar: "#34d399", glow: "rgba(52,211,153,0.2)",   text: "#6ee7b7" },
-  rose:    { bar: "#f87171", glow: "rgba(248,113,113,0.2)",  text: "#fca5a5" },
-  amber:   { bar: "#fbbf24", glow: "rgba(251,191,36,0.2)",   text: "#fde68a" },
+  violet:  { bar: "var(--accent-3)", glow: "color-mix(in srgb, var(--accent-3) 28%, transparent)", text: "color-mix(in srgb, var(--accent-3) 58%, white)" },
+  sky:     { bar: "var(--accent-2)", glow: "color-mix(in srgb, var(--accent-2) 28%, transparent)", text: "color-mix(in srgb, var(--accent-2) 55%, white)" },
+  emerald: { bar: "var(--accent)", glow: "color-mix(in srgb, var(--accent) 26%, transparent)", text: "color-mix(in srgb, var(--accent) 56%, white)" },
+  rose:    { bar: "var(--danger)", glow: "color-mix(in srgb, var(--danger) 26%, transparent)", text: "color-mix(in srgb, var(--danger) 52%, white)" },
+  amber:   { bar: "var(--warning)", glow: "color-mix(in srgb, var(--warning) 24%, transparent)", text: "color-mix(in srgb, var(--warning) 42%, white)" },
 };
 
 export function MetricCard({ label, value, helper, accent = "violet" }: MetricCardProps) {
@@ -18,18 +18,18 @@ export function MetricCard({ label, value, helper, accent = "violet" }: MetricCa
   return (
     <article
       className="relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
+      aria-label={`${label} metric`}
       style={{
-        background: "rgba(10, 18, 31, 0.72)",
-        border: "1px solid rgba(191,219,254,0.1)",
+        background: "color-mix(in srgb, var(--bg-alt) 88%, white 12%)",
+        border: "1px solid var(--border)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        boxShadow: `0 4px 18px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.04)`,
+        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.04)",
       }}
     >
       <div className="absolute inset-x-0 top-0 h-[2px] opacity-80" style={{ background: `linear-gradient(90deg, ${colors.bar}, transparent)` }} />
 
       {/* Colored top accent bar */}
-      {/* Background glow */}
       <div
         className="pointer-events-none absolute -right-4 -top-4 h-20 w-20 rounded-full opacity-30"
         style={{ background: colors.glow, filter: "blur(20px)" }}
@@ -43,7 +43,7 @@ export function MetricCard({ label, value, helper, accent = "violet" }: MetricCa
         {value}
       </p>
       {helper && (
-        <p className="relative z-10 mt-1.5 text-[11px] text-fog">{helper}</p>
+        <p className="relative z-10 mt-1.5 text-[11px]" style={{ color: "var(--text-soft)" }}>{helper}</p>
       )}
     </article>
   );

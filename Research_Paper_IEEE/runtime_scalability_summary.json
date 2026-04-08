@@ -39,12 +39,12 @@
     "layout": "Plan3 (core set)",
     "agents": 80,
     "runs": 5,
-    "wall_clock_mean_s": 4.317,
-    "wall_clock_std_s": 0.049,
-    "wall_clock_min_s": 4.266,
-    "wall_clock_max_s": 4.386,
-    "steps_mean": 1600,
-    "sim_time_mean_s": 119.24,
-    "completion_rate": 0.0
+    "wall_clock_mean_s": 1.067,
+    "wall_clock_std_s": 0.179,
+    "wall_clock_min_s": 0.841,
+    "wall_clock_max_s": 1.328,
+    "steps_mean": 1254.8,
+    "sim_time_mean_s": 250.96,
+    "completion_rate": 1.0
   }
 ]

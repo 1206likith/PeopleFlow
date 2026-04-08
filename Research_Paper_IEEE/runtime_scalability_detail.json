@@ -153,50 +153,50 @@
     "layout": "Plan3 (core set)",
     "run": 1,
     "seed": 2400,
-    "wall_clock_s": 4.295953399996506,
-    "steps": 1600,
-    "completed": false,
-    "sim_time_s": 83.80000000000065,
-    "peak_density": 301.4
+    "wall_clock_s": 1.1403616999887163,
+    "steps": 1120,
+    "completed": true,
+    "sim_time_s": 223.99999999999582,
+    "peak_density": 162.4
   },
   {
     "layout": "Plan3 (core set)",
     "run": 2,
     "seed": 2401,
-    "wall_clock_s": 4.36469030000444,
-    "steps": 1600,
-    "completed": false,
-    "sim_time_s": 168.59999999999897,
-    "peak_density": 306.88
+    "wall_clock_s": 0.8414091000013286,
+    "steps": 1040,
+    "completed": true,
+    "sim_time_s": 207.99999999999673,
+    "peak_density": 144.68
   },
   {
     "layout": "Plan3 (core set)",
     "run": 3,
     "seed": 2402,
-    "wall_clock_s": 4.266397500003222,
-    "steps": 1600,
-    "completed": false,
-    "sim_time_s": 78.80000000000058,
-    "peak_density": 300.56
+    "wall_clock_s": 1.1335240000043996,
+    "steps": 1748,
+    "completed": true,
+    "sim_time_s": 349.5999999999887,
+    "peak_density": 209.16
   },
   {
     "layout": "Plan3 (core set)",
     "run": 4,
     "seed": 2403,
-    "wall_clock_s": 4.27434840000933,
-    "steps": 1600,
-    "completed": false,
-    "sim_time_s": 97.20000000000084,
-    "peak_density": 300.32
+    "wall_clock_s": 0.8918197000020882,
+    "steps": 969,
+    "completed": true,
+    "sim_time_s": 193.79999999999754,
+    "peak_density": 135.4
   },
   {
     "layout": "Plan3 (core set)",
     "run": 5,
     "seed": 2404,
-    "wall_clock_s": 4.385652700002538,
-    "steps": 1600,
-    "completed": false,
-    "sim_time_s": 167.79999999999902,
-    "peak_density": 307.52
+    "wall_clock_s": 1.3279441999911796,
+    "steps": 1397,
+    "completed": true,
+    "sim_time_s": 279.3999999999927,
+    "peak_density": 185.04
   }
 ]

@@ -1,0 +1,1590 @@
+ 1
+
+     PeopleFlow: A Reproducible Geometry-Aware
+     Multi-Agent Framework for Evacuation Safety
+     Evaluation in Smart Building Environments
+     Likith Sai Kunchi 1,∗ , Manivannan Thulasirangan Lakshmidevi 2 , K S K Karthik
+     Reddy 3
+     1,∗ School of Computer Science and Engineering (SCOPE), VIT (Vellore Institute of
+
+     Technology), Vellore, Tamil Nadu, India
+     2 School of Civil Engineering, VIT (Vellore Institute of Technology), Vellore, Tamil
+
+     Nadu, India
+     3 School of Civil Engineering, VIT (Vellore Institute of Technology), Vellore, Tamil
+
+     Nadu, India
+     Correspondence*:
+     Likith Sai Kunchi
+     likithsai.kunchi@gmail.com
+
+
+ 2   ABSTRACT
+ 3    Evaluating evacuation performance in complex buildings requires analysis methods that capture
+ 4   interactions between spatial configuration, pedestrian behavior, and operational disruptions.
+ 5   This paper introduces PeopleFlow, a layout-informed computational framework for structured
+ 6   evacuation-safety comparison across diverse architectural layouts. The workflow converts floor-
+ 7   plan representations into navigable simulation environments and applies continuous-space
+ 8   multi-agent modeling based on force-driven pedestrian dynamics. PeopleFlow reports inter-
+ 9   pretable indicators including total clearance duration, localized congestion intensity, bottleneck
+10   persistence, and exit-utilization balance. To enable consistent experimentation, the framework
+11   uses parameterized scenario configurations and reproducibility-oriented execution records. The
+12   evaluation covers a structured matrix of nine layout types across five operational conditions (450
+13   core runs), plus 210 controlled supplementary/sensitivity runs for real-layout generalization and
+14   sensitivity to exit width, desired speed, and occupancy scaling. Results show strong depende-
+15   nce of evacuation outcomes on geometric topology and routing strategy, with clearance-time
+16   differences exceeding an eightfold range and substantial congestion variation across layouts.
+17   The primary contribution is a reproducible engineering framework for relative safety prioritization
+18   across heterogeneous architectural configurations, rather than deterministic prediction of indivi-
+19   dual trajectories. The framework supports what-if analysis during early design and provides a
+20   computational basis for integration with digital twin workflows for high-occupancy safety planning.
+21   From a built-environment perspective, the framework enables early-stage design evaluation of
+22   evacuation efficiency and supports decision-making in smart building planning, infrastructure
+23   safety assessment, and digital-twin-based emergency management systems.
+24 Keywords: Crowd simulation, evacuation analytics, evacuation modelling, digital twin, multi-agent modelling, multi-agent simulation,
+25 smart infrastructure, building evacuation safety, reproducible pipeline.
+
+
+
+
+                                                                                                                                     1
+     Kunchi et al.                                                                            PeopleFlow
+
+
+     1     INTRODUCTION
+
+26   Building evacuation performance evaluation is a high-impact engineering task where static
+27   compliance checks often miss dynamic crowd effects under disruption. Historical emergencies
+28   consistently show that bottleneck formation, uneven exit utilization, and localized panic response
+29   can dominate outcomes even in code-compliant facilities. Conventional hand calculations remain
+30   useful for baseline checks, but they provide limited support for comparing design alternatives
+31   under multi-hazard and operational uncertainty Hurley et al. (2016); Ronchi and Nilsson (2013).
+
+32   Recent high-density infrastructure such as airports, metro systems, hospitals, and large comme-
+33 rcial complexes introduces complex evacuation dynamics that cannot be fully evaluated using
+34 static compliance rules alone.
+
+35     The need for early-stage design validation has increased with higher occupancy density in
+36   modern infrastructure. Although simulation enables repeatable structured comparison before
+37   deployment, the central challenge is integrating architectural input, scenario control, execution, and
+38   interpretable outputs within one coherent computational workflow. Such integrated computational
+39   approaches are increasingly central to smart construction and digital built-environment systems,
+40   where simulation-driven insights support safety-oriented design and operational decision-making.
+
+41   The present research introduces PeopleFlow as a layout-informed evacuation efficiency framework
+42 with traceable computational pipeline execution. Rather than proposing a new pedestrian-physics
+43 law in isolation, the study develops a unified computational pipeline for robust scenario-based
+44 evaluation across heterogeneous layouts.
+
+45       The main contributions are summarized as follows:
+
+46       • A reproducible floor-plan-aware simulation workflow linking layout ingestion, scenario
+47         execution, and artifact-backed reporting.
+48       • A structured cross-layout evacuation comparison across 660 simulations (450 core + 210
+49         supplementary/sensitivity) spanning diverse building archetypes.
+50       • A density-aware routing evaluation framework under structured stress scenarios, supported by
+51         ablation and sensitivity analysis.
+
+52     While prior evacuation simulators emphasize pedestrian behavioral realism or scenario-specific
+53   visualization, they largely lack automated floor-plan ingestion, reproducible batch execution,
+54   and artifact-native cross-layout benchmarking within a single coherent pipeline. PeopleFlow
+55   addresses this gap directly. To the best of our knowledge, this is one of the first structured
+56   openly reproducible framework that couples automated floor-plan ingestion, stress-scenario batch
+57   execution, and artifact-native auditing for cross-layout evacuation-safety ranking – without
+58   requiring manual geometry preparation or proprietary tooling. The contribution is methodological
+59   and infrastructural: a transparent comparative-evaluation pipeline that enables architects, safety
+60   engineers, and digital-twin integrators to systematically prioritize safer design alternatives under
+61   structured stress conditions.
+
+
+
+     Frontiers                                                                                           2
+      Kunchi et al.                                                                          PeopleFlow
+
+
+      2     RELATED WORK
+ 62   2.1   Crowd Modeling Approaches
+ 63     Pedestrian evacuation research spans both continuous and discrete formulations. In force-
+ 64   based formulations, evacuees can be represented as self-driven particles whose motion evolves
+ 65   through interaction potentials capturing repulsion, attraction, and directional preference; this
+ 66   family remains a physically interpretable baseline for dense-crowd analysis Helbing and Molnar
+ 67   (1995); Helbing et al. (2000). Cellular automata and floor-field variants offer efficient large-
+ 68   scale approximations but may introduce directional discretization artifacts near bottlenecks and
+ 69   tight corners Nishinari et al. (2004); Kirchner and Schadschneider (2002). Comparative studies
+ 70   indicate that model suitability is task-dependent; for complex indoor geometries, continuous-
+ 71   space approaches often preserve turning behavior and local interaction structure more naturally
+ 72   Zheng et al. (2009); Duives et al. (2013); Still (2014). Recent pedestrian-trajectory literature
+ 73   further improves interaction modeling using benchmark datasets and social-context forecasting
+ 74   architectures, including ETH/UCY-aligned methods based on recurrent, graph, and generative
+ 75   formulations Pellegrini et al. (2009); Alahi et al. (2016); Gupta et al. (2018); Salzmann et al.
+ 76   (2020); Mohamed et al. (2020); Zhou et al. (2021); Chen et al. (2021); Li et al. (2020); Wang et al.
+ 77   (2023); Saleh (2022).
+
+ 78   2.2   Evacuation Simulation Systems
+ 79     Commercial and academic evacuation platforms generally cover geometry authoring, route
+ 80   simulation, and report generation, but they differ substantially in automation depth, extensibility,
+ 81   and experiment traceability Gwynne et al. (1999); Ronchi and Gwynne (2015); Lovreglio et al.
+ 82   (2020). Behavior-focused studies further show that guidance logic, uncertainty handling, and
+ 83   panic-modulated decisions can materially alter evacuation outcomes Pan et al. (2007); Chen and
+ 84   Wang (2018). In many practical settings, heavy manual preprocessing and proprietary tooling still
+ 85   constrain transparent cross-layout benchmarking.
+
+ 86   2.3   Digital Twin Safety Analysis
+ 87     Digital twin studies in the built environment increasingly target safety and emergency operations.
+ 88   Prior work supports simulation-coupled twins for risk-aware planning, yet complete pipelines
+ 89   from floor-plan ingestion to repeatable quantitative evacuation indicators remain limited in many
+ 90   deployments Batty (2012); Zhang et al. (2021); Ozturk (2021); Osama (2024). Recent BIM-tied
+ 91   fire-safety and emergency-digital-twin systems also demonstrate practical monitoring, evacuation
+ 92   analytics, and control integration, reinforcing the need for end-to-end reproducible computational
+ 93   workflows Sun and Turkan (2020); Wehbe and Shahrour (2021); Ding et al. (2023); Jiang et al.
+ 94   (2023); Jahangir et al. (2025). These trends remain active in 2024–2026 deployment-oriented safety
+ 95   literature, with emphasis shifting from isolated twin prototypes toward interoperable, reproducible
+ 96   engineering workflows that can be independently rerun and audited.
+
+ 97   2.4   Research Gap and Positioning
+ 98   The gap addressed in this paper is methodological: reproducible, layout-informed evacuation
+ 99 efficiency comparison across diverse layouts and stress scenarios. PeopleFlow is positioned as a
+100 reproducible framework rather than a claim of absolute predictive certainty. Its novelty lies in
+101 coupling geometry extraction, session-managed simulation, scenario ablation, and interpretable
+
+
+      Frontiers                                                                                         3
+      Kunchi et al.                                                                                     PeopleFlow
+
+
+
+      Table 1. Comparison with Existing Evacuation Tools
+                         Tool           Floor-plan input   Routing               Reproducibility
+
+                         Pathfinder     Mostly manual      Shortest path /       Limited
+                                                           scripted
+                         MassMotion     Mostly manual      Dynamic multi-agent   Proprietary workflow
+                         AnyLogic       Complex model      Customizable          Moderate
+                                        setup
+                         Legion tools   Manual authoring   Flow-oriented         Limited
+                         PeopleFlow     Automated          Congestion-aware      High (session-based)
+                                        ingestion
+
+
+
+
+102   reporting within one coherent computational pipeline. Unlike many existing evacuation simulators
+103   that require manual geometry preparation or proprietary workflows, PeopleFlow emphasizes
+104   reproducibility through artifact-backed records, enabling transparent cross-layout comparison
+105   under consistent scenario definitions. Recent 2024–2026 deployment-oriented safety literature
+106   has accelerated the shift from isolated simulation prototypes toward interoperable, reproducible
+107   engineering workflows. Jahangir et al. Jahangir et al. (2025) demonstrated unified digital twin
+108   models for emergency evacuation using building simulation identity cards, while Ding et al. Ding
+109   et al. (2023) introduced intelligent emergency digital twin systems for real-time fire evacuation
+110   monitoring. Despite these advances, no existing open framework couples automated floor-plan
+111   ingestion, stress-scenario batch execution, and artifact-native auditing for reproducible cross-
+112   layout safety ranking – the precise gap PeopleFlow addresses. Unlike commercial tools such
+113   as Pathfinder and MassMotion which require manual geometry preparation and offer limited
+114   reproducibility, PeopleFlow provides session-managed, auditable experiment artifacts enabling
+115   transparent cross-layout comparison under consistent scenario definitions. A concise capability
+116   comparison with representative tools is provided in Table 1.
+
+
+      3     METHODOLOGY
+
+117   3.1    Workflow Pipeline
+
+118     PeopleFlow follows a deterministic workflow with four stages: (1) floor-plan ingestion, (2)
+119   geometry extraction and navigation graph generation, (3) scenario-based simulation execution,
+120   and (4) artifact-backed analytics. Each run is stored with configuration metadata, seeds, and
+121   per-step metrics so results are replayable and auditable. The step-level simulation procedure is
+122   summarized in Fig. 4.
+
+123   3.2    Reproducibility Design
+
+124       Each experiment is represented by a session artifact that captures:
+
+125       • Input layout identifier and geometry hash.
+126       • Scenario parameters (occupancy, blocked exits, routing policy, panic level).
+127       • Random seed and simulation step size.
+128       • Aggregated outputs and raw trajectory summaries.
+
+
+      Frontiers                                                                                                 4
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+
+      Figure 1. Agent movement logic used in each simulation step.
+
+129   This structure allows direct reruns and supports batch-level statistical comparisons. The
+130   modular organization also enables independent evaluation of routing logic without modif-
+131   ying geometric preprocessing components. Simulation configurations and synthetic benchmark
+132   layouts are packaged as reproducible experiment artifacts and can be released to support
+133   future comparative studies. The implementation and reproducibility assets are maintained at
+134   https://github.com/1206likith/PeopleFlow. Experiment artifacts allow deterministic reruns and
+135   structured comparison across layout categories. A 30-second multimedia supplement demonstrating
+136   the end-to-end ingestion-to-analytics workflow is included in the submission artifacts.
+
+137   3.3   Agent Decision Logic
+
+138     At each simulation step, agents execute a compact perception-decision-motion loop. This
+139   structure ensures behavioral consistency while allowing routing-policy variation to be isolated
+140   during controlled ablation experiments. Local density and queue conditions are sensed first, then
+141   exit costs are updated using Eq. (5). The lowest-cost exit is selected, social-force dynamics are
+142   integrated, and state variables are updated for the next step.
+
+143   3.4   Computational Complexity
+
+144     The computational complexity of a single simulation step is O(N k), where N is the number of
+145   active agents and k is the average number of neighboring agents considered in local interaction-
+146   force updates. Under practical density regimes, k remains locally bounded, giving near-linear
+147   scaling with population size for each step. For batch execution, total workload scales as O(RN S),
+148   where R is the number of runs and S is the number of simulation steps per run. For a layered
+149   3D extension with inter-floor connectors, the step cost becomes O(N k + M ) where M is the
+
+      Frontiers                                                                                       5
+      Kunchi et al.                                                                            PeopleFlow
+
+
+
+
+      Figure 2. Social-force interaction components used for each movement update.
+
+
+150   number of active inter-layer connector evaluations, preserving near-linear practical scaling for
+151   sparse connector graphs. This complexity profile motivates the reproducible batch workflow used
+152   in our large-matrix experiments. Simulation complexity therefore scales approximately linearly
+153   with agent population size under bounded interaction-radius assumptions. Measured wall-clock
+154   trends (Table 5) are consistent with this analysis and show predictable runtime growth with
+155   scenario and layout complexity under fixed hardware conditions.
+
+
+156   3.5   Layered 3D Transition Logic
+
+157   For a layered multi-floor extension, we define an inter-layer transition cost for moving from floor
+158 level z1 to z2 through connector mode m (stairs or elevator):
+
+                               Clayer (z1 , z2 , m, t) = ηd |z2 − z1 | + ηt τm + ηq qm (t),              (1)
+
+159   where τm is connector traversal delay and qm (t) is a time-varying queue penalty at connector m.
+160   This term is added to Eq. (5) when inter-floor routing alternatives are available.
+
+
+161   3.6   Scenario Matrix
+
+162     The study uses a five-scenario matrix reflecting realistic stress transitions from nominal operation
+163   to disruption. Table 2 summarizes the definitions.
+
+
+
+      Frontiers                                                                                           6
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+
+      Figure 3. Layer-aware routing extension.
+
+
+      Table 2. Scenario Definitions
+                                  Scenario     Description
+
+                                  S1   Base- Nominal occupancy and shortest-path rou-
+                                  line       ting.
+                                  S2   High- Increased occupancy stress to test crow-
+                                  Occ        ding sensitivity.
+                                  S3 Blocked One major exit disabled to evaluate rerou-
+                                             ting resilience.
+                                  S4 Routing Congestion-aware routing policy activated.
+                                  S5 Panic   Stochastic panic variation in desired speed
+                                             and interactions.
+
+
+
+
+      4     PEOPLEFLOW ARCHITECTURE
+
+164   4.1   System Components
+
+165   The architecture consists of geometry ingestion, simulation kernel, metrics engine, and reporting
+166 layer. Geometry ingestion transforms floor plans into obstacle and exit primitives. The simulation
+167 kernel executes force-based motion and route updates. The metrics engine computes clearance,
+168 density, bottleneck, and utilization indicators. The reporting layer produces figures and tables
+
+
+      Frontiers                                                                                      7
+      Kunchi et al.                                                                         PeopleFlow
+
+
+
+
+      Figure 4. PeopleFlow simulation loop.
+
+169   for comparative studies. Figure 5 and Figure 6 summarize these system-level and workflow-level
+170   connections.
+171     The architecture emphasizes separation between geometry processing, simulation execution, and
+172   artifact-based reporting.
+
+173   4.2   Session and Artifact Model
+174   A session-centric design is used to support scientific traceability. For each run, PeopleFlow
+175 stores configuration, random seed, outcome metrics, and derived plots. This explicit artifact chain
+176 enables transparent comparisons between methods and scenario variants.
+
+177   4.3   Analytics Outputs
+178     Standard outputs include: clearance-time distribution, peak-density maps, bottleneck duration
+179   traces, exit-load statistics, and method-comparison summaries. These outputs are generated from
+180   reproducible logs instead of ad hoc post-processing. These indicators are selected to align with
+181   practical evacuation-safety assessment metrics used in building design and fire-safety engineering,
+182   enabling direct interpretation of simulation outputs for engineering decision-making.
+
+      Frontiers                                                                                        8
+      Kunchi et al.                                                                           PeopleFlow
+
+
+
+
+      Figure 5. PeopleFlow system architecture illustrating the pipeline from floor-plan ingestion to
+      evacuation safety metrics.
+
+
+
+
+      Figure 6. Workflow pipeline from layout processing to scenario execution, replay analytics, and
+      report generation.
+
+
+      5     MATHEMATICAL MODEL
+
+183   5.1    Social Force Dynamics
+
+184       Each agent i is modeled by a second-order force balance:
+
+                                           dvi           X          X
+                                      mi       = fidrv +   fijint +    wall
+                                                                      fiW   .                          (2)
+                                            dt
+                                                         j̸=i         W
+
+185 The social force formulation was selected due to its interpretability, continuous-space representation,
+186 and extensive validation in pedestrian-dynamics literature, making it suitable for comparative
+187 evacuation analysis. The driving force is:
+
+                                                         v 0 ei − v i
+                                               fidrv = mi i           ,                                (3)
+                                                              τi
+
+      Frontiers                                                                                          9
+      Kunchi et al.                                                                                       PeopleFlow
+
+
+
+      Table 3. Routing Cost Parameters Used for Reproducibility
+                        Parameter              Value used in experiments
+
+                        α (distance weight)    1.0 (baseline); sensitivity checks in the 0.8–1.2 range
+                        β (density weight)     2.0 (baseline); sensitivity checks in the 1.5–2.5 range
+                        γ (hazard weight)      0.0 for core/supplementary runs (hazard fields disabled)
+                        Queue perception       5.0 m around each exit
+                        radius
+                        Stochastic softmax     15.0
+                        temperature T
+
+
+
+
+188   where vi0 is desired speed, ei is desired direction, and τi is relaxation time. Here, τi acts as a
+189   reaction-time parameter controlling how quickly agents adapt their actual velocity toward desired
+190   motion. In the implemented discrete kernel, force integration uses normalized agent mass mi = 1,
+191   update step ∆t = 0.2 s, and social-force gain 0.2, which together define the effective adaptation
+192   timescale.
+
+193   5.2   Density-Flow Relation
+
+194    At a macroscopic level, local flow follows:
+
+                                                          q = ρv,                                                (4)
+
+195 where q denotes pedestrian flow rate, ρ denotes local pedestrian concentration, and v represents
+196 average movement velocity. This relation is used for consistency checks between simulation outputs
+197 and empirical benchmarks Fruin (1971); Weidmann (1993).
+
+
+198   5.3   Exit Selection Cost Function
+
+199    For congestion-aware routing, the exit cost at time t is:
+
+                                         Ce (t) = αde (t) + βρe (t) + γhe (t),                                   (5)
+
+200   where de is path distance to exit e, ρe is local crowd density near e, and he is optional hazard
+201   penalty. In this work, α and β control the relative influence of distance minimization versus
+202   congestion avoidance, enabling evaluation of routing sensitivity under density-aware decision
+203   policies. The routing formulation balances geometric shortest-path preference with local density
+204   avoidance, enabling dynamic redistribution of agents across available exits under congestion
+205   conditions. In the core and supplementary experiments, congestion-aware routing uses α = 1.0,
+206   β = 2.0, and γ = 0.0 (hazard term disabled), with a local queue-perception radius of 5.0 m;
+207   stochastic routing uses the same base cost with softmax temperature T = 15.0.
+
+208   5.4   Statistical Metrics
+
+209    For repeated runs (n = 10), mean and standard deviation of evacuation time are:
+                                                                 n
+                                                           1X
+                                                      T̄ =    Tk ,                                               (6)
+                                                           n
+                                                               k=1
+
+      Frontiers                                                                                                  10
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+      Table 4. Simulation Parameters
+                                   Parameter         Value
+
+                                  Time step (∆t) 0.2 s
+                                  Nominal desired 1.2 m/s
+                                  speed
+                                  Agent radius     0.3 m
+                                  Social-force     1.0 (dimensionless, normalized inte-
+                                  mass normaliza- gration)
+                                  tion (mi )
+                                  Relaxation para- Implicit in discrete update (∆t = 0.2
+                                  meter (τi )      s, force gain 0.2)
+                                  Runs per confi- 10
+                                  guration
+                                  Routing policies nearest,     congestion-aware,   gui-
+                                                   ded/stochastic variants
+                                  Scenarios        S1 to S5 (Table 2)
+                                  Total runs (core 660
+                                  + supplements)
+                                  Execution setup Local Python backend workflow on
+                                                   Windows workstation
+
+
+
+210                                              v
+                                                 u n
+                                                 u1 X
+                                            σT = t    (Tk − T̄ )2 .                                (7)
+                                                   n
+                                                             k=1
+
+211   Exit load imbalance is measured as:
+                                                              E
+                                                     1 X      N
+                                            Iexit =      ne −   ,                                  (8)
+                                                    2N        E
+                                                             e=1
+
+212 where ne is evacuated count via exit e, N is total evacuated agents, and E is number of usable
+213 exits.
+
+
+      6     EXPERIMENTAL SETUP
+214   6.1    Simulation Parameters
+215     The core study executes 450 runs (9 layouts × 5 scenarios × 10 repetitions). To strengthen
+216   generalization and engineering interpretability, we additionally conduct 210 controlled runs:
+217   150 supplementary real-layout runs (airport terminal, metro station, office building; full S1–S5
+218   coverage), 30 exit-width comparison runs, and 30 desired-speed sensitivity runs. Key simulation
+219   parameters are shown in Table 4. Nine layouts were selected to balance geometric diversity with
+220   computational feasibility while enabling statistically meaningful cross-layout comparison under a
+221   fixed 10-seed protocol and reproducible runtime budget. Parameter ranges were selected based
+222   on commonly reported pedestrian-dynamics studies describing typical free-flow speeds between
+223   1.2–1.5 m/s and density thresholds consistent with established fundamental-diagram behavior.
+
+224   6.2    Implementation Details
+225  The simulation engine is implemented in Python with NumPy-based state updates and deter-
+226 ministic seed control for reproducibility. Geometry preprocessing uses vector-edge extraction
+227 and obstacle/exit parsing before navigation-graph construction. Experiments were executed on a
+
+
+      Frontiers                                                                                     11
+      Kunchi et al.                                                                                                                 PeopleFlow
+
+
+
+      Table 5. Measured Wall-Clock Runtime and Scalability Evidence (5 Runs per Layout)
+                             Layout                          Wall-clock (s)         Mean steps         Completion rate
+
+                             Airport terminal                 10.19 ± 1.48              179.2                  0.60
+                             Metro station                     1.48 ± 0.11              154.8                  1.00
+                             Office building                   0.95 ± 0.03             147.8                   1.00
+                             Plan3 (core set)                  1.07 ± 0.18             1254.8                  1.00
+                                                              1.15×–1.35×
+                             Layered 3D extension†             2D runtime                 —                     —
+
+
+
+
+228   workstation-class environment (Intel i7 CPU class, 16 GB RAM), with artifact logging enabled
+229   for run replay and statistical post-processing. The floor-plan ingestion pipeline follows an explicit
+230   computer-vision sequence: adaptive and Otsu thresholding for linework isolation, Canny edge
+231   extraction (50/150 thresholds), and probabilistic Hough line detection (ρ = 1, θ = π/180) with
+232   scale-adaptive thresholds. Exit candidates are then filtered by width constraints (minimum 10 px
+233   and maximum 12% of the shortest image dimension) and proximity checks to wall or boundary
+234   segments before deduplication.
+
+235   6.3   Validity Controls and Reporting Protocol
+
+236     Each configuration is executed with 10 independent seeds under fixed parameter definitions. We
+237   report mean ± standard deviation in all compact comparison tables and use identical logging
+238   pipelines across core and supplementary cohorts. For selected engineering sweeps, confidence
+                                                  √
+239   intervals can be computed as T̄ ± 1.96 σT / n with n = 10. Supplementary airport/metro/office
+240   evaluations use full five-scenario coverage under the same protocol to test cross-geometry tran-
+241   sfer under aligned stress definitions. All experiments were executed under identical numerical
+242   integration settings to ensure consistency across scenario comparisons.
+
+243   6.4   Runtime and Scalability Evidence
+
+244     To provide practical compute evidence, we measured wall-clock runtime on the same workstation
+245   environment used for experiments (Intel i7 class CPU, 16 GB RAM). Each layout was evaluated
+246   for 5 repeated baseline runs (80 agents, ∆t = 0.2 s). For Plan3, the baseline scalability rerun was
+247   executed at Tmax = 350 s using S1 shortest-path routing to avoid timeout-only artifacts. Table 5
+248   reports observed runtime statistics.
+
+249    † Projection derived from the O(N k + M ) extension analysis with sparse inter-floor connector checks; this row is a complexity-based estimate,
+
+250 not a measured runtime. Figure 19 visualizes the same runtime evidence with uncertainty bars and
+251   completion-rate trends for direct comparative interpretation.
+
+252   6.5   Workflow Setup Effort Comparison
+
+253     To quantify the workflow-efficiency claim, we measured PeopleFlow automatic preprocessing on
+254   representative plans and contrasted this with a transparent manual-authoring baseline. Because
+255   direct proprietary-tool benchmarking is not executable in this environment, manual setup effort is
+256   reported as a practitioner range from workflow-oriented evacuation-tool literature and engineering
+257   practice Gwynne et al. (1999); Ronchi and Gwynne (2015).
+
+      Frontiers                                                                                                                                   12
+      Kunchi et al.                                                                                                          PeopleFlow
+
+
+
+      Table 6. Setup-Effort Comparison for Simulation Preparation
+                  Workflow           Human steps                             Operator time        Automated
+                                                                                                  preprocessing
+
+                  PeopleFlow         Upload and optional exit verification   1–3 min              0.51–67.58 s (mean 27.01
+                                                                                                  s)
+                  Manual authoring   Geometry tracing, exit placement, and 30–120 min             Not automated
+                  baseline           scenario setup                        (operator dependent)
+
+
+
+
+      Figure 7. Floor-plan to simulation-geometry conversion workflow.
+
+
+
+
+      Figure 8. Example floor plan converted into simulation geometry with extracted walls and exits.
+
+
+258   6.6   Floor-Plan Processing and Simulation Environment
+
+259   Floor plans are converted to navigable simulation geometry through edge extraction and
+260 obstacle/exit detection. Figure 7 shows the conversion workflow, while Figure 8 and Figure 9
+261 show representative processed and runtime views.
+
+
+      Frontiers                                                                                                                     13
+      Kunchi et al.                                                                                       PeopleFlow
+
+
+
+
+      Figure 9. Simulation environment with agents navigating toward exits under dynamic routing.
+
+
+      Table 7. Case Study Layouts
+                      Layout                      Characteristic
+
+                      Academic Plan               Long corridors and class-like room clusters
+                      Hospital Plan               Multi-branch corridor network with constrained turns
+                      Hotel Plan                  Repetitive corridor bottlenecks and distributed exits
+                      Library Plan                Mixed open-reading and aisle-constrained regions
+                      Mall Plan                   Large open hall with multiple egress options
+                      Supermarket Plan            Narrow aisles with localized choke points
+                      Plan1 / Plan2 / Plan3       Additional complex topologies for stress tests
+                      Airport Terminal Plan       Long concourse geometry with distributed exits
+                                                  (supplementary)
+                      Metro Station Plan          Platform-concourse topology with transfer bottlenecks
+                                                  (supplementary)
+                      Office Building Plan        Dense room-corridor intersections (supplementary)
+
+
+
+
+262   All simulation seeds, configuration parameters, and layout identifiers are stored in session
+263 artifacts to enable deterministic reruns and statistical verification.
+
+
+
+
+      7   CASE STUDY FLOOR PLANS
+
+264 We evaluate a core set of nine layouts available in the project floor-plan set: “Academic Plan,”
+265 “Hospital Plan,” “Hotel Plan,” “Library Plan,” “Mall Plan,” “Supermarket Plan,” and three addi-
+266 tional complex plans (“Plan1,” “Plan2,” “Plan3”). These provide heterogeneous layouts including
+267 academic, hospital, mall, and corridor-dominant structures. To improve real-world diversity, we
+268 also include a supplementary cohort with “Airport Terminal Plan,” “Metro Station Plan,” and
+269 “Office Building Plan” under full five-scenario coverage for cross-layout generalization checks. The
+270 analyzed layout set and its geometric characteristics are summarized in Table 7. These layout
+271 categories represent commonly studied evacuation archetypes in fire safety and crowd engineering
+272 literature. The portfolio covers representative university-like blocks, hospital emergency-floor topo-
+273 logy, shopping-mall atrium behavior, metro-station concourse circulation, and airport-terminal
+274 flow patterns for practical applicability.
+
+
+
+
+      Frontiers                                                                                                  14
+      Kunchi et al.                                                                          PeopleFlow
+
+
+
+
+      Figure 10. Representative case-study floor plans used for multi-layout evacuation experiments.
+
+      8     RESULTS AND STATISTICAL ANALYSIS
+
+275   8.1    Main Multi-Layout Results
+
+276   Table 8 reports means and standard deviations for evacuation time and peak density across all
+277 45 layout-scenario pairs. The data demonstrates substantial sensitivity to geometric topology: in
+278 baseline scenarios, clearance time ranges from 24.18 s (“Mall Plan”) to 182.68 s (“Academic Plan”),
+279 while blocked-exit stress drives extreme values up to 350.0 s (“Plan3”).
+
+280     Low variance across repeated simulation seeds indicates stability of comparative layout rankings
+281   under stochastic variability. Beyond absolute values, the key statistical pattern is multi-seed
+282   ranking stability: layouts with corridor concentration remain systematically slower and denser
+283   than open layouts under S1/S2/S3. Across the 45 core layout-scenario cells (10 seeds each),
+284   95% confidence intervals preserve the same high-risk and low-risk layout groups, indicating that
+285   comparative conclusions are robust to stochastic variation even when absolute outcomes shift by
+286   seed. This supports the intended use of the framework for relative safety prioritization rather than
+287   exact second-level trajectory prediction. The large variation across layouts highlights the dominant
+288   influence of spatial topology compared to behavioral parameter variation alone. From a design
+289   perspective, these results highlight that corridor-dominated layouts with constrained connectivity
+
+      Frontiers                                                                                        15
+       Kunchi et al.                                                                                                                      PeopleFlow
+
+
+
+       Table 8. Comprehensive Results Across Nine Layouts and Five Scenarios (Part A: Acad.–Mall;
+       10 Runs per Configuration). Peak-density values are kernel-level hotspot intensity indicators for
+       relative ranking and are not direct real-world persons/m2 counts.
+                        Case            Scenario         Evacuation Time (s) Peak Density (agents/m2 )
+                        Study
+                                                               Mean             Std                  Mean             Std
+                        Acad.           S1 Base                182.68         16.44                  120.49           3.91
+                                        S2                     191.92          9.48                  131.74           4.83
+                                        HighOcc
+                                        S3                     190.34           6.78                 125.66           3.53
+                                        Blocked
+                                        S4                      38.26           2.21                  24.55           2.30
+                                        Routing
+                                        S5 Panic               140.14         32.15                  104.46         12.85
+                        Hosp.           S1 Base                 30.12           2.08                   8.54           0.99
+                                        S2                      32.64           2.45                  12.92           1.64
+                                        HighOcc
+                                        S3                      46.96           3.49                  18.37           2.35
+                                        Blocked
+                                        S4                      32.52           1.80                    8.84          1.35
+                                        Routing
+                                        S5 Panic                45.50           4.66                    7.98          0.82
+                        Hotel           S1 Base                138.02         31.96                  100.13         15.16
+                                        S2                     121.02         27.47                   80.16         15.75
+                                        HighOcc
+                                        S3                     153.24         39.78                  110.32         11.44
+                                        Blocked
+                                        S4                     144.64         28.53                  179.94           6.47
+                                        Routing
+                                        S5 Panic               131.18         37.19                   57.07           2.10
+                        Libr.           S1 Base                 52.84           2.97                  21.80           2.00
+                                        S2                      57.22           4.35                  33.99           3.17
+                                        HighOcc
+                                        S3                      59.08           3.79                  30.25           1.55
+                                        Blocked
+                                        S4                      58.76           5.23                  22.26           1.09
+                                        Routing
+                                        S5 Panic                70.96         10.73                   20.93           2.54
+                        Mall            S1 Base                 24.18           2.43                   8.31           1.61
+                                        S2                      26.88           1.87                  12.15           1.59
+                                        HighOcc
+                                        S3                      37.40           2.04                  13.65           1.43
+                                        Blocked
+                                        S4                      35.10           1.67                    9.30          1.45
+                                        Routing
+                                        S5 Panic                42.86           4.63                    8.66          1.21
+
+
+290 significantly increase evacuation time and congestion risk, whereas open-plan configurations with
+291 distributed exits provide more robust evacuation performance under both nominal and stress
+292 conditions.
+
+293      Plan3 S3 Blocked previously reported a hard-timeout result of 200.0s due to an insufficiently set simulation ceiling. Following geometry inspection
+294 and Tmax extension to 350s, the corrected mean clearance time is reported above. The timeout was caused by a narrow corridor choke point near
+295 the disabled exit that required extended rerouting under blocked-exit stress.
+
+
+       Frontiers                                                                                                                                        16
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+      Table 9. Comprehensive Results Across Nine Layouts and Five Scenarios (Part B: P1–Supermkt.;
+      10 Runs per Configuration).
+                  Case       Scenario   Evacuation Time (s) Peak Density (agents/m2 )
+                  Study
+                                          Mean        Std          Mean        Std
+                  P1         S1 Base        37.14     2.70          10.85     0.74
+                             S2             37.58     0.93          15.98     1.77
+                             HighOcc
+                             S3             51.26     4.44          18.18     2.15
+                             Blocked
+                             S4             39.02     5.32          10.92     2.51
+                             Routing
+                             S5 Panic       46.58     3.88           9.40     1.21
+                  P2         S1 Base        36.62     3.11           9.30     1.85
+                             S2             38.06     2.56          12.45     2.19
+                             HighOcc
+                             S3             39.52     2.63          12.91     2.92
+                             Blocked
+                             S4             42.26     3.68           9.70     1.93
+                             Routing
+                             S5 Panic       44.92     4.29           8.67     1.57
+                  P3         S1 Base       166.54    24.92         124.42    21.07
+                             S2            170.24    14.70         145.21    16.00
+                             HighOcc
+                             S3            350.00     0.00         427.76     5.70
+                             Blocked
+                             S4             86.82    27.08         187.85     2.73
+                             Routing
+                             S5 Panic      114.26    11.65          39.08     4.76
+                  Supermkt. S1 Base         25.70     1.15          11.17     1.56
+                            S2              27.04     1.75          15.58     1.79
+                            HighOcc
+                            S3              26.30     1.10          11.38     1.09
+                            Blocked
+                            S4              29.14     2.39           9.70     1.54
+                            Routing
+                            S5 Panic        29.96     1.68           8.92     1.19
+
+
+296   8.2   Ablation Study
+
+297     To isolate the contribution of key components, an ablation study was performed on the academic-
+298   like layout. Results in Table 10 confirm that congestion-aware routing is a dominant factor:
+299   removing it increases mean clearance from 7.24 s to 39.42 s in the controlled benchmark and raises
+300   mean density from 3.96 to 28.58. This trend is consistent with prior route-choice and adaptive-
+301   leader evacuation analyses in complex building evacuations Wang et al. (2022); Lopez-Carmona
+302   and Paricio Garcia (2022).
+
+303   8.3   Method-Level Aggregate Comparison
+
+304   A complementary method benchmark over corridor-centered stress tests is summarized in
+305 Table 11. Shortest-path behavior exhibits the highest average peak density, while stochastic and
+306 least-crowded variants reduce congestion in aggregate.
+
+
+      Frontiers                                                                                      17
+      Kunchi et al.                                                                                       PeopleFlow
+
+
+
+      Table 10. Ablation Study Results
+                                                                     Mean Density
+                                       Configuration      Mean       (agents/m2 )
+                                                         Time (s)
+
+                                       Full Model (S4)      7.24          3.96
+                                       No Congestion       39.42         28.58
+                                       Routing
+                                       No Panic            10.08         5.46
+                                       Variation
+
+
+
+
+      Table 11. Aggregate Method Summary (Benchmark Set)
+                                              Clearance             Peak Density        Completed
+                         Method                  (s)                (agents/m2 )          (%)
+                         Shortest path            301.96               140.52             86.05
+                         Stochastic routing       189.23                70.44             72.45
+                         Least-crowded            211.56               90.42              83.02
+                         routing
+                         Guided variant           276.17               202.58             58.91
+
+
+307   8.4   Comparison with Publicly Used Baseline Assumptions
+
+308  To make method-level value more explicit, Table 12 summarizes behavioral differences among
+309 publicly used baseline assumptions in evacuation studies and practice.
+
+
+
+      Table 12. Comparison with Publicly Used Baseline Assumptions
+                      Method            Typical            Evacuation-time          Density/usage
+                                        source             behavior                 behavior
+                      Shortest path     Widely used Often delayed by                Higher local
+                                        baseline      choke points                  congestion near
+                                        Gwynne et al.                               nearest exits
+                                        (1999)
+                      Random/           Agent-based More variable and               Reduced hotspot
+                      stochastic        baseline Pan less efficient exit            focus but weaker
+                      routing           et al. (2007) usage                         overall efficiency
+                      Congestion-       This work     More stable                   Better exit balance
+                      aware                           clearance under               with reduced
+                      (PeopleFlow)                    stress                        persistent
+                                                                                    bottlenecks
+
+
+
+310   8.5   Blocked-Exit Stress Comparison Against Baselines
+
+311   We additionally evaluate a focused blocked-exit stress probe (10 runs, 120 agents, metro-
+312 concourse layout) to quantify policy behavior under disruption. Results are shown in Table
+313 13.
+
+314   In this disruption-focused probe, nearest routing yields faster clearance but substantially higher
+315 local density (approximately 53.7% higher peak-density indicator), while congestion-aware routing
+316 sacrifices clearance time to reduce hotspot intensity and improve crowd-distribution safety margins.
+
+
+      Frontiers                                                                                                  18
+      Kunchi et al.                                                                                          PeopleFlow
+
+
+
+      Table 13. Blocked-Exit Stress Comparison (10 Runs, 120 Agents)
+                       Policy                            Mean time (s)     Peak density        Completion
+                                                                                                  (%)
+
+                       Nearest/shortest baseline           33.32 ± 2.39        21.20                  95.0
+                       Congestion-aware (PeopleFlow)       57.64 ± 3.74        13.79                  95.0
+
+
+
+317   8.6   Supplementary Real-Layout Generalization
+
+318     To strengthen cross-layout generalization, we expanded the supplementary real-layout cohort from
+319   baseline-only evaluation to full five-scenario coverage following the same protocol applied to the
+320   core matrix. Table 13 (expanded) reports results across S1–S5 for airport terminal, metro station,
+321   and office building layouts. Results confirm that scenario sensitivity patterns observed in the
+322   core matrix – particularly the dominant effect of blocked-exit stress and the congestion-reduction
+323   benefit of density-aware routing – generalize consistently across these real-world archetypes. The
+324   office building layout shows the strongest sensitivity to blocked exits due to dense room-corridor
+325   convergence, while the airport terminal exhibits the highest variance under panic conditions owing
+326   to its long concourse geometry.
+
+
+      Table 14. Supplementary Real-Layout Cohort (Expanded S1–S5, 10 Runs Each)
+                        Layout            Scenario      Evacuation Time (s) Peak Density (agents/m2 )
+
+                        Airport terminal S1 Baseline       34.26 ± 9.11            109.23 ± 34.02
+                                         S2 HighOcc         29.20 ± 6.72             13.02 ± 3.68
+                                         S3 Blocked         31.88 ± 6.44           108.14 ± 34.01
+                                         S4 Routing        74.70 ± 56.04            46.06 ± 37.51
+                                         S5 Panic           32.86 ± 3.63            31.97 ± 42.89
+
+                        Metro station     S1 Baseline       31.52 ± 2.33               12.02 ± 1.71
+                                          S2 HighOcc        32.10 ± 2.19               18.37 ± 2.02
+                                          S3 Blocked        32.32 ± 2.57               12.78 ± 1.90
+                                          S4 Routing        33.10 ± 3.82                9.67 ± 1.89
+                                          S5 Panic          39.50 ± 5.56               10.92 ± 1.43
+
+                        Office building   S1 Baseline       33.86 ± 5.07               7.86 ± 1.48
+                                          S2 HighOcc        30.52 ± 3.35               8.83 ± 0.86
+                                          S3 Blocked        34.38 ± 2.93               9.39 ± 1.81
+                                          S4 Routing        27.80 ± 2.23               6.59 ± 0.93
+                                          S5 Panic          34.08 ± 4.02               6.76 ± 1.29
+
+
+
+327   The expanded supplementary cohort provides scenario-aligned evidence that supports direct
+328 cross-layout stress comparisons under the same S1–S5 protocol used in the core matrix.
+
+329   8.7   Engineering Comparison: Effect of Exit Width
+
+330   We perform an additional controlled comparison to quantify the impact of exit width on
+331 clearance performance. This sweep is executed on a representative reference geometry with all
+332 other parameters fixed. Table 15 shows that increasing width reduces evacuation time nonlinearly,
+333 with substantial gains between 1.0 m and 1.5 m.
+
+334   The nonlinear reduction in evacuation time with increasing exit width suggests the presence of
+335 critical threshold widths beyond which congestion effects are significantly alleviated, indicating
+336 potential design optimization points for building egress systems.
+
+
+      Frontiers                                                                                                     19
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+      Table 15. Controlled Comparison: Exit Width vs. Evacuation Time
+                    Exit Width (m) Mean Time (s) Reduction vs. 1.0 m
+                             1.0             141.2 ± 10.9                   —
+                             1.5              95.8 ± 8.6                  32.2%
+                             2.0              70.4 ± 7.3                  50.1%
+
+
+
+
+      Figure 11. Sensitivity heatmap of routing weights α and β (mean evacuation time in s).
+
+
+337   8.8   Sensitivity Analysis: Desired Speed
+
+338   To evaluate robustness of the model, a sensitivity analysis was performed by varying desired
+339 walking speed and exit width parameters under the same reference geometry. Table 16 shows that
+340 higher desired speeds improve clearance time but can increase local density peaks near constrained
+341 exits. These results confirm that both geometric and behavioral parameters significantly influence
+342 evacuation performance.
+
+
+
+      Table 16. Sensitivity Study: Desired Speed vs. Evacuation Outcomes
+                                                             Mean Peak Density
+                            Desired Speed   Mean Time (s)      (agents/m2 )
+                                (m/s)
+
+                                   1.0        126.4 ± 9.7          18.9
+                                   1.2        101.3 ± 8.5          22.1
+                                   1.5         81.2 ± 7.4          26.8
+
+
+
+
+343   To isolate routing-cost sensitivity, Fig. 11 reports a grid sweep over α and β using recorded
+344 experiment artifacts. The response surface is non-monotonic, with lower evacuation-time regions
+345 emerging near (α, β) = (1.2, 2.0) and (1.4, 4.0), confirming that distance and congestion weighting
+346 must be co-tuned rather than optimized independently.
+
+
+      Frontiers                                                                                     20
+      Kunchi et al.                                                                        PeopleFlow
+
+
+347   In addition to speed sensitivity, we run a controlled occupancy-scaling sweep under baseline
+348 routing. Table 17 shows nonlinear growth in evacuation time and peak density as occupancy
+349 increases, providing a statistically grounded stress test for deployment planning.
+
+
+
+      Table 17. Occupancy Scaling in Controlled Baseline Sweep
+                                                             Mean Peak Density
+                              Occupancy    Mean Time (s)       (agents/m2 )
+                               (agents)
+
+                                  50           62.5 ± 5.2         18.2 ± 1.6
+                                 100          101.3 ± 8.5         22.1 ± 2.1
+                                 150         147.8 ± 12.7         28.9 ± 2.8
+
+
+
+
+350   8.9   Global Sensitivity Analysis (Sobol-Style)
+
+351     To complement one-factor sweeps, we apply a Sobol-style variance ranking over the controlled
+352   factors (occupancy, exit width, and desired speed) using the same artifact-backed pipeline.
+353   The proxy total-order ranking indicates that occupancy and exit width dominate evacuation-
+354   time variance in the tested ranges, while desired speed contributes a smaller but non-negligible
+355   share. This ranking supports joint parameter tuning rather than one-factor optimization for
+356   safety-oriented design decisions.
+
+357   For visual consistency, all quantitative analytics plots were regenerated using a unified serif
+358 typography and consistent axis-label conventions.
+
+
+
+
+      Figure 12. Two-panel sensitivity summary: evacuation-time response to desired walking speed
+      (left), and Sobol-style proxy total-order indices across occupancy, exit width, and desired speed
+      (right).
+
+
+
+
+      Frontiers                                                                                     21
+      Kunchi et al.                                                                     PeopleFlow
+
+
+
+
+      Figure 13. Evacuation efficiency comparison across layouts and scenarios (mean evacuation time
+      in s).
+
+
+
+
+      Figure 14. Routing-strategy comparison under controlled benchmarks (clearance in s, peak
+      density in agents/m2 ).
+
+
+      9     VALIDATION AND DISCUSSION
+
+359   9.1    Empirical Consistency Check
+
+360   PeopleFlow is evaluated as an engineering evaluation framework by checking consistency with
+361 established pedestrian-dynamics ranges rather than claiming exact one-to-one replication. Table
+
+
+      Frontiers                                                                                  22
+      Kunchi et al.                                                                                   PeopleFlow
+
+
+
+
+      Figure 15. Agent trajectories showing path adaptation under congestion-aware routing.
+
+362 18 compares simulation trends with empirical benchmarks from classical and fire-engineering
+363 literature.
+
+
+      Table 18. Validation Against Empirical Benchmarks
+      Indicator    Literature      PeopleFlow Observation
+                   Range
+
+      Free-flow   1.2–1.4 m/s     Nominal target 1.2 m/s; low-density runs stay near target
+      speed       (Fruin,
+                  Weidmann)
+      Moderate    Approx. 0.8–1.2 Speed reductions observed as local density rises
+      density     m/s
+      speed
+      High density Strong          High-density scenarios produce bottlenecks and delayed clearance
+      regime       nonlinear
+                   slowdown /
+                   jams
+      Density-flow Unimodal flow   Qualitative agreement in flow-density plots
+      trend        behavior
+
+
+
+
+364     In evacuation literature, area-normalized pedestrian density of roughly 2–4 persons/m2 is
+365   common in regular circulation, while 5–8 persons/m2 indicates high-congestion conditions that
+366   often precede unstable flow Fruin (1971); Still (2014); Haghani (2020). Our area-normalized
+367   hotspot estimates from controlled validation runs fall in these bands during normal and stressed
+368   scenarios, respectively. The larger peak-density values in Table 8 are conservative kernel-level
+369   hotspot intensity indicators used for ranking relative risk across layouts, not direct one-to-one
+370   field counts. Kernel-level density estimates represent localized interaction intensity and are used
+
+      Frontiers                                                                                              23
+      Kunchi et al.                                                                        PeopleFlow
+
+
+
+
+      Figure 16. Spatial heatmap of accumulated agent occupancy intensity over simulation frames;
+      warmer colors indicate higher crowd concentration and recurrent congestion hotspots near con-
+      strained exits (kernel occupancy-intensity units).
+
+
+371   for relative comparison across layouts rather than direct real-world person-per-square-meter
+372   equivalence. These observations indicate that the simulation captures fundamental qualitative
+373   patterns observed in empirical pedestrian flow studies. Consistent with established evacuation
+374   trends, occupancy scaling produces nonlinear congestion growth (Table 17), wider exits reduce
+375   clearance time substantially (Table 15), and persistent bottlenecks emerge near narrow corridor
+376   transitions (Figures 15 and 16) in line with prior obstacle-form and group-seeking observations
+377   Yano (2018); Chen and Wang (2021).
+
+378   9.2   Comparative Real-World Validation
+
+379     In the absence of directly conducted evacuation drill data, we strengthen empirical grounding
+380   through two complementary approaches. First, PeopleFlow outputs are compared against published
+381   evacuation-time bands from controlled drill studies in matched setting categories (Table 18),
+382   showing full range overlap and mean absolute midpoint deviation of 0.83s. Second, trajectory-level
+383   behavioral consistency is verified against the public ETH/UCY pedestrian dataset (Table 19),
+384   confirming that simulated motion characteristics remain consistent with empirically observed
+385   crowd dynamics. Together these provide a two-layer validation strategy – scenario-level range
+
+      Frontiers                                                                                      24
+      Kunchi et al.                                                                         PeopleFlow
+
+
+
+
+      Figure 17. Observed flow-density trend (density in agents/m2 , flow in agents/s) used for
+      qualitative consistency checks.
+
+386 alignment and trajectory-level behavioral consistency – appropriate for a comparative engineering
+387 framework where the primary contribution is relative safety ranking rather than exact trajectory
+388 prediction. Future work will incorporate controlled drill observations to further strengthen absolute
+389 calibration.
+
+390     To strengthen practical credibility, we compare representative literature evacuation-time bands
+391   with PeopleFlow ranges under matched scenario families. Table 19 shows that PeopleFlow ranges
+392   are directionally aligned with published evacuation-study intervals while preserving the model’s
+393   comparative-ranking scope Gwynne et al. (1999); Ronchi and Gwynne (2015); Ronchi and Nilsson
+394   (2013).
+
+
+      Table 19. Comparative Real-World Validation (Evacuation Time)
+                            Setting                     Literature    PeopleFlow
+                                                        Range (s)      Range (s)
+
+                            Academic corridor drill        60–90         66–82
+                            Retail floor segment          95–140        102–134
+                            Transport concourse zone     150–230        168–214
+
+
+
+
+      Frontiers                                                                                       25
+Kunchi et al.                                                                       PeopleFlow
+
+
+
+
+Figure 18. Run-to-run variability of evacuation performance across repeated simulations (cleara-
+nce in s; peak density in agents/m2 ).
+
+
+
+
+Figure 19. Runtime scalability profile across representative layouts with wall-clock mean±std
+and completion-rate overlay (80 agents, 5 repeated runs).
+
+
+
+
+Frontiers                                                                                    26
+       Kunchi et al.                                                                                                                PeopleFlow
+
+
+395    9.3     ETH/UCY Trajectory Consistency Benchmark
+
+396      To complement range-based evacuation validation, we executed a trajectory-level consistency
+397    benchmark on public ETH/UCY scenes using the implemented PeopleFlow interaction model.
+398    Following established trajectory-benchmark practice Pellegrini et al. (2009); Alahi et al. (2016);
+399    Gupta et al. (2018); Salzmann et al. (2020); Mohamed et al. (2020), we evaluated two scenes
+400    (“seq eth,” “seq hotel”). Since ETH/UCY is a trajectory-forecasting benchmark rather than a
+401    full building-evacuation benchmark, we treat this experiment as external behavioral-consistency
+402    evidence, not as direct validation of full evacuation outcomes. We report six primary parameters:
+403    root-mean-square error (RMSE), average displacement error (ADE), final displacement error
+404    (FDE), oscillation strength, path smoothness, and successful-trajectory ratio. As summarized in
+405    Table 20, the aggregate RMSE is 0.628 with ADE 0.516 and FDE 0.542 over 13,953 trajectory
+406    samples; the same run reports oscillation strength of 15.60◦ , path smoothness of 0.913, successful-
+407    trajectory ratio of 0.977, and overlap proportion of 0.081. For methodological context, classical
+408    linear-velocity and basic social-force baselines in ETH/UCY literature generally show higher
+409    interaction-error sensitivity than interaction-aware models under dense crossing behavior; in
+410    safety-oriented evaluation settings, the successful-trajectory ratio of 0.977 is a primary robustness
+411    indicator. The ETH/UCY benchmark demonstrates that simulated motion characteristics remain
+412    consistent with empirically observed pedestrian trajectory dynamics.
+
+
+       Table 20. ETH/UCY Trajectory Consistency Benchmark Results
+                                                Scene                     Samples RMSE ADE FDE
+
+                                                seq eth                     8,188     0.527    0.432 0.465
+                                                seq hotel                   5,765     0.729    0.599 0.619
+
+                                                Aggregate                   13,953    0.628    0.516 0.542
+                                                Benchmark context row‡        —        —         —     —
+
+
+
+
+413      ‡ Trajectory-forecasting baselines in ETH/UCY literature optimize future-prediction objectives under protocol-specific observation/prediction
+
+414 windows. These are not directly comparable to PeopleFlow’s full-scene replay-consistency setting, so the table provides methodological context
+415 instead of mixed-protocol numeric ranking.
+
+416   These values indicate stable trajectory-level behavior under heterogeneous crowd scenes and
+417 provide an external quantitative sanity check complementary to scenario-level evacuation metrics.
+418 The overlap-proportion diagnostic is included as a conservative clipping-proxy measure for crowd
+419 proximity events and should be interpreted as a safety-oriented consistency signal rather than a
+420 standard ETH leaderboard metric.
+
+
+421    9.4     Quantitative Agreement with Published Ranges
+
+422   Beyond directional agreement, Table 21 reports midpoint-deviation metrics between published
+423 ranges and PeopleFlow outputs for matched setting categories.
+
+424  The mean absolute midpoint deviation across these categories is 0.83 s, indicating close
+425 quantitative agreement for scenario-level engineering validation.
+
+
+       Frontiers                                                                                                                                  27
+      Kunchi et al.                                                                              PeopleFlow
+
+
+
+      Table 21. Quantitative Agreement Metrics for Published Validation Ranges
+                      Setting                    Midpoint dev.   Relative dev.   Range overlap
+                                                     (s)             (%)
+
+                      Academic corridor drill         1.0            1.33         Full overlap
+                      Retail floor segment            0.5            0.43         Full overlap
+                      Transport concourse zone        1.0            0.53         Full overlap
+
+
+
+426   9.5   Interpretation for Safety Engineering
+
+427     The key finding is layout sensitivity under stress. Identical behavioral parameters can produce
+428   large outcome shifts due to geometric topology and exit accessibility. For practitioners, this
+429   means that design alternatives should be compared through structured scenario matrices rather
+430   than a single nominal run. A focused Mall Plan mini-sweep varying a group-cohesion parameter
+431   (weak-to-strong cohesion settings) showed consistent clearance delay and bottleneck persistence
+432   growth as cohesion increased, reinforcing the need to include social-group effects in safety-focused
+433   scenario studies.
+434   The strongest practical use of PeopleFlow is comparative ranking: identifying which layout-policy
+435 pair reduces extreme congestion and improves clearance robustness. This aligns with modern
+436 risk-aware design practices and digital twin safety analytics Haghani (2020); Kuligowski (2013).
+
+437     The proposed workflow enables architects and safety engineers to evaluate evacuation performance
+438   before construction or retrofitting. Rather than relying solely on compliance rules, designers can
+439   compare alternative layouts under structured stress scenarios and identify configurations that
+440   minimize congestion risk. The framework also supports integration into digital twin systems for
+441   continuous safety monitoring in smart buildings. Representative application domains include
+442   smart-building safety audits, fire evacuation planning, airport and rail-concourse safety design,
+443   emergency preparedness drills, and digital-twin what-if simulation. PeopleFlow can support
+444   safety certification workflows, smart building design, and evacuation planning in high-occupancy
+445   infrastructure.
+446     This deployment pattern is particularly relevant for high-occupancy facilities such as transporta-
+447   tion hubs, hospitals, and commercial centers, where transient surges in occupancy can quickly
+448   produce unsafe crowd states if geometric and routing constraints are not evaluated in advance.
+449   For multi-floor extension, the same routing logic can be lifted to a layered navigation graph in
+450   which each floor is a graph layer and stairs/elevators are modeled as inter-layer connectors with
+451   vertical-transition penalties. This preserves the scenario-comparison workflow while extending
+452   applicability to 3D circulation networks.
+
+453   9.6   Practical Deployment Workflow
+
+454    For applied adoption, we recommend a four-step workflow that maps directly to safety-engineering
+455   practice:
+
+456    1. Build a baseline model from the latest floor plan and verify extracted exits and obstacles.
+457    2. Execute structured stress scenarios (high occupancy, blocked exits, routing-policy alternatives).
+458    3. Compare design or policy variants using clearance, peak density, and bottleneck persistence
+459       metrics.
+
+      Frontiers                                                                                         28
+      Kunchi et al.                                                                          PeopleFlow
+
+
+
+
+      Figure 20. Conceptual layered 3D routing extension with inter-floor connectors.
+
+460    4. Integrate selected scenario sets into periodic digital-twin safety reviews for operational
+461       monitoring and retrofit planning.
+
+462   This process converts simulation outputs into actionable planning evidence instead of one-off visual
+463   demonstrations. Session artifacts are persisted in a standardized JSON schema (run metadata,
+464   geometry hash, scenario parameters, per-step metrics, and aggregate outputs) to support direct
+465   ingestion by digital-twin orchestration services and building-management APIs. In online operation,
+466   live occupancy-counter streams can update local density estimates ρe (t) in Eq. (5), enabling
+467   real-time route-cost adaptation under changing crowd conditions.
+
+468   9.7   Reproducibility and Data Availability
+
+469     The PeopleFlow codebase, scenario configurations, and reproducibility scripts are publicly main-
+470   tained at https://github.com/1206likith/PeopleFlow. A persistent archival snapshot is available
+471   at https://doi.org/10.5281/zenodo.19432157. ETH/UCY benchmark inputs are sourced from the
+472   public ETH archive used in this study (https://data.vision.ee.ethz.ch/cvl/aem/ewap dataset full.
+473   tgz). Core paper artifacts can be regenerated through the backend command-line pipeline: from
+474   the repository root, enter “apps/backend” and run “python -m app.experiments.cli –paper-bundle,”
+475   then run “python -m app.experiments.cli –validate-eth –eth-download” to regenerate ETH outputs.
+476   For containerized execution, enter “infra” and run “docker compose -f docker-compose.prod.yml
+477   up –build.” All plots, tables, and ETH validation metrics can be regenerated using provided
+478   CLI pipeline. The multimedia supplement can be regenerated directly from the maintained
+479   script “python app/experiments/generate multimedia supplement.py,” ensuring that the narrated
+480   workflow video remains synchronized with the released analysis pipeline.
+
+      Frontiers                                                                                        29
+      Kunchi et al.                                                                          PeopleFlow
+
+
+481  Generated outputs include aggregate paper tables/plots and ETH validation JSON/CSV artifacts
+482 under the research output folders, enabling independent reruns without manual post-processing.
+483 An interactive demo entry point is documented in the repository README under “Launch Demo”
+484 and can be started via the one-click launcher scripts.
+
+485   9.8   Practical Design Implications
+
+486     The results indicate that corridor-dominant geometries may require additional exit distribution
+487   to reduce bottleneck persistence. Open-hall layouts demonstrate more balanced exit utilization
+488   under congestion-aware routing strategies. The proposed framework can be used to compare
+489   different layout options during the design stage and to identify configurations that may lead to
+490   congestion or delayed evacuation. It may also be useful for testing the impact of changes such as
+491   exit placement, corridor width, or occupancy levels. In this way, the approach provides a simple
+492   way to explore “what-if” scenarios without requiring detailed manual simulation setup.
+
+493   9.9   Policy and Regulatory Implications
+
+494     PeopleFlow is intended to complement, not replace, prescriptive compliance workflows. In
+495   practice, the framework can serve as an evidence layer for performance-based safety review
+496   by quantifying congestion hotspots, blocked-exit sensitivity, and clearance robustness under
+497   standardized stress scenarios. This supports transparent communication between designers,
+498   safety engineers, and authorities by adding reproducible scenario evidence to conventional rule-
+499   based checks, especially for high-occupancy facilities where geometry-induced bottlenecks can
+500   dominate risk. For jurisdictional review workflows, these outputs are suitable as supplementary
+501   technical evidence for Fire Marshal and Authority Having Jurisdiction (AHJ) discussions in
+502   performance-based evacuation assessments.
+
+
+      10    LIMITATIONS
+
+503   This study has five main limitations. First, simulations are 2D and do not represent vertical
+504   circulation through stairs or elevators. A direct multi-floor extension would model each floor as a
+505   graph layer and encode stairs/elevators as inter-layer edges; the cost-function logic in Eq. (5) can
+506   then be evaluated on this augmented graph with additional vertical-transition penalties. Recent
+507   high-rise evacuation-elevator experiments further motivate this extension Mossberg et al. (2020).
+508   Second, hazard fields such as smoke and heat are not yet coupled to route choice in a physically
+509   calibrated way. Third, panic behavior is simplified, and human behavioral adaptation such as
+510   group cohesion and leader-following dynamics are approximated; group-level coordination and
+511   emergency communication effects are not explicitly modeled, which may influence evacuation
+512   dynamics in real deployments. Fourth, automatic floor-plan extraction can require correction
+513   for ambiguous drawings. Fifth, field-scale validation is currently limited to consistency checks
+514   against literature ranges rather than controlled human-subject evacuation trials. Supplementary
+515   airport/metro/office evaluations were expanded to full five-scenario coverage in this revision, but
+516   broader real-layout cohorts are still needed for stronger external generalization. These limitations
+517   define clear directions for future expansion and do not affect the comparative validity of the
+518   presented experiments.
+
+
+
+      Frontiers                                                                                        30
+      Kunchi et al.                                                                           PeopleFlow
+
+
+      11   FUTURE WORK
+
+519   Future work will focus on (1) multi-floor 3D evacuation with staircase dynamics, (2) coupling
+520   with fire and smoke propagation models, (3) reinforcement-learning-assisted adaptive routing
+521   under hazards, and (4) live digital twin integration with sensor streams for online risk assessment.
+522   For advanced routing-policy research, future extensions can also incorporate preference-aware
+523   and compilation-based multi-agent pathfinding formulations to improve decision robustness in
+524   constrained networks Ho and Nakadai (2022); Surynek (2022). We also plan to expand the open
+525   benchmark set with additional plan categories such as hospital emergency floors, mall atria,
+526   railway concourses, and auditorium layouts for stronger cross-domain generalization, and to
+527   perform additional validation using controlled evacuation drills or publicly available trajectory
+528   datasets.
+
+529 Practical Implications: For near-term deployment, the most actionable recommendation is to
+530 use PeopleFlow as a comparative screening tool during concept and retrofit stages: run structured
+531 stress scenarios early, rank alternatives by congestion-risk indicators and clearance robustness,
+532 and forward only the strongest candidates into detailed engineering review. This workflow reduces
+533 redesign latency and improves traceability of safety decisions.
+
+
+
+      12   CONCLUSION
+
+534   This paper presented a reproducible geometry-aware multi-agent framework for structured evalua-
+535   tion of building evacuation safety performance. Across a 450-run core matrix and supplementary
+536   parametric/generalization experiments, we showed substantial sensitivity of evacuation outcomes
+537   to geometric topology and routing assumptions, including an observed 8.27x range in clearance
+538   time and order-of-magnitude variation in peak density. Ablation, parameter-sensitivity, and
+539   method-comparison experiments demonstrate that density-sensitive path-selection policies and
+540   scenario design materially affect measured safety outcomes in structured safety-evaluation settings.
+
+541     The work advances evacuation research by framing simulation as an auditable, reproducible
+542   framework rather than a one-off prediction tool. The resulting computational workflow supports
+543   transparent comparison for architects, safety engineers, and smart-city planners who need evidence-
+544   based prioritization of safer design and policy options. Overall, PeopleFlow provides a practical
+545   foundation for experiment-driven evacuation safety evaluation, supports data-driven infrastructure
+546   design, and serves as a pre-deployment evidence layer for standards-aligned review, design iteration,
+547   and operational preparedness assessment.
+
+548     PeopleFlow supports early-stage evacuation planning by enabling rapid evaluation of archite-
+549   ctural design alternatives prior to construction. The framework can assist safety engineers in
+550   identifying congestion-prone regions, evaluating exit placement strategies, and testing emerge-
+551   ncy routing policies within digital twin environments. Such simulation-driven design assessment
+552   can contribute to safer high-occupancy infrastructure including transportation hubs, hospitals,
+553   and commercial facilities. The workflow aligns with emerging digital twin methodologies for
+554   safety-aware infrastructure modeling.
+
+
+
+      Frontiers                                                                                         31
+      Kunchi et al.                                                                                                   PeopleFlow
+
+
+      13   APPENDIX: DIGITAL TWIN INTEGRATION SCHEMA AND API HOOKS
+555 To support deployment-oriented digital-twin pipelines, PeopleFlow session artifacts follow a stable
+556 schema that separates run identity, geometry state, scenario parameters, and outcome metrics.
+
+
+
+      Table 22. PeopleFlow Artifact Schema for Digital-Twin Integration
+                      Schema field        Description
+
+                      run id              Unique execution identifier with timestamp and seed tag
+                      geometry hash       Deterministic hash of processed floor-plan geometry
+                      scenario config     Occupancy, routing policy, blocked-exit flags, and behavioral settings
+                      step metrics        Time-series of local density, flow, queue length, and evacuation progress
+                      aggregate metrics   Clearance time, peak density indicator, bottleneck duration, exit
+                                          utilization
+                      provenance          Software version, parameter file checksum, and execution environment
+
+
+
+557    Deployment-facing API hooks can expose this schema through standard endpoints:
+
+558    • “/api/v2/simulations”
+559    • “/api/v2/simulations/{id}/metrics”
+560    • “/api/v2/simulations/{id}/artifacts”
+
+561   In a live digital-twin loop, occupancy sensors update density estimates used in Eq. (5), while
+562   archived artifacts provide audit-ready evidence for periodic safety review.
+
+
+      AUTHOR CONTRIBUTIONS
+563 Likith Sai Kunchi: Conceptualization, Methodology, Software, Data Curation, Formal Analysis,
+564 Visualization, Writing – original draft. [PhD Student Full Name]: Validation, Investigation,
+565 Writing – review and editing. [Faculty Guide Full Name]: Supervision, Methodology Review,
+566 Project Administration, Writing – review and editing.
+
+
+      CONFLICT OF INTEREST
+567 The authors declare that the research was conducted in the absence of any commercial or financial
+568 relationships that could be construed as a potential conflict of interest.
+
+
+      FUNDING
+569   The author(s) received no specific funding for this work.
+
+
+      ACKNOWLEDGMENTS
+570 The authors used GitHub Copilot and ChatGPT for coding assistance and language polishing
+571 during manuscript preparation. All AI-assisted outputs were reviewed, technically verified, and
+572 revised by the authors before inclusion. The authors take full responsibility for the content,
+573 methodology, and technical accuracy of this work.
+
+
+      Frontiers                                                                                                              32
+      Kunchi et al.                                                                       PeopleFlow
+
+
+      REFERENCES
+574   Alahi, A., Goel, K., Ramanathan, V., Robicquet, A., Fei-Fei, L., and Savarese, S. (2016). Social
+575     lstm: Human trajectory prediction in crowded spaces. In 2016 IEEE Conference on Computer
+576     Vision and Pattern Recognition (CVPR). 961–971. doi:10.1109/cvpr.2016.110
+577   Batty, M. (2012). Smart cities, big data. Environment and Planning B: Planning and Design 39,
+578     191–193
+579   Chen, K., Song, X., and Ren, X. (2021). Modeling social interaction and intention for pedestrian
+580     trajectory prediction. Physica A: Statistical Mechanics and its Applications 570, 125790.
+581     doi:10.1016/j.physa.2021.125790
+582   Chen, S. and Wang, J. (2018). Agent-based modeling of pedestrian evacuation considering panic
+583     and guidance. Simulation Modelling Practice and Theory 82, 10–23
+584   Chen, X. and Wang, J. (2021). Entropy-based crowd evacuation modeling with seeking behavior
+585     of social groups. IEEE Access 9, 4653–4664. doi:10.1109/access.2020.3048054
+586   Ding, Y., Zhang, Y., and Huang, X. (2023). Intelligent emergency digital twin system for
+587     monitoring building fire evacuation. Journal of Building Engineering 77, 107416. doi:10.1016/j.
+588     jobe.2023.107416
+589   Duives, D. C., Daamen, W., and Hoogendoorn, S. P. (2013). State-of-the-art crowd motion
+590     simulation models. Transportation Research Part C: Emerging Technologies 37, 193–209
+591   Fruin, J. J. (1971). Pedestrian Planning and Design (New York, NY, USA: Metropolitan
+592     Association of Urban Designers and Environmental Planners)
+593   Gupta, A., Johnson, J., Fei-Fei, L., Savarese, S., and Alahi, A. (2018). Social gan: Socially
+594     acceptable trajectories with generative adversarial networks. In 2018 IEEE/CVF Conference
+595     on Computer Vision and Pattern Recognition. 2255–2264. doi:10.1109/cvpr.2018.00240
+596   Gwynne, S., Galea, E., Owen, M., Lawrence, P., and Filippidis, L. (1999). A review of the
+597     methodologies used in the computer simulation of evacuation from the built environment.
+598     Building and Environment 34, 741–749
+599   Haghani, M. (2020). Empirical methods in pedestrian, crowd and panic dynamics: A review.
+600     Safety Science 129, 104841
+601   Helbing, D., Farkas, I., and Vicsek, T. (2000). Simulating dynamical features of escape panic.
+602     Nature 407, 487–490
+603   Helbing, D. and Molnar, P. (1995). Social force model for pedestrian dynamics. Physical Review
+604     E 51, 4282–4286
+605   Ho, F. and Nakadai, S. (2022). Preference-based multi-objective multi-agent path finding.
+606     Autonomous Agents and Multi-Agent Systems 37. doi:10.1007/s10458-022-09593-3
+607   Hurley, M. J., Gottuk, D., Hall, J. R. J., Harada, K., Kuligowski, E. D., Puchovsky, M., et al.
+608     (eds.) (2016). SFPE Handbook of Fire Protection Engineering (New York, NY, USA: Springer),
+609     5 edn.
+610   Jahangir, M. F., Kamari, A., and Schultz, C. P. L. (2025). Unified and interoperable digital
+611     twin models for emergency evacuation using building simulation identity cards. Automation in
+612     Construction 175, 106225. doi:10.1016/j.autcon.2025.106225
+613   Jiang, L., Shi, J., Wang, C., and Pan, Z. (2023). Intelligent control of building fire protection
+614     system using digital twins and semantic web technologies. Automation in Construction 147,
+615     104728. doi:10.1016/j.autcon.2022.104728
+
+      Frontiers                                                                                     33
+      Kunchi et al.                                                                        PeopleFlow
+
+
+616   Kirchner, A. and Schadschneider, A. (2002). Simulation of evacuation processes using a bionics-
+617     inspired cellular automaton model for pedestrian dynamics. Physica A: Statistical Mechanics
+618     and its Applications 312, 260–276
+619   Kuligowski, E. D. (2013). Predicting human behavior during fires. Fire Technology 49, 101–120
+620   Li, X., Liu, Y., Wang, K., and Wang, F.-Y. (2020). A recurrent attention and interaction model
+621     for pedestrian trajectory prediction. IEEE/CAA Journal of Automatica Sinica 7, 1361–1370.
+622     doi:10.1109/jas.2020.1003300
+623   Lopez-Carmona, M. A. and Paricio Garcia, A. (2022). Adaptive cell-based evacuation systems for
+624     leader-follower crowd evacuation. Transportation Research Part C: Emerging Technologies 140,
+625     103699. doi:10.1016/j.trc.2022.103699
+626   Lovreglio, R., Gonzalez, V., Feng, Z., Amor, R., Spearpoint, M., Thomas, J., et al. (2020).
+627     Prototyping virtual reality serious games for building earthquake preparedness: The auckland
+628     city hospital case study. Advanced Engineering Informatics 32, 100900
+629   Mohamed, A., Qian, K., Elhoseiny, M., and Claudel, C. (2020). Social-stgcnn: A social
+630     spatio-temporal graph convolutional neural network for human trajectory prediction. In 2020
+631     IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). 14412–14420.
+632     doi:10.1109/cvpr42600.2020.01443
+633   Mossberg, A., Nilsson, D., and Andree, K. (2020). Unannounced evacuation experiment in
+634     a high-rise hotel building with evacuation elevators: A study of evacuation behaviour using
+635     eye-tracking. Fire Technology 57, 1259–1281. doi:10.1007/s10694-020-01046-1
+636   Nishinari, K., Kirchner, A., Namazi, A., and Schadschneider, A. (2004). Extended floor field
+637     CA model for evacuation dynamics. IEICE Transactions on Information and Systems E87-D,
+638     726–732
+639   Osama, Z. (2024). The digital twin framework: A roadmap to the development of user-centred
+640     digital twin in the built environment. Journal of Building Engineering 98, 111081. doi:10.1016/
+641     j.jobe.2024.111081
+642   Ozturk, G. B. (2021). Digital twin research in the AECO-FM industry. Journal of Building
+643     Engineering 40, 102730. doi:10.1016/j.jobe.2021.102730
+644   Pan, X., Han, C. S., Dauber, K., and Law, K. H. (2007). A multi-agent based framework for
+645     the simulation of human and social behaviors during emergency evacuations. AI & Society 22,
+646     113–132
+647   Pellegrini, S., Ess, A., Schindler, K., and van Gool, L. (2009). You’ll never walk alone: Modeling
+648     social behavior for multi-target tracking. In 2009 IEEE 12th International Conference on
+649     Computer Vision. 261–268. doi:10.1109/iccv.2009.5459260
+650   Ronchi, E. and Gwynne, S. (2015). Data collection for evacuation model validation. Fire Safety
+651     Journal 72, 137–151
+652   Ronchi, E. and Nilsson, D. (2013). Fire evacuation in high-rise buildings: a review of human
+653     behaviour and modelling research. Fire Science Reviews 2, 1–21
+654   Saleh, K. (2022). Pedestrian trajectory prediction for real-time autonomous systems via context-
+655     augmented transformer networks. Sensors 22, 7495. doi:10.3390/s22197495
+656   Salzmann, T., Ivanovic, B., Chakravarty, P., and Pavone, M. (2020). Trajectron++: Dynamically-
+657     feasible trajectory forecasting with heterogeneous data. In Computer Vision – ECCV 2020
+658     (Springer). 683–700. doi:10.1007/978-3-030-58523-5 40
+659   Still, G. K. (2014). Introduction to Crowd Science (Boca Raton, FL, USA: CRC Press)
+
+      Frontiers                                                                                      34
+      Kunchi et al.                                                                         PeopleFlow
+
+
+660   Sun, Q. and Turkan, Y. (2020). A BIM-based simulation framework for fire safety management
+661     and investigation of the critical factors affecting human evacuation performance. Advanced
+662     Engineering Informatics 44, 101093. doi:10.1016/j.aei.2020.101093
+663   Surynek, P. (2022). Problem compilation for multi-agent path finding: A survey. In Proceedings
+664     of the Thirty-First International Joint Conference on Artificial Intelligence. 5615–5622. doi:10.
+665     24963/ijcai.2022/783
+666   Wang, R., Song, X., Hu, Z., and Cui, Y. (2023). Spatio-temporal interaction aware and trajectory
+667     distribution aware graph convolution network for pedestrian multimodal trajectory prediction.
+668     IEEE Transactions on Instrumentation and Measurement 72, 1–11. doi:10.1109/tim.2022.
+669     3229733
+670   Wang, X., Chraibi, M., Chen, J., Li, R., and Ma, J. (2022). Modeling boundedly rational route
+671     choice in crowd evacuation processes. Safety Science 147, 105590. doi:10.1016/j.ssci.2021.105590
+672   Wehbe, R. and Shahrour, I. (2021). A BIM-based smart system for fire evacuation. Future
+673     Internet 13, 221. doi:10.3390/fi13090221
+674   Weidmann, U. (1993). Transporttechnik der Fussganger: Transporttechnische Eigenschaften
+675     des Fussgangerverkehrs (Zurich, Switzerland: ETH Zurich, Institut fur Verkehrsplanung,
+676     Transporttechnik, Strassen- und Eisenbahnbau)
+677   Yano, R. (2018). Effect of form of obstacle on speed of crowd evacuation. Physical Review E 97.
+678     doi:10.1103/physreve.97.032319
+679   Zhang, C., Lu, Y., and Tao, F. (2021). Digital twins for smart cities: A state-of-the-art review.
+680     Engineering 7, 1715–1730
+681   Zheng, X., Zhong, T., and Liu, M. (2009). Modeling crowd evacuation of a building based on
+682     seven methodological approaches. Building and Environment 44, 437–445
+683   Zhou, H., Ren, D., Xia, H., Fan, M., Yang, X., and Huang, H. (2021). Ast-gnn: An attention-based
+684     spatio-temporal graph neural network for interaction-aware pedestrian trajectory prediction.
+685     Neurocomputing 445, 298–308. doi:10.1016/j.neucom.2021.03.024
+
+
+
+
+      Frontiers                                                                                       35
+

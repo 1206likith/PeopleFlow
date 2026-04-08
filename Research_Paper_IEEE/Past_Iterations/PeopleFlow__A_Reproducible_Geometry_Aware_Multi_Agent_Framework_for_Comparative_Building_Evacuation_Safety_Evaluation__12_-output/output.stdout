@@ -1,0 +1,66 @@
+chktex exit: 0
+Rc files read:
+  /usr/local/share/latexmk/LatexMk
+Latexmk: This is Latexmk, John Collins, 27 Dec. 2024. Version 4.86a.
+Latexmk: Changing directory to '/compile/'
+No existing .aux file, so I'll make a simple one, and require run of *latex.
+Force *latex to be remade.
+------------
+Running 'internal overleaf_pre_process "access.tex" "output.pdf"'
+------------
+Latexmk: calling overleaf_pre_process( "access.tex" "output.pdf" )
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Category 'other':
+  Rerun of 'pdflatex' forced or previously required:
+    Reason or flag: 'go_mode=3'
+
+------------
+Run number 1 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "access.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+
+------------
+Run number 2 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "access.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: Summary of warnings from last run of *latex:
+  Latex failed to resolve 27 reference(s)
+  =====Latex reported missing or unavailable character(s).
+=====See log file for details.
+  Latex failed to resolve 56 citation(s)
+Latexmk: Errors, in force_mode: so I tried finishing targets
+------------
+Running 'internal overleaf_post_process "access.tex" "output.pdf"'
+------------
+Latexmk: calling overleaf_post_process( "access.tex" "output.pdf" )
+Collected error summary (may duplicate other messages):
+  pdflatex: Command for 'pdflatex' gave return code 1
+      Refer to 'output.log' and/or above output for details
+Latexmk: Undoing directory change
+'pdflatex': time = 13.70
+'pdflatex': time = 12.41
+Processing time = 28.51, of which invoked processes = 26.11, other = 2.40.
+Elapsed clock time = 28.71.
+Number of rules run = 2
+

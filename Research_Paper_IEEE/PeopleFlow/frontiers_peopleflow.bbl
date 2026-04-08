@@ -1,0 +1,352 @@
+\begin{thebibliography}{44}
+\providecommand{\natexlab}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\bibAnnoteFile}[1]{%
+  \IfFileExists{#1}{\begin{quotation}\noindent\textsc{Key:} #1\\
+  \textsc{Annotation:}\ \input{#1}\end{quotation}}{}}
+\providecommand{\bibAnnote}[2]{%
+  \begin{quotation}\noindent\textsc{Key:} #1\\
+  \textsc{Annotation:}\ #2\end{quotation}}
+
+\bibitem[{Alahi et~al.(2016)Alahi, Goel, Ramanathan, Robicquet, Fei-Fei, and
+  Savarese}]{alahi2016sociallstm}
+Alahi, A., Goel, K., Ramanathan, V., Robicquet, A., Fei-Fei, L., and Savarese,
+  S. (2016).
+\newblock Social lstm: Human trajectory prediction in crowded spaces.
+\newblock In \emph{2016 IEEE Conference on Computer Vision and Pattern
+  Recognition (CVPR)}. 961--971.
+\newblock \doi{10.1109/cvpr.2016.110}
+\bibAnnoteFile{alahi2016sociallstm}
+
+\bibitem[{Batty(2012)}]{batty2012}
+Batty, M. (2012).
+\newblock Smart cities, big data.
+\newblock \emph{Environment and Planning B: Planning and Design} 39, 191--193
+\bibAnnoteFile{batty2012}
+
+\bibitem[{Chen et~al.(2021)Chen, Song, and Ren}]{chen2021intention}
+Chen, K., Song, X., and Ren, X. (2021).
+\newblock Modeling social interaction and intention for pedestrian trajectory
+  prediction.
+\newblock \emph{Physica A: Statistical Mechanics and its Applications} 570,
+  125790.
+\newblock \doi{10.1016/j.physa.2021.125790}
+\bibAnnoteFile{chen2021intention}
+
+\bibitem[{Chen and Wang(2018)}]{chen2018}
+Chen, S. and Wang, J. (2018).
+\newblock Agent-based modeling of pedestrian evacuation considering panic and
+  guidance.
+\newblock \emph{Simulation Modelling Practice and Theory} 82, 10--23
+\bibAnnoteFile{chen2018}
+
+\bibitem[{Chen and Wang(2021)}]{chen2021entropy}
+Chen, X. and Wang, J. (2021).
+\newblock Entropy-based crowd evacuation modeling with seeking behavior of
+  social groups.
+\newblock \emph{IEEE Access} 9, 4653--4664.
+\newblock \doi{10.1109/access.2020.3048054}
+\bibAnnoteFile{chen2021entropy}
+
+\bibitem[{Ding et~al.(2023)Ding, Zhang, and Huang}]{ding2023jbe}
+Ding, Y., Zhang, Y., and Huang, X. (2023).
+\newblock Intelligent emergency digital twin system for monitoring building
+  fire evacuation.
+\newblock \emph{Journal of Building Engineering} 77, 107416.
+\newblock \doi{10.1016/j.jobe.2023.107416}
+\bibAnnoteFile{ding2023jbe}
+
+\bibitem[{Duives et~al.(2013)Duives, Daamen, and Hoogendoorn}]{duives2013}
+Duives, D.~C., Daamen, W., and Hoogendoorn, S.~P. (2013).
+\newblock State-of-the-art crowd motion simulation models.
+\newblock \emph{Transportation Research Part C: Emerging Technologies} 37,
+  193--209
+\bibAnnoteFile{duives2013}
+
+\bibitem[{Fruin(1971)}]{fruin}
+Fruin, J.~J. (1971).
+\newblock \emph{Pedestrian Planning and Design} (New York, NY, USA:
+  Metropolitan Association of Urban Designers and Environmental Planners)
+\bibAnnoteFile{fruin}
+
+\bibitem[{Gupta et~al.(2018)Gupta, Johnson, Fei-Fei, Savarese, and
+  Alahi}]{gupta2018socialgan}
+Gupta, A., Johnson, J., Fei-Fei, L., Savarese, S., and Alahi, A. (2018).
+\newblock Social gan: Socially acceptable trajectories with generative
+  adversarial networks.
+\newblock In \emph{2018 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}. 2255--2264.
+\newblock \doi{10.1109/cvpr.2018.00240}
+\bibAnnoteFile{gupta2018socialgan}
+
+\bibitem[{Gwynne et~al.(1999)Gwynne, Galea, Owen, Lawrence, and
+  Filippidis}]{path_planning}
+Gwynne, S., Galea, E., Owen, M., Lawrence, P., and Filippidis, L. (1999).
+\newblock A review of the methodologies used in the computer simulation of
+  evacuation from the built environment.
+\newblock \emph{Building and Environment} 34, 741--749
+\bibAnnoteFile{path_planning}
+
+\bibitem[{Haghani(2020)}]{haghani2020}
+Haghani, M. (2020).
+\newblock Empirical methods in pedestrian, crowd and panic dynamics: A review.
+\newblock \emph{Safety Science} 129, 104841
+\bibAnnoteFile{haghani2020}
+
+\bibitem[{Helbing et~al.(2000)Helbing, Farkas, and Vicsek}]{helbing2000}
+Helbing, D., Farkas, I., and Vicsek, T. (2000).
+\newblock Simulating dynamical features of escape panic.
+\newblock \emph{Nature} 407, 487--490
+\bibAnnoteFile{helbing2000}
+
+\bibitem[{Helbing and Molnar(1995)}]{sfm}
+Helbing, D. and Molnar, P. (1995).
+\newblock Social force model for pedestrian dynamics.
+\newblock \emph{Physical Review E} 51, 4282--4286
+\bibAnnoteFile{sfm}
+
+\bibitem[{Ho and Nakadai(2022)}]{ho2022mapfpref}
+Ho, F. and Nakadai, S. (2022).
+\newblock Preference-based multi-objective multi-agent path finding.
+\newblock \emph{Autonomous Agents and Multi-Agent Systems} 37.
+\newblock \doi{10.1007/s10458-022-09593-3}
+\bibAnnoteFile{ho2022mapfpref}
+
+\bibitem[{Hurley et~al.(2016)Hurley, Gottuk, Hall, Harada, Kuligowski,
+  Puchovsky et~al.}]{sfpe}
+Hurley, M.~J., Gottuk, D., Hall, J. R.~J., Harada, K., Kuligowski, E.~D.,
+  Puchovsky, M., et~al. (eds.) (2016).
+\newblock \emph{SFPE Handbook of Fire Protection Engineering} (New York, NY,
+  USA: Springer), 5 edn.
+\bibAnnoteFile{sfpe}
+
+\bibitem[{Jahangir et~al.(2025)Jahangir, Kamari, and Schultz}]{jahangir2025dt}
+Jahangir, M.~F., Kamari, A., and Schultz, C. P.~L. (2025).
+\newblock Unified and interoperable digital twin models for emergency
+  evacuation using building simulation identity cards.
+\newblock \emph{Automation in Construction} 175, 106225.
+\newblock \doi{10.1016/j.autcon.2025.106225}
+\bibAnnoteFile{jahangir2025dt}
+
+\bibitem[{Jiang et~al.(2023)Jiang, Shi, Wang, and Pan}]{jiang2023autcon}
+Jiang, L., Shi, J., Wang, C., and Pan, Z. (2023).
+\newblock Intelligent control of building fire protection system using digital
+  twins and semantic web technologies.
+\newblock \emph{Automation in Construction} 147, 104728.
+\newblock \doi{10.1016/j.autcon.2022.104728}
+\bibAnnoteFile{jiang2023autcon}
+
+\bibitem[{Kirchner and Schadschneider(2002)}]{kirchner2002}
+Kirchner, A. and Schadschneider, A. (2002).
+\newblock Simulation of evacuation processes using a bionics-inspired cellular
+  automaton model for pedestrian dynamics.
+\newblock \emph{Physica A: Statistical Mechanics and its Applications} 312,
+  260--276
+\bibAnnoteFile{kirchner2002}
+
+\bibitem[{Kuligowski(2013)}]{kuligowski}
+Kuligowski, E.~D. (2013).
+\newblock Predicting human behavior during fires.
+\newblock \emph{Fire Technology} 49, 101--120
+\bibAnnoteFile{kuligowski}
+
+\bibitem[{Li et~al.(2020)Li, Liu, Wang, and Wang}]{li2020recurrent}
+Li, X., Liu, Y., Wang, K., and Wang, F.-Y. (2020).
+\newblock A recurrent attention and interaction model for pedestrian trajectory
+  prediction.
+\newblock \emph{IEEE/CAA Journal of Automatica Sinica} 7, 1361--1370.
+\newblock \doi{10.1109/jas.2020.1003300}
+\bibAnnoteFile{li2020recurrent}
+
+\bibitem[{Lopez-Carmona and Paricio~Garcia(2022)}]{lopez2022adaptive}
+Lopez-Carmona, M.~A. and Paricio~Garcia, A. (2022).
+\newblock Adaptive cell-based evacuation systems for leader-follower crowd
+  evacuation.
+\newblock \emph{Transportation Research Part C: Emerging Technologies} 140,
+  103699.
+\newblock \doi{10.1016/j.trc.2022.103699}
+\bibAnnoteFile{lopez2022adaptive}
+
+\bibitem[{Lovreglio et~al.(2020)Lovreglio, Gonzalez, Feng, Amor, Spearpoint,
+  Thomas et~al.}]{lovreglio2020}
+Lovreglio, R., Gonzalez, V., Feng, Z., Amor, R., Spearpoint, M., Thomas, J.,
+  et~al. (2020).
+\newblock Prototyping virtual reality serious games for building earthquake
+  preparedness: The auckland city hospital case study.
+\newblock \emph{Advanced Engineering Informatics} 32, 100900
+\bibAnnoteFile{lovreglio2020}
+
+\bibitem[{Mohamed et~al.(2020)Mohamed, Qian, Elhoseiny, and
+  Claudel}]{mohamed2020stgcnn}
+Mohamed, A., Qian, K., Elhoseiny, M., and Claudel, C. (2020).
+\newblock Social-stgcnn: A social spatio-temporal graph convolutional neural
+  network for human trajectory prediction.
+\newblock In \emph{2020 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}. 14412--14420.
+\newblock \doi{10.1109/cvpr42600.2020.01443}
+\bibAnnoteFile{mohamed2020stgcnn}
+
+\bibitem[{Mossberg et~al.(2020)Mossberg, Nilsson, and
+  Andree}]{mossberg2020elevator}
+Mossberg, A., Nilsson, D., and Andree, K. (2020).
+\newblock Unannounced evacuation experiment in a high-rise hotel building with
+  evacuation elevators: A study of evacuation behaviour using eye-tracking.
+\newblock \emph{Fire Technology} 57, 1259--1281.
+\newblock \doi{10.1007/s10694-020-01046-1}
+\bibAnnoteFile{mossberg2020elevator}
+
+\bibitem[{Nishinari et~al.(2004)Nishinari, Kirchner, Namazi, and
+  Schadschneider}]{ca}
+Nishinari, K., Kirchner, A., Namazi, A., and Schadschneider, A. (2004).
+\newblock Extended floor field {CA} model for evacuation dynamics.
+\newblock \emph{IEICE Transactions on Information and Systems} E87-D, 726--732
+\bibAnnoteFile{ca}
+
+\bibitem[{Osama(2024)}]{osama2024dtframework}
+Osama, Z. (2024).
+\newblock The digital twin framework: A roadmap to the development of
+  user-centred digital twin in the built environment.
+\newblock \emph{Journal of Building Engineering} 98, 111081.
+\newblock \doi{10.1016/j.jobe.2024.111081}
+\bibAnnoteFile{osama2024dtframework}
+
+\bibitem[{Ozturk(2021)}]{ozturk2021dt}
+Ozturk, G.~B. (2021).
+\newblock Digital twin research in the {AECO-FM} industry.
+\newblock \emph{Journal of Building Engineering} 40, 102730.
+\newblock \doi{10.1016/j.jobe.2021.102730}
+\bibAnnoteFile{ozturk2021dt}
+
+\bibitem[{Pan et~al.(2007)Pan, Han, Dauber, and Law}]{pan2007}
+Pan, X., Han, C.~S., Dauber, K., and Law, K.~H. (2007).
+\newblock A multi-agent based framework for the simulation of human and social
+  behaviors during emergency evacuations.
+\newblock \emph{AI \& Society} 22, 113--132
+\bibAnnoteFile{pan2007}
+
+\bibitem[{Pellegrini et~al.(2009)Pellegrini, Ess, Schindler, and van
+  Gool}]{pellegrini2009eth}
+Pellegrini, S., Ess, A., Schindler, K., and van Gool, L. (2009).
+\newblock You'll never walk alone: Modeling social behavior for multi-target
+  tracking.
+\newblock In \emph{2009 IEEE 12th International Conference on Computer Vision}.
+  261--268.
+\newblock \doi{10.1109/iccv.2009.5459260}
+\bibAnnoteFile{pellegrini2009eth}
+
+\bibitem[{Ronchi and Gwynne(2015)}]{ronchi2015}
+Ronchi, E. and Gwynne, S. (2015).
+\newblock Data collection for evacuation model validation.
+\newblock \emph{Fire Safety Journal} 72, 137--151
+\bibAnnoteFile{ronchi2015}
+
+\bibitem[{Ronchi and Nilsson(2013)}]{evac_review}
+Ronchi, E. and Nilsson, D. (2013).
+\newblock Fire evacuation in high-rise buildings: a review of human behaviour
+  and modelling research.
+\newblock \emph{Fire Science Reviews} 2, 1--21
+\bibAnnoteFile{evac_review}
+
+\bibitem[{Saleh(2022)}]{saleh2022transformer}
+Saleh, K. (2022).
+\newblock Pedestrian trajectory prediction for real-time autonomous systems via
+  context-augmented transformer networks.
+\newblock \emph{Sensors} 22, 7495.
+\newblock \doi{10.3390/s22197495}
+\bibAnnoteFile{saleh2022transformer}
+
+\bibitem[{Salzmann et~al.(2020)Salzmann, Ivanovic, Chakravarty, and
+  Pavone}]{salzmann2020trajectron}
+Salzmann, T., Ivanovic, B., Chakravarty, P., and Pavone, M. (2020).
+\newblock Trajectron++: Dynamically-feasible trajectory forecasting with
+  heterogeneous data.
+\newblock In \emph{Computer Vision -- ECCV 2020} (Springer). 683--700.
+\newblock \doi{10.1007/978-3-030-58523-5_40}
+\bibAnnoteFile{salzmann2020trajectron}
+
+\bibitem[{Still(2014)}]{crowd_book}
+Still, G.~K. (2014).
+\newblock \emph{Introduction to Crowd Science} (Boca Raton, FL, USA: CRC Press)
+\bibAnnoteFile{crowd_book}
+
+\bibitem[{Sun and Turkan(2020)}]{sun2020bimfire}
+Sun, Q. and Turkan, Y. (2020).
+\newblock A {BIM}-based simulation framework for fire safety management and
+  investigation of the critical factors affecting human evacuation performance.
+\newblock \emph{Advanced Engineering Informatics} 44, 101093.
+\newblock \doi{10.1016/j.aei.2020.101093}
+\bibAnnoteFile{sun2020bimfire}
+
+\bibitem[{Surynek(2022)}]{surynek2022mapfsurvey}
+Surynek, P. (2022).
+\newblock Problem compilation for multi-agent path finding: A survey.
+\newblock In \emph{Proceedings of the Thirty-First International Joint
+  Conference on Artificial Intelligence}. 5615--5622.
+\newblock \doi{10.24963/ijcai.2022/783}
+\bibAnnoteFile{surynek2022mapfsurvey}
+
+\bibitem[{Wang et~al.(2023)Wang, Song, Hu, and Cui}]{wang2023timtraj}
+Wang, R., Song, X., Hu, Z., and Cui, Y. (2023).
+\newblock Spatio-temporal interaction aware and trajectory distribution aware
+  graph convolution network for pedestrian multimodal trajectory prediction.
+\newblock \emph{IEEE Transactions on Instrumentation and Measurement} 72,
+  1--11.
+\newblock \doi{10.1109/tim.2022.3229733}
+\bibAnnoteFile{wang2023timtraj}
+
+\bibitem[{Wang et~al.(2022)Wang, Chraibi, Chen, Li, and Ma}]{wang2022bounded}
+Wang, X., Chraibi, M., Chen, J., Li, R., and Ma, J. (2022).
+\newblock Modeling boundedly rational route choice in crowd evacuation
+  processes.
+\newblock \emph{Safety Science} 147, 105590.
+\newblock \doi{10.1016/j.ssci.2021.105590}
+\bibAnnoteFile{wang2022bounded}
+
+\bibitem[{Wehbe and Shahrour(2021)}]{wehbe2021bimfire}
+Wehbe, R. and Shahrour, I. (2021).
+\newblock A {BIM}-based smart system for fire evacuation.
+\newblock \emph{Future Internet} 13, 221.
+\newblock \doi{10.3390/fi13090221}
+\bibAnnoteFile{wehbe2021bimfire}
+
+\bibitem[{Weidmann(1993)}]{weidmann1993}
+Weidmann, U. (1993).
+\newblock \emph{Transporttechnik der Fussganger: Transporttechnische
+  Eigenschaften des Fussgangerverkehrs} (Zurich, Switzerland: ETH Zurich,
+  Institut fur Verkehrsplanung, Transporttechnik, Strassen- und Eisenbahnbau)
+\bibAnnoteFile{weidmann1993}
+
+\bibitem[{Yano(2018)}]{yano2018obstacle}
+Yano, R. (2018).
+\newblock Effect of form of obstacle on speed of crowd evacuation.
+\newblock \emph{Physical Review E} 97.
+\newblock \doi{10.1103/physreve.97.032319}
+\bibAnnoteFile{yano2018obstacle}
+
+\bibitem[{Zhang et~al.(2021)Zhang, Lu, and Tao}]{zhang2021dtwins}
+Zhang, C., Lu, Y., and Tao, F. (2021).
+\newblock Digital twins for smart cities: A state-of-the-art review.
+\newblock \emph{Engineering} 7, 1715--1730
+\bibAnnoteFile{zhang2021dtwins}
+
+\bibitem[{Zheng et~al.(2009)Zheng, Zhong, and Liu}]{zheng2009}
+Zheng, X., Zhong, T., and Liu, M. (2009).
+\newblock Modeling crowd evacuation of a building based on seven methodological
+  approaches.
+\newblock \emph{Building and Environment} 44, 437--445
+\bibAnnoteFile{zheng2009}
+
+\bibitem[{Zhou et~al.(2021)Zhou, Ren, Xia, Fan, Yang, and
+  Huang}]{zhou2021astgnn}
+Zhou, H., Ren, D., Xia, H., Fan, M., Yang, X., and Huang, H. (2021).
+\newblock Ast-gnn: An attention-based spatio-temporal graph neural network for
+  interaction-aware pedestrian trajectory prediction.
+\newblock \emph{Neurocomputing} 445, 298--308.
+\newblock \doi{10.1016/j.neucom.2021.03.024}
+\bibAnnoteFile{zhou2021astgnn}
+
+\end{thebibliography}

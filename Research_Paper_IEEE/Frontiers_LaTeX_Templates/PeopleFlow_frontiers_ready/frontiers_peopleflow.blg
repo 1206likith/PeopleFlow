@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: frontiers_peopleflow.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+The style file: Frontiers-Harvard.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: references.bib
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+You've used 44 entries,
+            3029 wiz_defined-function locations,
+            894 strings with 13338 characters,
+and the built_in function-call counts, 29860 in all, are:
+= -- 2573
+> -- 1429
+< -- 21
++ -- 692
+- -- 385
+* -- 2146
+:= -- 4392
+add.period$ -- 114
+call.type$ -- 44
+change.case$ -- 357
+chr.to.int$ -- 45
+cite$ -- 88
+duplicate$ -- 1970
+empty$ -- 2156
+format.name$ -- 514
+if$ -- 6122
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 435
+newline$ -- 298
+num.names$ -- 177
+pop$ -- 919
+preamble$ -- 1
+purify$ -- 304
+quote$ -- 0
+skip$ -- 1031
+stack$ -- 0
+substring$ -- 1420
+swap$ -- 969
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 384
+warning$ -- 0
+while$ -- 201
+width$ -- 0
+write$ -- 671

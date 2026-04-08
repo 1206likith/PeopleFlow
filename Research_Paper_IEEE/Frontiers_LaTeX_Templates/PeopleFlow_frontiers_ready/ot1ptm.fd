@@ -1,0 +1,25 @@
+\ProvidesFile{ot1ptm.fd}
+   [2026/04/06 local fallback font definitions for OT1/ptm.]
+
+\DeclareFontFamily{OT1}{ptm}{}
+
+% Map OT1/ptm to always-available Computer Modern faces without substitutions.
+\DeclareFontShape{OT1}{ptm}{m}{n}{<-> cmr10}{}
+\DeclareFontShape{OT1}{ptm}{m}{it}{<-> cmti10}{}
+\DeclareFontShape{OT1}{ptm}{m}{sl}{<-> cmsl10}{}
+\DeclareFontShape{OT1}{ptm}{m}{sc}{<-> cmcsc10}{}
+
+\DeclareFontShape{OT1}{ptm}{b}{n}{<-> cmbx10}{}
+\DeclareFontShape{OT1}{ptm}{b}{it}{<-> cmbxti10}{}
+\DeclareFontShape{OT1}{ptm}{b}{sl}{<-> cmbx10}{}
+\DeclareFontShape{OT1}{ptm}{b}{sc}{<-> cmbx10}{}
+
+\DeclareFontShape{OT1}{ptm}{bx}{n}{<-> cmbx10}{}
+\DeclareFontShape{OT1}{ptm}{bx}{it}{<-> cmbxti10}{}
+\DeclareFontShape{OT1}{ptm}{bx}{sl}{<-> cmbx10}{}
+\DeclareFontShape{OT1}{ptm}{bx}{sc}{<-> cmbx10}{}
+
+\DeclareFontShape{OT1}{ptm}{m}{ui}{<-> cmti10}{}
+\DeclareFontShape{OT1}{ptm}{b}{ui}{<-> cmbxti10}{}
+\DeclareFontShape{OT1}{ptm}{bx}{ui}{<-> cmbxti10}{}
+\endinput

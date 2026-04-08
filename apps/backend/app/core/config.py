@@ -90,6 +90,7 @@ class Settings(BaseSettings):
 
     ADMIN_KEY_ENABLED: bool = True
     ADMIN_API_KEY: str = "change-me"
+    ACTOR_HEADER_ALLOWED_IN_PRODUCTION: bool = False
 
     UPLOAD_DIR: str = "uploads"
     MAX_UPLOAD_SIZE: int = 10 * 1024 * 1024
@@ -161,7 +162,7 @@ class Settings(BaseSettings):
     def _normalize_environment(cls, value: Any) -> str:
         return str(value or "development").strip().lower()
 
-    @field_validator("DEBUG", "REDIS_ENABLED", "ADMIN_KEY_ENABLED", "RATE_LIMIT_ENABLED", "UNITY_ENABLED", "ENABLE_METRICS", "REQUIRE_HTTPS", "ALLOW_FEATURE_MUTATION", mode="before")
+    @field_validator("DEBUG", "REDIS_ENABLED", "ADMIN_KEY_ENABLED", "ACTOR_HEADER_ALLOWED_IN_PRODUCTION", "RATE_LIMIT_ENABLED", "UNITY_ENABLED", "ENABLE_METRICS", "REQUIRE_HTTPS", "ALLOW_FEATURE_MUTATION", mode="before")
     @classmethod
     def _normalize_boolish_flags(cls, value: Any) -> bool:
         if isinstance(value, bool):

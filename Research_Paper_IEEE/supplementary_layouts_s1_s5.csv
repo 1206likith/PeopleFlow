@@ -1,0 +1,16 @@
+layout,scenario,num_agents,routing_policy,blocked_exit_id,mean_time,std_time,mean_density,std_density,mean_completion_pct,completion_rate
+Airport terminal,S1_Baseline,80,shortest_path,,34.26,9.11,109.23,34.02,93.88,0.1
+Airport terminal,S2_HighOcc,120,shortest_path,,29.2,6.72,13.02,3.68,95.0,1.0
+Airport terminal,S3_Blocked,80,shortest_path,exit_1,31.88,6.44,108.14,34.01,93.88,0.1
+Airport terminal,S4_Routing,80,least_crowded,,74.7,56.04,46.06,37.51,94.62,0.7
+Airport terminal,S5_Panic,80,shortest_path,,32.86,3.63,31.97,42.89,94.75,0.8
+Metro station,S1_Baseline,80,shortest_path,,31.52,2.33,12.02,1.71,95.12,1.0
+Metro station,S2_HighOcc,120,shortest_path,,32.1,2.19,18.37,2.02,95.08,1.0
+Metro station,S3_Blocked,80,shortest_path,exit_1,32.32,2.57,12.78,1.9,95.0,1.0
+Metro station,S4_Routing,80,least_crowded,,33.1,3.82,9.67,1.89,95.25,1.0
+Metro station,S5_Panic,80,shortest_path,,39.5,5.56,10.92,1.43,95.0,1.0
+Office building,S1_Baseline,80,shortest_path,,33.86,5.07,7.86,1.48,95.12,1.0
+Office building,S2_HighOcc,120,shortest_path,,30.52,3.35,8.83,0.86,95.08,1.0
+Office building,S3_Blocked,80,shortest_path,exit_1,34.38,2.93,9.39,1.81,95.12,1.0
+Office building,S4_Routing,80,least_crowded,,27.8,2.23,6.59,0.93,95.0,1.0
+Office building,S5_Panic,80,shortest_path,,34.08,4.02,6.76,1.29,95.0,1.0

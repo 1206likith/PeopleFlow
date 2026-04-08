@@ -1,0 +1,65 @@
+{
+  "layout": "Plan3 (core set)",
+  "agents": 80,
+  "runs": [
+    {
+      "layout": "Plan3 (core set)",
+      "run": 1,
+      "seed": 2400,
+      "wall_clock_s": 1.1403616999887163,
+      "steps": 1120,
+      "completed": true,
+      "sim_time_s": 223.99999999999582,
+      "peak_density": 162.4
+    },
+    {
+      "layout": "Plan3 (core set)",
+      "run": 2,
+      "seed": 2401,
+      "wall_clock_s": 0.8414091000013286,
+      "steps": 1040,
+      "completed": true,
+      "sim_time_s": 207.99999999999673,
+      "peak_density": 144.68
+    },
+    {
+      "layout": "Plan3 (core set)",
+      "run": 3,
+      "seed": 2402,
+      "wall_clock_s": 1.1335240000043996,
+      "steps": 1748,
+      "completed": true,
+      "sim_time_s": 349.5999999999887,
+      "peak_density": 209.16
+    },
+    {
+      "layout": "Plan3 (core set)",
+      "run": 4,
+      "seed": 2403,
+      "wall_clock_s": 0.8918197000020882,
+      "steps": 969,
+      "completed": true,
+      "sim_time_s": 193.79999999999754,
+      "peak_density": 135.4
+    },
+    {
+      "layout": "Plan3 (core set)",
+      "run": 5,
+      "seed": 2404,
+      "wall_clock_s": 1.3279441999911796,
+      "steps": 1397,
+      "completed": true,
+      "sim_time_s": 279.3999999999927,
+      "peak_density": 185.04
+    }
+  ],
+  "wall_clock_mean_s": 1.067,
+  "wall_clock_std_s": 0.179,
+  "wall_clock_min_s": 0.841,
+  "wall_clock_max_s": 1.328,
+  "steps_mean": 1254.8,
+  "sim_time_mean_s": 250.96,
+  "completion_rate": 1.0,
+  "tmax_s": 350,
+  "routing_policy": "shortest_path"
+}

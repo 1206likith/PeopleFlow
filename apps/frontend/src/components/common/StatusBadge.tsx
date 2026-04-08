@@ -7,11 +7,11 @@ interface StatusBadgeProps {
 }
 
 const toneMap: Record<Tone, { dot: string; bg: string; border: string; text: string }> = {
-  good:    { dot: "#34d399", bg: "rgba(52,211,153,0.1)",  border: "rgba(52,211,153,0.25)",  text: "#6ee7b7" },
-  bad:     { dot: "#f87171", bg: "rgba(248,113,113,0.1)", border: "rgba(248,113,113,0.25)", text: "#fca5a5" },
-  warn:    { dot: "#fbbf24", bg: "rgba(251,191,36,0.1)",  border: "rgba(251,191,36,0.25)",  text: "#fde68a" },
-  info:    { dot: "#38bdf8", bg: "rgba(56,189,248,0.1)",  border: "rgba(56,189,248,0.25)",  text: "#7dd3fc" },
-  neutral: { dot: "#5a6f85", bg: "rgba(90,111,133,0.1)",  border: "rgba(90,111,133,0.25)",  text: "#a8b8cc" },
+  good:    { dot: "var(--success)", bg: "color-mix(in srgb, var(--success) 18%, transparent)", border: "color-mix(in srgb, var(--success) 35%, transparent)", text: "color-mix(in srgb, var(--success) 60%, white)" },
+  bad:     { dot: "var(--danger)", bg: "color-mix(in srgb, var(--danger) 18%, transparent)", border: "color-mix(in srgb, var(--danger) 35%, transparent)", text: "color-mix(in srgb, var(--danger) 52%, white)" },
+  warn:    { dot: "var(--warning)", bg: "color-mix(in srgb, var(--warning) 18%, transparent)", border: "color-mix(in srgb, var(--warning) 34%, transparent)", text: "color-mix(in srgb, var(--warning) 46%, white)" },
+  info:    { dot: "var(--accent-2)", bg: "color-mix(in srgb, var(--accent-2) 18%, transparent)", border: "color-mix(in srgb, var(--accent-2) 34%, transparent)", text: "color-mix(in srgb, var(--accent-2) 52%, white)" },
+  neutral: { dot: "var(--text-soft)", bg: "color-mix(in srgb, var(--text-soft) 18%, transparent)", border: "color-mix(in srgb, var(--text-soft) 28%, transparent)", text: "var(--text-muted)" },
 };
 
 export function StatusBadge({ label, tone = "neutral", pulse = false }: StatusBadgeProps) {
@@ -19,6 +19,9 @@ export function StatusBadge({ label, tone = "neutral", pulse = false }: StatusBa
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-semibold tracking-[0.12em] uppercase"
+      role="status"
+      aria-live="polite"
+      aria-label={`Status ${label}`}
       style={{
         background: `linear-gradient(135deg, rgba(255,255,255,0.03) 0%, ${c.bg} 100%)`,
         border: `1px solid ${c.border}`,

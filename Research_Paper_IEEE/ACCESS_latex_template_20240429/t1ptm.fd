@@ -1,0 +1,22 @@
+\ProvidesFile{t1ptm.fd}
+   [2026/04/06 portable fallback font definitions for T1/ptm.]
+
+\DeclareFontFamily{T1}{ptm}{}
+
+% Keep this file portable across TeX Live and MiKTeX by avoiding local font assets.
+\DeclareFontShape{T1}{ptm}{m}{n}{<->ssub * cmr/m/n}{}
+\DeclareFontShape{T1}{ptm}{m}{it}{<->ssub * cmr/m/it}{}
+\DeclareFontShape{T1}{ptm}{m}{sl}{<->ssub * cmr/m/n}{}
+\DeclareFontShape{T1}{ptm}{m}{sc}{<->ssub * cmr/m/n}{}
+
+\DeclareFontShape{T1}{ptm}{b}{n}{<->ssub * cmr/bx/n}{}
+\DeclareFontShape{T1}{ptm}{b}{it}{<->ssub * cmr/bx/n}{}
+\DeclareFontShape{T1}{ptm}{b}{sl}{<->ssub * cmr/bx/n}{}
+\DeclareFontShape{T1}{ptm}{b}{sc}{<->ssub * cmr/bx/n}{}
+
+\DeclareFontShape{T1}{ptm}{bx}{n}{<->ssub * ptm/b/n}{}
+\DeclareFontShape{T1}{ptm}{bx}{it}{<->ssub * ptm/b/it}{}
+\DeclareFontShape{T1}{ptm}{bx}{sl}{<->ssub * ptm/b/sl}{}
+\DeclareFontShape{T1}{ptm}{bx}{sc}{<->ssub * ptm/b/sc}{}
+
+\endinput

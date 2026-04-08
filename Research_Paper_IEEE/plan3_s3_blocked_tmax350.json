@@ -1,0 +1,103 @@
+{
+  "case": "Plan3",
+  "scenario": "S3_Blocked",
+  "max_runtime_seconds": 350,
+  "mean_time": 350.0,
+  "std_time": 0.0,
+  "mean_density": 429.99,
+  "std_density": 7.76,
+  "completion_rate": 0.0,
+  "mean_completion_pct": 0.0,
+  "runs": [
+    {
+      "time": 350.0,
+      "peak_density": 422.0,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 429.68,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 432.52,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 411.92,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 429.92,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 438.92,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 431.76,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 427.96,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 436.52,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    },
+    {
+      "time": 350.0,
+      "peak_density": 438.72,
+      "completed": false,
+      "completion_pct": 0.0,
+      "steps": 1750,
+      "blocked_exit": "exit_1",
+      "exit_count": 2
+    }
+  ]
+}

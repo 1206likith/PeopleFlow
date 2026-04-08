@@ -103,6 +103,14 @@ def main() -> None:
     num_agents = 80
     routing_policy = "least_crowded"
     panic_level = 0.3
+    # Plan3 scalability is rerun with S1 shortest-path at extended Tmax to avoid timeout-only artifacts.
+    layout_overrides: dict[str, dict[str, Any]] = {
+        "Plan3 (core set)": {
+            "routing_policy": "shortest_path",
+            "max_runtime_seconds": 350,
+            "max_steps": 1750,
+        }
+    }
 
     detail_rows: list[dict[str, Any]] = []
     summary_rows: list[dict[str, Any]] = []
@@ -116,14 +124,17 @@ def main() -> None:
         scaled = _rescale_floor_plan(raw)
 
         run_results: list[dict[str, Any]] = []
+        override = layout_overrides.get(layout_name, {})
         for i in range(repeats):
             seed = 2400 + i
             result = _run_single(
                 floor_plan=scaled,
                 num_agents=num_agents,
-                routing_policy=routing_policy,
+                routing_policy=str(override.get("routing_policy", routing_policy)),
                 panic_level=panic_level,
                 seed=seed,
+                max_runtime_seconds=int(override.get("max_runtime_seconds", 300)),
+                max_steps=int(override.get("max_steps", 1600)),
             )
             run_results.append(result)
             detail_rows.append(

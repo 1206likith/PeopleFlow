@@ -85,6 +85,42 @@ def test_request_context_uses_global_tenant_and_mode():
         settings.APP_MODE = old_mode
 
 
+def test_request_context_rejects_unverified_actor_header_in_production_by_default():
+    app = FastAPI()
+
+    @app.get("/ctx")
+    async def context(request: Request):
+        return get_request_actor(request)
+
+    client = create_client(app)
+    old_mode = settings.APP_MODE
+    old_allow = settings.ACTOR_HEADER_ALLOWED_IN_PRODUCTION
+    try:
+        settings.APP_MODE = "production"
+        settings.ACTOR_HEADER_ALLOWED_IN_PRODUCTION = False
+        body = client.get("/ctx", headers={"X-Actor-ID": "operator-1"}).json()
+        assert body["id"] == "system"
+
+        settings.ACTOR_HEADER_ALLOWED_IN_PRODUCTION = True
+        body = client.get("/ctx", headers={"X-Actor-ID": "operator-1"}).json()
+        assert body["id"] == "operator-1"
+    finally:
+        settings.APP_MODE = old_mode
+        settings.ACTOR_HEADER_ALLOWED_IN_PRODUCTION = old_allow
+
+
+def test_request_context_accepts_bearer_actor_compatibility_token():
+    app = FastAPI()
+
+    @app.get("/ctx")
+    async def context(request: Request):
+        return get_request_actor(request)
+
+    client = create_client(app)
+    body = client.get("/ctx", headers={"Authorization": "Bearer actor:ops-user"}).json()
+    assert body["id"] == "ops-user"
+
+
 def test_admin_key_middleware_only_blocks_v2_mutations():
     app = FastAPI()
     app.add_middleware(AdminKeyMiddleware)

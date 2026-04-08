@@ -1,0 +1,116 @@
+{
+  "routingRules": [
+    {
+      "skill": "builder-god-skill",
+      "keywords": ["end-to-end", "end to end", "build this fully", "ship this", "full implementation", "production-ready"]
+    },
+    {
+      "skill": "growth-god-skill",
+      "keywords": ["growth", "traffic", "conversions", "funnel", "go-to-market", "gtm", "launch campaign"]
+    },
+    {
+      "skill": "research-god-skill",
+      "keywords": ["research end-to-end", "experiment design", "publishable", "paper-ready", "reproducible analysis"]
+    },
+    {
+      "skill": "security-engineering-god-skill",
+      "keywords": ["secure end-to-end", "security hardening", "threat model", "security engineering", "harden this"]
+    },
+    {
+      "skill": "content-authority-god-skill",
+      "keywords": ["authoritative content", "source-backed article", "high-trust content", "content package"]
+    },
+    {
+      "skill": "pdf-skill",
+      "keywords": ["pdf", "merge pdf", "split pdf", "extract text", "ocr", "watermark"]
+    },
+    {
+      "skill": "docx-skill",
+      "keywords": ["docx", "word document", "ms word", "track changes", "doc file"]
+    },
+    {
+      "skill": "xlsx-skill",
+      "keywords": ["xlsx", "excel", "spreadsheet", "formula", "workbook", "sheet"]
+    },
+    {
+      "skill": "pptx-skill",
+      "keywords": ["pptx", "powerpoint", "slides", "presentation deck"]
+    },
+    {
+      "skill": "frontend-design-skill",
+      "keywords": ["ui design", "ux", "landing page", "frontend layout", "design system"]
+    },
+    {
+      "skill": "canvas-design-skill",
+      "keywords": ["poster", "visual design", "banner", "social creative", "artwork"]
+    },
+    {
+      "skill": "web-artifacts-skill",
+      "keywords": ["react", "react component", "vite", "tailwind", "shadcn", "web app scaffold", "dashboard ui"]
+    },
+    {
+      "skill": "deep-research-skill",
+      "keywords": ["research", "citations", "sources", "evidence", "literature"]
+    },
+    {
+      "skill": "deep-research-enterprise-skill",
+      "keywords": ["enterprise research", "red team", "review board", "multi-phase research"]
+    },
+    {
+      "skill": "notebooklm-skill",
+      "keywords": ["notebooklm", "document grounded", "source only", "knowledge notebook"]
+    },
+    {
+      "skill": "context-engineering-skill",
+      "keywords": ["context engineering", "memory strategy", "agent context", "prompt architecture"]
+    },
+    {
+      "skill": "context-engineering-kit",
+      "keywords": ["sdd", "spec driven", "subagent", "reflexion", "llm-as-judge", "workflow orchestration"]
+    },
+    {
+      "skill": "task-master-skill",
+      "keywords": ["task management", "prd", "milestones", "backlog", "roadmap"]
+    },
+    {
+      "skill": "planning-with-files-skill",
+      "keywords": ["task_plan.md", "findings.md", "progress.md", "file based planning"]
+    },
+    {
+      "skill": "superpowers-skill",
+      "keywords": ["brainstorm plan execute", "agent workflow", "review cycle", "coding superpowers"]
+    },
+    {
+      "skill": "skill-creator-skill",
+      "keywords": ["create skill", "skill.md", "skill authoring", "skill testing"]
+    },
+    {
+      "skill": "tdd-guard",
+      "keywords": ["tdd", "test first", "red green refactor", "test enforcement"]
+    },
+    {
+      "skill": "owasp-security",
+      "keywords": ["security", "secure", "owasp", "security audit", "auth security", "xss", "sql injection", "asvs"]
+    },
+    {
+      "skill": "claude-scientific-skills",
+      "keywords": ["bioinformatics", "cheminformatics", "drug discovery", "omics", "scientific workflow"]
+    },
+    {
+      "skill": "marketing-skills",
+      "keywords": ["copywriting", "cro", "email sequence", "marketing funnel", "launch strategy", "positioning"]
+    },
+    {
+      "skill": "claude-seo",
+      "keywords": ["seo", "schema", "core web vitals", "sitemap", "geo", "search console"]
+    },
+    {
+      "skill": "humanizer",
+      "keywords": ["humanize text", "ai writing", "rewrite voice", "tone match", "style rewrite"]
+    },
+    {
+      "skill": "claude-mem",
+      "keywords": ["memory", "session history", "retrieve context", "progressive disclosure", "observations"]
+    }
+  ]
+}

@@ -39,6 +39,11 @@ Useful launcher options:
 - `.\start_peopleflow.ps1 -OpenPath /simulation`
 - `.\start_peopleflow.bat -BackendPort 8002 -FrontendPort 4175`
 
+## Launch Demo
+[![Launch Demo](https://img.shields.io/badge/Launch-Demo-2E7D32?style=for-the-badge)](http://127.0.0.1:4173/simulation)
+
+After starting PeopleFlow, open `http://127.0.0.1:4173/simulation` to enter the interactive demo route directly.
+
 Backend:
 - pip install -r requirements.txt
 - cp infra/deployment/environment.example.env .env
@@ -74,6 +79,10 @@ The canonical payload definitions live in modules/contracts/ and are used by bac
 
 ## Journal Reproducibility (PeopleFlow Paper)
 From repository root:
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19432157.svg)](https://doi.org/10.5281/zenodo.19432157)
+
+All plots, tables, and ETH validation metrics can be regenerated using the provided CLI pipeline.
 
 1) Generate the core + supplementary matrix statistics (450 + 90 runs):
 - `cd apps/backend`

@@ -28,9 +28,9 @@ export default {
         cyan:    "#38bdf8",
       },
       fontFamily: {
-        heading: ["Outfit", "sans-serif"],
-        body:    ["Inter", "sans-serif"],
-        mono:    ["JetBrains Mono", "monospace"],
+        heading: ["var(--font-heading)", "sans-serif"],
+        body:    ["var(--font-body)", "sans-serif"],
+        mono:    ["var(--font-mono)", "monospace"],
       },
       boxShadow: {
         panel:  "0 8px 32px rgba(0, 0, 0, 0.5)",

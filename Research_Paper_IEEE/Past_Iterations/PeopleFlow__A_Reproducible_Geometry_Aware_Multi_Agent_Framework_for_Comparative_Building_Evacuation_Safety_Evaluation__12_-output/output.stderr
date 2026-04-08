@@ -1,0 +1,415 @@
+ChkTeX v1.7.8 - Copyright 1995-96 Jens T. Berger Thielemann.
+Compiled with PCRE regex support.
+No errors printed; No warnings printed; 488 user suppressed warnings; No line suppressed warnings.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+kpathsea: Appending font creation commands to missfont.log.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times-italic
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times-italic.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-italic
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times-italic
+
+! I can't find file `t1-times-italic'.
+<*> ...ag:=1; ; nonstopmode; input t1-times-italic
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...ag:=1; ; nonstopmode; input t1-times-italic
+                                                  
+Transcript written on mfput.log.
+grep: t1-times-italic.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-italic' failed to make t1-times-italic.tfm.
+
+kpathsea: Running mktextfm nullfont
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input nullfont
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf nullfont
+
+! I can't find file `nullfont'.
+<*> ...four; mag:=1; ; nonstopmode; input nullfont
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input nullfont
+                                                  
+Transcript written on mfput.log.
+grep: nullfont.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input nullfont' failed to make nullfont.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times-bold
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times-bold.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-bold
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times-bold
+
+! I can't find file `t1-times-bold'.
+<*> ... mag:=1; ; nonstopmode; input t1-times-bold
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ... mag:=1; ; nonstopmode; input t1-times-bold
+                                                  
+Transcript written on mfput.log.
+grep: t1-times-bold.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-bold' failed to make t1-times-bold.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+PNG copy skipped (other): ./logo.png
+Image written (PNG, 0 ms): ./logo.png
+PNG copy skipped (other): ./notaglinelogo.png
+Image written (PNG, 0 ms): ./notaglinelogo.png
+PNG copy skipped (alpha): ./fig_agent_logic.png
+Image written (PNG, 63 ms): ./fig_agent_logic.png
+PNG copy skipped (alpha): ./fig_social_force_components.png
+Image written (PNG, 64 ms): ./fig_social_force_components.png
+PNG copy skipped (alpha): ./fig_architecture.png
+Image written (PNG, 35 ms): ./fig_architecture.png
+PNG copy skipped (alpha): ./fig_pipeline.png
+Image written (PNG, 22 ms): ./fig_pipeline.png
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+kpathsea: Appending font creation commands to missfont.log.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times-italic
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times-italic.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-italic
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times-italic
+
+! I can't find file `t1-times-italic'.
+<*> ...ag:=1; ; nonstopmode; input t1-times-italic
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...ag:=1; ; nonstopmode; input t1-times-italic
+                                                  
+Transcript written on mfput.log.
+grep: t1-times-italic.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-italic' failed to make t1-times-italic.tfm.
+
+kpathsea: Running mktextfm nullfont
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input nullfont
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf nullfont
+
+! I can't find file `nullfont'.
+<*> ...four; mag:=1; ; nonstopmode; input nullfont
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input nullfont
+                                                  
+Transcript written on mfput.log.
+grep: nullfont.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input nullfont' failed to make nullfont.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times-bold
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times-bold.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-bold
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times-bold
+
+! I can't find file `t1-times-bold'.
+<*> ... mag:=1; ; nonstopmode; input t1-times-bold
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ... mag:=1; ; nonstopmode; input t1-times-bold
+                                                  
+Transcript written on mfput.log.
+grep: t1-times-bold.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times-bold' failed to make t1-times-bold.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+
+kpathsea: Running mktextfm t1-times
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Could not map typeface abbreviation 1- for t1-times.
+/usr/local/texlive/2025/texmf-dist/web2c/mktexnam: Need to update /usr/local/texlive/2025/texmf-dist/fonts/map/fontname/special.map?
+mktextfm: Running mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times
+This is METAFONT, Version 2.71828182 (TeX Live 2025) (preloaded base=mf)
+
+kpathsea: Running mktexmf t1-times
+
+! I can't find file `t1-times'.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Please type another input file name
+! Emergency stop.
+<*> ...four; mag:=1; ; nonstopmode; input t1-times
+                                                  
+Transcript written on mfput.log.
+grep: t1-times.log: No such file or directory
+mktextfm: `mf-nowin -progname=mf \mode:=ljfour; mag:=1; ; nonstopmode; input t1-times' failed to make t1-times.tfm.
+PNG copy skipped (other): ./logo.png
+Image written (PNG, 0 ms): ./logo.png
+PNG copy skipped (other): ./notaglinelogo.png
+Image written (PNG, 0 ms): ./notaglinelogo.png
+PNG copy skipped (alpha): ./fig_agent_logic.png
+Image written (PNG, 65 ms): ./fig_agent_logic.png
+PNG copy skipped (alpha): ./fig_social_force_components.png
+Image written (PNG, 76 ms): ./fig_social_force_components.png
+PNG copy skipped (alpha): ./fig_architecture.png
+Image written (PNG, 43 ms): ./fig_architecture.png
+PNG copy skipped (alpha): ./fig_pipeline.png
+Image written (PNG, 23 ms): ./fig_pipeline.png
+Failure to make 'output.pdf'
+Latexmk: ====Undefined refs and citations with line #s in .tex file:
+  Missing character: There is no E in font nullfont!
+  Missing character: There is no v in font nullfont!
+  Missing character: There is no a in font nullfont!
+  Missing character: There is no l in font nullfont!
+  Missing character: There is no u in font nullfont!
+  Missing character: There is no a in font nullfont!
+  Missing character: There is no t in font nullfont!
+ And 34001 more --- see log file 'output.log'

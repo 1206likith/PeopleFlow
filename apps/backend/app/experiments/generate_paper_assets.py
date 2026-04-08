@@ -371,7 +371,7 @@ def _write_density_figure(case_c_floor_plan: Dict[str, Any], frames: List[Dict[s
 
 
 def _write_pipeline_figure() -> None:
-    fig, ax = plt.subplots(figsize=(9.2, 2.4))
+    fig, ax = plt.subplots(figsize=(10.8, 3.3))
     ax.axis("off")
     labels = [
         "Floor-plan\nupload",
@@ -386,32 +386,32 @@ def _write_pipeline_figure() -> None:
     box_half_width = box_width * 0.5
     connector_pad = 0.008
     for index, (x, label) in enumerate(zip(xs, labels)):
-        rect = plt.Rectangle((x - box_half_width, 0.35), box_width, 0.32, facecolor="#eef4ff", edgecolor="#2a5bd7", linewidth=1.6)
+        rect = plt.Rectangle((x - box_half_width, 0.31), box_width, 0.40, facecolor="#eef4ff", edgecolor="#2a5bd7", linewidth=1.7)
         ax.add_patch(rect)
-        ax.text(x, 0.51, label, ha="center", va="center", fontsize=8)
+        ax.text(x, 0.51, label, ha="center", va="center", fontsize=10.5, fontweight="semibold")
         if index < len(labels) - 1:
             start_x = x + box_half_width + connector_pad
             end_x = xs[index + 1] - box_half_width - connector_pad
-            ax.annotate("", xy=(end_x, 0.51), xytext=(start_x, 0.51), arrowprops={"arrowstyle": "->", "lw": 1.4})
+            ax.annotate("", xy=(end_x, 0.51), xytext=(start_x, 0.51), arrowprops={"arrowstyle": "->", "lw": 1.8})
     fig.tight_layout()
-    fig.savefig(OUTPUT_DIR / "fig_pipeline.png", dpi=220, bbox_inches="tight")
+    fig.savefig(OUTPUT_DIR / "fig_pipeline.png", dpi=260, bbox_inches="tight")
     plt.close(fig)
 
 
 def _write_architecture_figure() -> None:
-    fig, ax = plt.subplots(figsize=(8.4, 3.8))
+    fig, ax = plt.subplots(figsize=(10.2, 4.8))
     ax.axis("off")
     blocks = [
-        (0.05, 0.58, 0.24, 0.24, "#eef4ff", "Designer\nUpload + exit edits"),
-        (0.38, 0.58, 0.24, 0.24, "#eef4ff", "Simulation studio\nLive run + replay"),
-        (0.71, 0.58, 0.24, 0.24, "#eef4ff", "Experiments dashboard\nArtifacts + comparison"),
-        (0.2, 0.15, 0.24, 0.22, "#f7f9fc", "Backend services\nProcessing + sessions"),
-        (0.56, 0.15, 0.24, 0.22, "#f7f9fc", "Persistence\nSQLite + JSON artifacts"),
+        (0.05, 0.56, 0.24, 0.26, "#eef4ff", "Designer\nUpload + exit edits"),
+        (0.38, 0.56, 0.24, 0.26, "#eef4ff", "Simulation studio\nLive run + replay"),
+        (0.71, 0.56, 0.24, 0.26, "#eef4ff", "Experiments dashboard\nArtifacts + comparison"),
+        (0.2, 0.14, 0.24, 0.24, "#f7f9fc", "Backend services\nProcessing + sessions"),
+        (0.56, 0.14, 0.24, 0.24, "#f7f9fc", "Persistence\nSQLite + JSON artifacts"),
     ]
     for x, y, w, h, color, label in blocks:
         rect = plt.Rectangle((x, y), w, h, facecolor=color, edgecolor="#334155", linewidth=1.5)
         ax.add_patch(rect)
-        ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=9)
+        ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=10.5, fontweight="semibold")
     arrows = [
         ((0.29, 0.58), (0.32, 0.37)),
         ((0.50, 0.58), (0.50, 0.37)),
@@ -419,9 +419,9 @@ def _write_architecture_figure() -> None:
         ((0.44, 0.26), (0.56, 0.26)),
     ]
     for start, end in arrows:
-        ax.annotate("", xy=end, xytext=start, arrowprops={"arrowstyle": "->", "lw": 1.5})
+        ax.annotate("", xy=end, xytext=start, arrowprops={"arrowstyle": "->", "lw": 1.9})
     fig.tight_layout()
-    fig.savefig(OUTPUT_DIR / "fig_architecture.png", dpi=220, bbox_inches="tight")
+    fig.savefig(OUTPUT_DIR / "fig_architecture.png", dpi=260, bbox_inches="tight")
     plt.close(fig)
 
 

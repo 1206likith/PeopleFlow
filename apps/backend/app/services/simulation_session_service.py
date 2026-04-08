@@ -19,6 +19,7 @@ from app.api.contracts.simulation_session_contracts import (
     SimulationSessionConfigSchema,
 )
 from app.core.config import settings
+from app.core.request_context import get_request_actor
 from app.services.frame_ingest import ingest_frame
 from app.services.simulation_projection_service import SimulationProjectionService
 from app.services.simulation_result_repository import get_simulation_result_repository
@@ -613,7 +614,8 @@ class SimulationSessionService:
         return normalized
 
     def _actor_id(self, request: Request) -> str:
-        return str(request.headers.get("X-Actor-ID") or "web-dashboard")
+        actor = get_request_actor(request)
+        return str(actor.get("id") or "web-dashboard")
 
     def _stable_seed_hint(self, config_payload: Dict[str, Any]) -> int:
         source = f"{config_payload.get('floor_plan_ref')}:{config_payload.get('emergency_type')}:{config_payload.get('mode')}:{config_payload.get('num_agents')}"
